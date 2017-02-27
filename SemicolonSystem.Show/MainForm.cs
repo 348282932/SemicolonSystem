@@ -10,11 +10,21 @@ using System.Windows.Forms;
 
 namespace SemicolonSystem.Show
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// 导入规则
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btn_ImportRule_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }
