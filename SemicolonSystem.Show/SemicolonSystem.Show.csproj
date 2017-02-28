@@ -52,10 +52,19 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MatchingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MatchingForm.Designer.cs">
+      <DependentUpon>MatchingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MatchingForm.resx">
+      <DependentUpon>MatchingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -81,6 +90,20 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SemicolonSystem.Business\SemicolonSystem.Business.csproj">
+      <Project>{30a46f29-33ae-4ce1-a8bf-03cdd605a4b0}</Project>
+      <Name>SemicolonSystem.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SemicolonSystem.Common\SemicolonSystem.Common.csproj">
+      <Project>{58f6068e-bf71-4380-af24-26b7c2c9ec27}</Project>
+      <Name>SemicolonSystem.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SemicolonSystem.Model\SemicolonSystem.Model.csproj">
+      <Project>{485b4024-d3ce-4ed4-94a5-389e072553a1}</Project>
+      <Name>SemicolonSystem.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
