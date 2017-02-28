@@ -28,21 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            this.lbl_PositionTitle = new System.Windows.Forms.Label();
             this.lbl_OffsetTitle = new System.Windows.Forms.Label();
             this.lbl_PriorityLevel = new System.Windows.Forms.Label();
             this.btn_confirm = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // label1
+            // lbl_PositionTitle
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(39, 21);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(31, 12);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "部位";
+            this.lbl_PositionTitle.AutoSize = true;
+            this.lbl_PositionTitle.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbl_PositionTitle.Location = new System.Drawing.Point(39, 21);
+            this.lbl_PositionTitle.Name = "lbl_PositionTitle";
+            this.lbl_PositionTitle.Size = new System.Drawing.Size(31, 12);
+            this.lbl_PositionTitle.TabIndex = 0;
+            this.lbl_PositionTitle.Text = "部位";
             // 
             // lbl_OffsetTitle
             // 
@@ -82,7 +82,7 @@
             this.Controls.Add(this.btn_confirm);
             this.Controls.Add(this.lbl_PriorityLevel);
             this.Controls.Add(this.lbl_OffsetTitle);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lbl_PositionTitle);
             this.Name = "MatchingForm";
             this.Text = "设置权重匹配订单";
             this.Load += new System.EventHandler(this.MatchingForm_Load);
@@ -93,7 +93,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lbl_PositionTitle;
         private System.Windows.Forms.Label lbl_OffsetTitle;
         private System.Windows.Forms.Label lbl_PriorityLevel;
         private System.Windows.Forms.Button btn_confirm;

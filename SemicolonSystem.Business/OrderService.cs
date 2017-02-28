@@ -47,6 +47,20 @@ namespace SemicolonSystem.Business
         }
 
         /// <summary>
+        /// 导入权重配置
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        public static DataResult ImportWeightCofig(List<WeightModel> list)
+        {
+            var cache = new Cache<List<WeightModel>>();
+
+            cache.SetCache("WeightCofig", list);
+
+            return new DataResult();
+        }
+
+        /// <summary>
         /// 导入订单 Excel
         /// </summary>
         /// <param name="fileName"></param>

@@ -26,32 +26,36 @@ namespace SemicolonSystem.Show
 
             if (!dataResult.IsSuccess)
             {
-                MessageBox.Show("初始化权重配置异常！请尝试重新导入订单！异常原因：" + dataResult.Message);
+                MessageBox.Show("初始化权重配置异常！请尝试重新导入订单！");
 
                 return;
             }
 
             int top = 60;
 
-            List<KeyValuePair<string,int>> cbxData = new List<KeyValuePair<string,int>>()
-            {
-                new KeyValuePair<string,int>("无",-1),
-                new KeyValuePair<string,int>("1",1),
-                new KeyValuePair<string,int>("2",2),
-                new KeyValuePair<string,int>("3",3)
-            };
-
             foreach (var item in dataResult.Data)
             {
+                List<KeyValuePair<string, int>> cbxData = new List<KeyValuePair<string, int>>()
+                {
+                    new KeyValuePair<string,int>("无", -1)
+                };
+
+                for (int i = 1; i <= 30; i++)
+                {
+                    cbxData.Add(new KeyValuePair<string, int>(i.ToString(), i));
+                }
+
                 Label lbl_Position = new Label();
 
                 lbl_Position.Text = item.Position;
 
-                lbl_Position.Top = top;
+                lbl_Position.Top = top + 4;
 
                 lbl_Position.Left = 39;
 
                 lbl_Position.Width = 60;
+
+                lbl_Position.Name = "lbl_Position";
 
                 Label lbl_Offset = new Label();
 
@@ -63,15 +67,23 @@ namespace SemicolonSystem.Show
 
                 lbl_Offset.Width = 15;
 
+                lbl_Offset.Name = "lbl_Offset";
+
                 TextBox tbx_Offset = new TextBox();
 
                 tbx_Offset.Text = "0";
 
                 tbx_Offset.Top = top;
 
-                tbx_Offset.Left = 142;
+                tbx_Offset.Left = 145;
 
                 tbx_Offset.Width = 40;
+
+                tbx_Offset.Name = "tbx_Offset";
+
+                tbx_Offset.LostFocus += tbx_Offset_LostFocus;
+
+                tbx_Offset.KeyPress += tbx_Offset_KeyPress;
 
                 ComboBox cbx_PriorityLevel = new ComboBox();
 
@@ -83,6 +95,8 @@ namespace SemicolonSystem.Show
 
                 cbx_PriorityLevel.SelectedValue = -1;
 
+                cbx_PriorityLevel.DropDownHeight = 80;
+
                 cbx_PriorityLevel.Top = top;
 
                 cbx_PriorityLevel.Left = 224;
@@ -91,25 +105,77 @@ namespace SemicolonSystem.Show
 
                 cbx_PriorityLevel.Name = "cbx_PriorityLevel";
 
-                this.Controls.Add(lbl_Position);
+                Controls.Add(lbl_Position);
 
-                this.Controls.Add(lbl_Offset);
+                Controls.Add(lbl_Offset);
 
-                this.Controls.Add(tbx_Offset);
+                Controls.Add(tbx_Offset);
 
-                this.Controls.Add(cbx_PriorityLevel);
+                Controls.Add(cbx_PriorityLevel);
 
                 top += 40;
             }
 
-            this.Height = top + 100;
+            Height = top + 100;
 
-            this.btn_confirm.Top = top + 10;
+            btn_confirm.Top = top + 10;
+        }
+
+        private void tbx_Offset_LostFocus(object sender, EventArgs e)
+        {
+            TextBox tbx = (TextBox)sender;
+
+            if (String.IsNullOrWhiteSpace(tbx.Text))
+            {
+                tbx.Text = "0";
+            }
+        }
+
+        private void tbx_Offset_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar != 8 && !Char.IsDigit(e.KeyChar) && e.KeyChar != 46)
+            {
+                e.Handled = true;
+            }
         }
 
         private void btn_confirm_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("配置成功！");
+            List<WeightModel> list = new List<WeightModel>();
+
+            var positionArr = Controls.Find("lbl_Position", false);
+
+            var offsetArr = Controls.Find("tbx_Offset", false);
+
+            var priorityLevelArr = Controls.Find("cbx_PriorityLevel", false);
+
+            for (int i = 0; i < positionArr.Length; i++)
+            {
+                var priorityLevel = Convert.ToInt16(((ComboBox)priorityLevelArr[i]).SelectedValue);
+
+                var offset = Convert.ToDecimal(offsetArr[i].Text.Trim());
+
+                if (priorityLevel < 0 || offset == 0)
+                    continue;
+
+                list.Add(new WeightModel
+                {
+                    Position = positionArr[i].Text.ToString(),
+                    Offset = offset,
+                    PriorityLevel = priorityLevel
+                });
+            }
+
+            var dataResult = OrderService.ImportWeightCofig(list);
+
+            if (dataResult.IsSuccess)
+            {
+                MessageBox.Show("配置成功！");
+            }
+            else
+            {
+                MessageBox.Show("配置失败！请尝试重新配置权重！");
+            }
         }
     }
 }
