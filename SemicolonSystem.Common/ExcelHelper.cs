@@ -69,7 +69,7 @@ namespace SemicolonSystem.Common
         /// <param name="file"></param>
         public static void TableToExcelForXLS(DataTable dt, string file, List<KeyValuePair<string,int>> sumResult)
         {
-            HSSFWorkbook hssfworkbook = new HSSFWorkbook();
+            XSSFWorkbook hssfworkbook = new XSSFWorkbook();
             ISheet sheet = hssfworkbook.CreateSheet("匹配结果");
 
             //表头

@@ -162,7 +162,11 @@ namespace SemicolonSystem.Show
             {
                 MessageBox.Show("配置成功！");
 
-                this.Close();
+                Close();
+
+                //var btn_SetWeight = mainForm.Controls.Find("btn_SetWeight", false);
+
+                //btn_SetWeight[0].BackColor = Color.Green;
             }
             else
             {

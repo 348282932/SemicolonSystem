@@ -40,6 +40,8 @@ namespace SemicolonSystem.Show
             if (dataResult.IsSuccess)
             {
                 MessageBox.Show("导入成功！");
+
+                btn_ImportRule.BackColor = Color.Green;
             }
             else
             {
@@ -68,6 +70,8 @@ namespace SemicolonSystem.Show
             if (dataResult.IsSuccess)
             {
                 MessageBox.Show("导入成功！");
+
+                btn_ImportOrder.BackColor = Color.Green;
             }
             else
             {
