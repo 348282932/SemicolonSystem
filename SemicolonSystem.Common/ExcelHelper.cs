@@ -1,6 +1,7 @@
 ﻿using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
+using SemicolonSystem.Model.Enum;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -66,27 +67,80 @@ namespace SemicolonSystem.Common
         /// </summary>
         /// <param name="dt"></param>
         /// <param name="file"></param>
-        public static void TableToExcelForXLS(DataTable dt, string file)
+        public static void TableToExcelForXLS(DataTable dt, string file, List<KeyValuePair<string,int>> sumResult)
         {
             HSSFWorkbook hssfworkbook = new HSSFWorkbook();
-            ISheet sheet = hssfworkbook.CreateSheet("Test");
+            ISheet sheet = hssfworkbook.CreateSheet("匹配结果");
 
             //表头
             IRow row = sheet.CreateRow(0);
             for (int i = 0; i < dt.Columns.Count; i++)
             {
+                if (i == 2)
+                {
+                    continue;
+                }
                 ICell cell = row.CreateCell(i);
                 cell.SetCellValue(dt.Columns[i].ColumnName);
             }
+
+            dt.Columns.Add();
+            dt.Columns.Add();
+            dt.Columns.Add();
+            dt.Columns.Add();
 
             //数据
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 IRow row1 = sheet.CreateRow(i + 1);
-                for (int j = 0; j < dt.Columns.Count; j++)
+                for (int j = 0; j < dt.Columns.Count + 2; j++)
                 {
                     ICell cell = row1.CreateCell(j);
-                    cell.SetCellValue(dt.Rows[i][j].ToString());
+
+                    if (j < 2)
+                    {
+                        string cellValue = dt.Rows[i][j].ToString();
+
+                        ICellStyle colorStyle = hssfworkbook.CreateCellStyle();
+                        colorStyle.FillPattern = FillPattern.SolidForeground;
+                        cell.CellStyle = colorStyle;
+
+                        if (dt.Rows[i][2].ToString() == MatchingLevel.PerfectMatch.ToString())
+                            colorStyle.FillForegroundColor = 3;
+
+                        if (dt.Rows[i][2].ToString() == MatchingLevel.BarelyMatch.ToString())
+                            colorStyle.FillForegroundColor = 5;
+
+                        if (dt.Rows[i][2].ToString() == MatchingLevel.ForceMatching.ToString())
+                            colorStyle.FillForegroundColor = 2;
+
+                        cell.SetCellValue(cellValue);
+                    }
+
+                    if (j == 3 && i < sumResult.Count)
+                    {
+                        dt.Rows[i][j] = sumResult[i].Key;
+
+                        ICellStyle style = hssfworkbook.CreateCellStyle();
+                        style.Alignment = HorizontalAlignment.Center;
+                        IFont f = hssfworkbook.CreateFont();
+                        f.Boldweight = (short)FontBoldWeight.Bold;
+                        style.SetFont(f);
+                        cell.CellStyle = style;
+                        cell.SetCellValue(sumResult[i].Key);
+                    }
+
+                    if (j == 4 && i < sumResult.Count)
+                    {
+                        dt.Rows[i][j] = sumResult[i].Value;
+                        ICellStyle style = hssfworkbook.CreateCellStyle();
+                        style.Alignment = HorizontalAlignment.Center;
+                        IFont f = hssfworkbook.CreateFont();
+                        f.Boldweight = (short)FontBoldWeight.Bold;
+                        style.SetFont(f);
+                        cell.CellStyle = style;
+                        cell.SetCellValue(sumResult[i].Value);
+                    }
                 }
             }
 

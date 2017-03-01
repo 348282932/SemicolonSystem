@@ -1,14 +1,7 @@
 ﻿using SemicolonSystem.Business;
-using SemicolonSystem.Common;
 using SemicolonSystem.Model;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SemicolonSystem.Show
@@ -37,7 +30,7 @@ namespace SemicolonSystem.Show
             {
                 List<KeyValuePair<string, int>> cbxData = new List<KeyValuePair<string, int>>()
                 {
-                    new KeyValuePair<string,int>("无", -1)
+                    new KeyValuePair<string,int>("无", 999)
                 };
 
                 for (int i = 1; i <= 30; i++)
@@ -71,7 +64,7 @@ namespace SemicolonSystem.Show
 
                 TextBox tbx_Offset = new TextBox();
 
-                tbx_Offset.Text = "0";
+                tbx_Offset.Text = item.Offset.ToString();
 
                 tbx_Offset.Top = top;
 
@@ -93,8 +86,6 @@ namespace SemicolonSystem.Show
 
                 cbx_PriorityLevel.ValueMember = "Value";
 
-                cbx_PriorityLevel.SelectedValue = -1;
-
                 cbx_PriorityLevel.DropDownHeight = 80;
 
                 cbx_PriorityLevel.Top = top;
@@ -112,6 +103,8 @@ namespace SemicolonSystem.Show
                 Controls.Add(tbx_Offset);
 
                 Controls.Add(cbx_PriorityLevel);
+
+                cbx_PriorityLevel.SelectedValue = (int)item.PriorityLevel;
 
                 top += 40;
             }
@@ -155,9 +148,6 @@ namespace SemicolonSystem.Show
 
                 var offset = Convert.ToDecimal(offsetArr[i].Text.Trim());
 
-                if (priorityLevel < 0 || offset == 0)
-                    continue;
-
                 list.Add(new WeightModel
                 {
                     Position = positionArr[i].Text.ToString(),
@@ -171,6 +161,8 @@ namespace SemicolonSystem.Show
             if (dataResult.IsSuccess)
             {
                 MessageBox.Show("配置成功！");
+
+                this.Close();
             }
             else
             {

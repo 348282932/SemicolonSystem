@@ -81,5 +81,51 @@ namespace SemicolonSystem.Show
 
             matchingForm.ShowDialog();
         }
+
+        private void btn_Matching_Click(object sender, EventArgs e)
+        {
+            var dataResult = OrderService.GetMatchingResult();
+
+            if (dataResult.IsSuccess)
+            {
+                DataTable dt = new DataTable();
+
+                dt.Columns.Add(new DataColumn("名称"));
+
+                dt.Columns.Add(new DataColumn("匹配结果"));
+
+                dt.Columns.Add(new DataColumn("归入状态"));
+
+                for (int i = 0; i < dataResult.Data.Count; i++)
+                {
+                    dt.Rows.Add(dt.NewRow());
+
+                    dt.Rows[i][0] = dataResult.Data[i].Name;
+
+                    dt.Rows[i][1] = dataResult.Data[i].Model;
+
+                    dt.Rows[i][2] = dataResult.Data[i].MatchingLevel.ToString();
+                }
+
+                DialogResult dialogResult = saveResultFileDialog.ShowDialog();
+
+                if (dialogResult != DialogResult.OK && dialogResult != DialogResult.Yes)
+                {
+                    return;
+                }
+
+                string filePath = saveResultFileDialog.FileName;
+
+                var sumResults = dataResult.Data.GroupBy(g => g.Model).Select(s => new KeyValuePair<string, int>(s.Key, s.Count())).ToList();
+
+                ExcelHelper.TableToExcelForXLS(dt, filePath, sumResults);
+
+                MessageBox.Show("匹配成功！");
+            }
+            else
+            {
+                MessageBox.Show("匹配失败！失败原因：" + dataResult.Message);
+            }
+        }
     }
 }

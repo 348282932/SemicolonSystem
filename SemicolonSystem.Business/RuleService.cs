@@ -44,7 +44,7 @@ namespace SemicolonSystem.Business
                         {
                             Model = tab.Rows[i][0].ToString().Trim(),
                             Position = tab.Columns[j].ColumnName.Trim(),
-                            Size = Convert.ToDecimal(tab.Rows[0][j].ToString().Trim())
+                            Size = Convert.ToDecimal(tab.Rows[i][j].ToString().Trim())
                         });
                     }
                 }

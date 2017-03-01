@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SemicolonSystem.Common
 {
-    public class Cache<TData>
+    public class Cache<TData> where TData : class
     {
         private string path = AppDomain.CurrentDomain.BaseDirectory + "\\Cache\\";
 
@@ -41,11 +41,16 @@ namespace SemicolonSystem.Common
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        public TData GetCache(string fileName)
+        public DataResult<TData> GetCache(string fileName)
         {
             fileName = fileName + ".cache";
 
             string filePath = path + fileName;
+
+            if (!File.Exists(filePath))
+            {
+                return new DataResult<TData>("找不到缓存文件！");
+            }
 
             StreamReader sr = new StreamReader(filePath, Encoding.UTF8);
 
@@ -53,7 +58,7 @@ namespace SemicolonSystem.Common
 
             sr.Close();
 
-            return JsonConvert.DeserializeObject<TData>(cache);
+            return new DataResult<TData>(JsonConvert.DeserializeObject<TData>(cache));
         }
     }
 }
