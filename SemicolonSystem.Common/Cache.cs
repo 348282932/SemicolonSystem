@@ -60,5 +60,21 @@ namespace SemicolonSystem.Common
 
             return new DataResult<TData>(JsonConvert.DeserializeObject<TData>(cache));
         }
+
+        /// <summary>
+        /// 清除指定缓存
+        /// </summary>
+        /// <param name="cacheName"></param>
+        public void Clear(string cacheName)
+        {
+            cacheName = cacheName + ".cache";
+
+            string filePath = path + cacheName;
+
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+        }
     }
 }

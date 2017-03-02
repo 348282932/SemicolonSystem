@@ -241,6 +241,16 @@ namespace SemicolonSystem.Business
                 return dataResult;
             }
 
+            if (tab.Rows.Count == 0 || tab.Columns.Count == 0)
+            {
+                return new DataResult("请按模版导入 Excel");
+            }
+
+            if (tab.Rows[0][0].ToString().Trim() != "姓名")
+            {
+                return new DataResult("请按模版导入 Excel");
+            }
+
             var orderList = new List<KeyValuePair<String, List<SizeRuleModel>>>();
 
             try

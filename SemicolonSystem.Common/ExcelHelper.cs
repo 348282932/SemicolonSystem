@@ -84,16 +84,11 @@ namespace SemicolonSystem.Common
                 cell.SetCellValue(dt.Columns[i].ColumnName);
             }
 
-            dt.Columns.Add();
-            dt.Columns.Add();
-            dt.Columns.Add();
-            dt.Columns.Add();
-
             //数据
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 IRow row1 = sheet.CreateRow(i + 1);
-                for (int j = 0; j < dt.Columns.Count + 2; j++)
+                for (int j = 0; j < dt.Columns.Count; j++)
                 {
                     ICell cell = row1.CreateCell(j);
 

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,11 +43,15 @@ namespace SemicolonSystem.Show
                 MessageBox.Show("导入成功！");
 
                 btn_ImportRule.BackColor = Color.Green;
+
+                btn_ImportOrder.BackColor = Control.DefaultBackColor;
             }
             else
             {
                 MessageBox.Show("导入失败！失败原因：" + dataResult.Message);
             }
+
+            
         }
 
         /// <summary>
@@ -98,7 +103,11 @@ namespace SemicolonSystem.Show
 
                 dt.Columns.Add(new DataColumn("匹配结果"));
 
-                dt.Columns.Add(new DataColumn("归入状态"));
+                dt.Columns.Add(new DataColumn(""));
+
+                dt.Columns.Add(new DataColumn("尺寸型号"));
+
+                dt.Columns.Add(new DataColumn("数量"));
 
                 for (int i = 0; i < dataResult.Data.Count; i++)
                 {
@@ -130,6 +139,64 @@ namespace SemicolonSystem.Show
             {
                 MessageBox.Show("匹配失败！失败原因：" + dataResult.Message);
             }
+        }
+
+        private void lbl_DownRule_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = saveTemplateFileDialog.ShowDialog();
+
+            if (dialogResult != DialogResult.OK && dialogResult != DialogResult.Yes)
+            {
+                return;
+            }
+
+            string filePath = saveTemplateFileDialog.FileName;
+
+            string path = Application.StartupPath;
+
+            path = path.Substring(0, path.IndexOf("Show") + 4) + "\\Template\\规则模版.xlsx";
+
+            try
+            {
+                File.Copy(path, filePath);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(String.Format("获取规则模板异常！异常原因：{0}，请尝试在该路径下取出模板！{1}{2}", ex.Message, Environment.NewLine, path));
+
+                return;
+            }
+
+            MessageBox.Show("导出模板成功！");
+        }
+
+        private void lbl_DownOrder_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = saveTemplateFileDialog.ShowDialog();
+
+            if (dialogResult != DialogResult.OK && dialogResult != DialogResult.Yes)
+            {
+                return;
+            }
+
+            string filePath = saveTemplateFileDialog.FileName;
+
+            string path = Application.StartupPath;
+
+            path = path.Substring(0, path.IndexOf("Show") + 4) + "\\Template\\订单模版.xlsx";
+
+            try
+            {
+                File.Copy(path, filePath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(String.Format("获取订单模板异常！异常原因：{0}，请尝试在该路径下取出模板！{1}{2}", ex.Message, Environment.NewLine, path));
+
+                return;
+            }
+
+            MessageBox.Show("导出模板成功！");
         }
     }
 }

@@ -84,6 +84,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Template\规则模版.xlsx" />
+    <None Include="Template\订单模版.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

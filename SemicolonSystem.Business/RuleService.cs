@@ -25,14 +25,20 @@ namespace SemicolonSystem.Business
             }
             catch (Exception ex)
             {
-                dataResult.IsSuccess = false;
-
-                dataResult.Message = ex.Message;
-
-                return dataResult;
+                return new DataResult(ex.Message);
             }
 
             List<SizeRuleModel> sizeList = new List<SizeRuleModel>();
+
+            if (tab.Rows.Count == 0 || tab.Columns.Count == 0)
+            {
+                return new DataResult("请按模版导入 Excel");
+            }
+
+            if (tab.Rows[0][0].ToString().Trim() != "尺寸/型号")
+            {
+                return new DataResult("请按模版导入 Excel");
+            }
 
             try
             {
@@ -51,24 +57,20 @@ namespace SemicolonSystem.Business
             }
             catch (FormatException)
             {
-                dataResult.IsSuccess = false;
-
-                dataResult.Message = "导入的尺寸大小必须是数字或小数";
-
-                return dataResult;
+                return new DataResult("导入的尺寸大小必须是数字或小数");
             }
             catch (Exception)
             {
-                dataResult.IsSuccess = false;
-
-                dataResult.Message = "导入 Excel 格式不正确！请按照模版导入！";
-
-                return dataResult;
+                return new DataResult("导入 Excel 格式不正确！请按照模版导入！");
             }
 
             Cache<List<SizeRuleModel>> cache = new Cache<List<SizeRuleModel>>();
 
             cache.SetCache("SizeRule", sizeList);
+
+            cache.Clear("Order");
+
+            cache.Clear("WeightCofig");
 
             return dataResult;
         }
