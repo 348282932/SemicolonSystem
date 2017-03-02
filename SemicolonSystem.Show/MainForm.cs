@@ -1,4 +1,5 @@
-﻿using SemicolonSystem.Business;
+﻿using Microsoft.Win32;
+using SemicolonSystem.Business;
 using SemicolonSystem.Common;
 using System;
 using System.Collections.Generic;
@@ -152,9 +153,28 @@ namespace SemicolonSystem.Show
 
             string filePath = saveTemplateFileDialog.FileName;
 
-            string path = Application.StartupPath;
+            string path = String.Empty;
 
-            path = path.Substring(0, path.IndexOf("Show") + 4) + "\\Template\\规则模版.xlsx";
+            #region 获取注册表安装路径
+
+            string softPath = @"SOFTWARE\OrangeSemicolon\SemicolonSystem.Show.exe";
+
+            RegistryKey regKey = Registry.LocalMachine;
+
+            RegistryKey regSubKey = regKey.OpenSubKey(softPath, false);
+
+            object objResult = regSubKey.GetValue("InstallPath");
+
+            RegistryValueKind regValueKind = regSubKey.GetValueKind("InstallPath");
+
+            if (regValueKind == RegistryValueKind.String)
+            {
+                path = objResult.ToString();
+            }
+
+            #endregion
+
+            path = path.Substring(0, path.LastIndexOf("\\")) + "\\Template\\规则模版.xlsx";
 
             try
             {
@@ -181,9 +201,28 @@ namespace SemicolonSystem.Show
 
             string filePath = saveTemplateFileDialog.FileName;
 
-            string path = Application.StartupPath;
+            string path = String.Empty;
 
-            path = path.Substring(0, path.IndexOf("Show") + 4) + "\\Template\\订单模版.xlsx";
+            #region 获取注册表安装路径
+
+            string softPath = @"SOFTWARE\OrangeSemicolon\\SemicolonSystem.Show.exe";
+
+            RegistryKey regKey = Registry.LocalMachine;
+
+            RegistryKey regSubKey = regKey.OpenSubKey(softPath, false);
+
+            object objResult = regSubKey.GetValue("InstallPath");
+
+            RegistryValueKind regValueKind = regSubKey.GetValueKind("InstallPath");
+
+            if (regValueKind == RegistryValueKind.String)
+            {
+                path = objResult.ToString();
+            }
+
+            #endregion
+
+            path = path.Substring(0, path.LastIndexOf("\\")) + "\\Template\\订单模版.xlsx";
 
             try
             {

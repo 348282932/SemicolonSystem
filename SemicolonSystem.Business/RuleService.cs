@@ -35,7 +35,7 @@ namespace SemicolonSystem.Business
                 return new DataResult("请按模版导入 Excel");
             }
 
-            if (tab.Rows[0][0].ToString().Trim() != "尺寸/型号")
+            if (tab.Columns[0].ToString().Trim() != "尺寸/型号")
             {
                 return new DataResult("请按模版导入 Excel");
             }

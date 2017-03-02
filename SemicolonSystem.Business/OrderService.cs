@@ -246,7 +246,7 @@ namespace SemicolonSystem.Business
                 return new DataResult("请按模版导入 Excel");
             }
 
-            if (tab.Rows[0][0].ToString().Trim() != "姓名")
+            if (tab.Columns[0].ToString().Trim() != "姓名")
             {
                 return new DataResult("请按模版导入 Excel");
             }

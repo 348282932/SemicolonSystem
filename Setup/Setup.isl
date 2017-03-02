@@ -340,19 +340,22 @@
 		<col def="S0">ISDotNetInstallerArgsCommit</col>
 		<col def="S0">ISDotNetInstallerArgsUninstall</col>
 		<col def="S0">ISDotNetInstallerArgsRollback</col>
-		<row><td>ICSharpCode.SharpZipLib.dll</td><td>{8F5E4B35-3E3A-412B-B921-8618901336D8}</td><td>INSTALLDIR</td><td>2</td><td/><td>icsharpcode.sharpziplib.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>Component</td><td>{37B8EBCA-C265-482B-84BC-3993F694BCC9}</td><td>INSTALLDIR</td><td>2</td><td/><td>File</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ICSharpCode.SharpZipLib.dll</td><td>{FBE00136-7D92-45EE-B74E-2C5CCA03F3F3}</td><td>INSTALLDIR</td><td>2</td><td/><td>icsharpcode.sharpziplib.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT</td><td>{EEE31D39-C26B-48B3-ADE1-529A6F3ADEE3}</td><td>INSTALLDIR</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT1</td><td>{C40B64EA-60E5-475E-9CEE-5978BEEF4FD9}</td><td>TEMPLATE</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT2</td><td>{74250FDC-3911-4415-9E80-1CA17A11FE97}</td><td>INSTALLDIR</td><td>258</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>IS_ININSTALL_SHORTCUT</td><td>{375506B2-6923-43E6-A6B5-FC67F9300CF4}</td><td>INSTALLDIR</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>NPOI.OOXML.dll</td><td>{5CAE3704-3B1D-4BA7-A55D-27AE206A7ACA}</td><td>INSTALLDIR</td><td>2</td><td/><td>npoi.ooxml.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>NPOI.OpenXml4Net.dll</td><td>{99571D54-EBD5-43B5-93CB-A6F898D31617}</td><td>INSTALLDIR</td><td>2</td><td/><td>npoi.openxml4net.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>NPOI.OpenXmlFormats.dll</td><td>{C83FE066-04EF-44F1-9953-64B8A5B12882}</td><td>INSTALLDIR</td><td>2</td><td/><td>npoi.openxmlformats.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>NPOI.dll</td><td>{793BF21B-71D0-4394-AAEE-F134D832DDFF}</td><td>INSTALLDIR</td><td>2</td><td/><td>npoi.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>Newtonsoft.Json.dll</td><td>{0D629E4B-E8A2-4CD0-8BE1-53B296D657BD}</td><td>INSTALLDIR</td><td>2</td><td/><td>newtonsoft.json.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>SemicolonSystem.Business.dll</td><td>{559FA44B-BE8E-4929-8176-27564D4177B7}</td><td>INSTALLDIR</td><td>2</td><td/><td>semicolonsystem.business.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>SemicolonSystem.Common.dll</td><td>{87EEC2F3-0A7B-4C4A-BFAD-50D267BD1B51}</td><td>INSTALLDIR</td><td>2</td><td/><td>semicolonsystem.common.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>SemicolonSystem.Model.dll</td><td>{6CA98A09-B0FB-4E72-A29D-B0D7814779D7}</td><td>INSTALLDIR</td><td>2</td><td/><td>semicolonsystem.model.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>SemicolonSystem.Show.exe</td><td>{9CB76854-0859-4E9E-8AC1-B733E438AE01}</td><td>INSTALLDIR</td><td>2</td><td/><td>semicolonsystem.show.exe</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>SemicolonSystem.Show.vshost.exe</td><td>{805AAEDE-154E-4BCF-8339-82AA962D1BB4}</td><td>INSTALLDIR</td><td>2</td><td/><td>semicolonsystem.show.vshost.</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>NPOI.OOXML.dll</td><td>{9817DB0D-F019-400D-A1CB-E2DBA286468F}</td><td>INSTALLDIR</td><td>2</td><td/><td>npoi.ooxml.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>NPOI.OpenXml4Net.dll</td><td>{A24AFA1C-0DF6-44B6-8E1A-066A5989A422}</td><td>INSTALLDIR</td><td>2</td><td/><td>npoi.openxml4net.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>NPOI.OpenXmlFormats.dll</td><td>{6B9C8D89-F198-47CA-B437-2DCBA5B03F93}</td><td>INSTALLDIR</td><td>2</td><td/><td>npoi.openxmlformats.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>NPOI.dll</td><td>{7D12A244-CA76-4AD9-A5AC-CCE21C078AC7}</td><td>INSTALLDIR</td><td>2</td><td/><td>npoi.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>Newtonsoft.Json.dll</td><td>{4E36ACFD-35F2-4C1D-8237-DEA6E335C64F}</td><td>INSTALLDIR</td><td>2</td><td/><td>newtonsoft.json.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>SemicolonSystem.Business.dll</td><td>{1D0A1BFD-7F79-4541-8804-BD70E29A0E2D}</td><td>INSTALLDIR</td><td>2</td><td/><td>semicolonsystem.business.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>SemicolonSystem.Common.dll</td><td>{77D981C8-71FB-4BC7-BADD-8F9ED9982755}</td><td>INSTALLDIR</td><td>2</td><td/><td>semicolonsystem.common.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>SemicolonSystem.Model.dll</td><td>{731A0BB6-F1BE-4026-AA8C-C6A75CFF4FAC}</td><td>INSTALLDIR</td><td>2</td><td/><td>semicolonsystem.model.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>SemicolonSystem.Show.exe</td><td>{1FE58245-6E75-481E-A434-B26DE43B9413}</td><td>INSTALLDIR</td><td>2</td><td/><td>semicolonsystem.show.exe</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>SemicolonSystem.Show.vshost.exe</td><td>{02879334-FA14-4868-ACDC-B2C7DC16A89C}</td><td>INSTALLDIR</td><td>2</td><td/><td>semicolonsystem.show.vshost.1</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 	</table>
 
 	<table name="Condition">
@@ -936,7 +939,6 @@
 		<row><td>DestinationFolder</td><td>Cancel</td><td>SpawnDialog</td><td>CancelSetup</td><td>1</td><td>1</td></row>
 		<row><td>DestinationFolder</td><td>ChangeFolder</td><td>SpawnDialog</td><td>InstallChangeFolder</td><td>1</td><td>1</td></row>
 		<row><td>DestinationFolder</td><td>ChangeFolder</td><td>[_BrowseProperty]</td><td>INSTALLDIR</td><td>1</td><td>2</td></row>
-		<row><td>DestinationFolder</td><td>Next</td><td>EndDialog</td><td>Return</td><td>OutOfDiskSpace &lt;&gt; 1</td><td>1</td></row>
 		<row><td>DestinationFolder</td><td>Next</td><td>NewDialog</td><td>ReadyToInstall</td><td>0</td><td>1</td></row>
 		<row><td>DiskSpaceRequirements</td><td>OK</td><td>EndDialog</td><td>Return</td><td>1</td><td>0</td></row>
 		<row><td>FilesInUse</td><td>Exit</td><td>EndDialog</td><td>Exit</td><td>1</td><td>0</td></row>
@@ -954,7 +956,8 @@
 		<row><td>LicenseAgreement</td><td>Back</td><td>NewDialog</td><td>InstallWelcome</td><td>NOT Installed</td><td>0</td></row>
 		<row><td>LicenseAgreement</td><td>Cancel</td><td>SpawnDialog</td><td>CancelSetup</td><td>1</td><td>0</td></row>
 		<row><td>LicenseAgreement</td><td>ISPrintButton</td><td>DoAction</td><td>ISPrint</td><td>1</td><td>0</td></row>
-		<row><td>LicenseAgreement</td><td>Next</td><td>NewDialog</td><td>DestinationFolder</td><td>AgreeToLicense = "Yes"</td><td>0</td></row>
+		<row><td>LicenseAgreement</td><td>Next</td><td>EndDialog</td><td>Return</td><td>OutOfDiskSpace &lt;&gt; 1</td><td>1</td></row>
+		<row><td>LicenseAgreement</td><td>Next</td><td>NewDialog</td><td>DestinationFolder</td><td>0</td><td>1</td></row>
 		<row><td>MaintenanceType</td><td>Back</td><td>NewDialog</td><td>MaintenanceWelcome</td><td>1</td><td>0</td></row>
 		<row><td>MaintenanceType</td><td>Cancel</td><td>SpawnDialog</td><td>CancelSetup</td><td>1</td><td>0</td></row>
 		<row><td>MaintenanceType</td><td>Next</td><td>NewDialog</td><td>CustomSetup</td><td>_IsMaintenance = "Change"</td><td>12</td></row>
@@ -1062,8 +1065,11 @@
 	<table name="CreateFolder">
 		<col key="yes" def="s72">Directory_</col>
 		<col key="yes" def="s72">Component_</col>
+		<row><td>INSTALLDIR</td><td>Component</td></row>
 		<row><td>INSTALLDIR</td><td>ICSharpCode.SharpZipLib.dll</td></row>
 		<row><td>INSTALLDIR</td><td>ISX_DEFAULTCOMPONENT</td></row>
+		<row><td>INSTALLDIR</td><td>ISX_DEFAULTCOMPONENT1</td></row>
+		<row><td>INSTALLDIR</td><td>ISX_DEFAULTCOMPONENT2</td></row>
 		<row><td>INSTALLDIR</td><td>IS_ININSTALL_SHORTCUT</td></row>
 		<row><td>INSTALLDIR</td><td>NPOI.OOXML.dll</td></row>
 		<row><td>INSTALLDIR</td><td>NPOI.OpenXml4Net.dll</td></row>
@@ -1075,6 +1081,7 @@
 		<row><td>INSTALLDIR</td><td>SemicolonSystem.Model.dll</td></row>
 		<row><td>INSTALLDIR</td><td>SemicolonSystem.Show.exe</td></row>
 		<row><td>INSTALLDIR</td><td>SemicolonSystem.Show.vshost.exe</td></row>
+		<row><td>TEMPLATE</td><td>ISX_DEFAULTCOMPONENT1</td></row>
 	</table>
 
 	<table name="CustomAction">
@@ -1193,6 +1200,7 @@
 		<row><td>System64Folder</td><td>TARGETDIR</td><td>.:System64</td><td/><td>0</td><td/></row>
 		<row><td>SystemFolder</td><td>TARGETDIR</td><td>.:System32</td><td/><td>0</td><td/></row>
 		<row><td>TARGETDIR</td><td/><td>SourceDir</td><td/><td>0</td><td/></row>
+		<row><td>TEMPLATE</td><td>INSTALLDIR</td><td>Template</td><td/><td>0</td><td/></row>
 		<row><td>TempFolder</td><td>TARGETDIR</td><td>.:Temp</td><td/><td>0</td><td/></row>
 		<row><td>TemplateFolder</td><td>TARGETDIR</td><td>.:ShellNew</td><td/><td>0</td><td/></row>
 		<row><td>USERPROFILE</td><td>TARGETDIR</td><td>.:USERPR~1|UserProfile</td><td/><td>0</td><td/></row>
@@ -1893,8 +1901,11 @@
 	<table name="FeatureComponents">
 		<col key="yes" def="s38">Feature_</col>
 		<col key="yes" def="s72">Component_</col>
+		<row><td>AlwaysInstall</td><td>Component</td></row>
 		<row><td>AlwaysInstall</td><td>ICSharpCode.SharpZipLib.dll</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT</td></row>
+		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT1</td></row>
+		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT2</td></row>
 		<row><td>AlwaysInstall</td><td>IS_ININSTALL_SHORTCUT</td></row>
 		<row><td>AlwaysInstall</td><td>NPOI.OOXML.dll</td></row>
 		<row><td>AlwaysInstall</td><td>NPOI.OpenXml4Net.dll</td></row>
@@ -1920,26 +1931,32 @@
 		<col def="S255">ISBuildSourcePath</col>
 		<col def="I4">ISAttributes</col>
 		<col def="S72">ISComponentSubFolder_</col>
-		<row><td>icsharpcode.sharpziplib.dll</td><td>ICSharpCode.SharpZipLib.dll</td><td>ICSHAR~1.DLL|ICSharpCode.SharpZipLib.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Source\DemoTest\SemicolonSystem\SemicolonSystem.Show\bin\Release\ICSharpCode.SharpZipLib.dll</td><td>1</td><td/></row>
-		<row><td>newtonsoft.json.dll</td><td>Newtonsoft.Json.dll</td><td>NEWTON~1.DLL|Newtonsoft.Json.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Source\DemoTest\SemicolonSystem\SemicolonSystem.Show\bin\Release\Newtonsoft.Json.dll</td><td>1</td><td/></row>
-		<row><td>newtonsoft.json.xml</td><td>ISX_DEFAULTCOMPONENT</td><td>NEWTON~1.XML|Newtonsoft.Json.xml</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Source\DemoTest\SemicolonSystem\SemicolonSystem.Show\bin\Release\Newtonsoft.Json.xml</td><td>1</td><td/></row>
-		<row><td>npoi.dll</td><td>NPOI.dll</td><td>NPOI.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Source\DemoTest\SemicolonSystem\SemicolonSystem.Show\bin\Release\NPOI.dll</td><td>1</td><td/></row>
-		<row><td>npoi.ooxml.dll</td><td>NPOI.OOXML.dll</td><td>NPOIOO~1.DLL|NPOI.OOXML.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Source\DemoTest\SemicolonSystem\SemicolonSystem.Show\bin\Release\NPOI.OOXML.dll</td><td>1</td><td/></row>
-		<row><td>npoi.openxml4net.dll</td><td>NPOI.OpenXml4Net.dll</td><td>NPOIOP~1.DLL|NPOI.OpenXml4Net.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Source\DemoTest\SemicolonSystem\SemicolonSystem.Show\bin\Release\NPOI.OpenXml4Net.dll</td><td>1</td><td/></row>
-		<row><td>npoi.openxmlformats.dll</td><td>NPOI.OpenXmlFormats.dll</td><td>NPOIOP~1.DLL|NPOI.OpenXmlFormats.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Source\DemoTest\SemicolonSystem\SemicolonSystem.Show\bin\Release\NPOI.OpenXmlFormats.dll</td><td>1</td><td/></row>
-		<row><td>npoi.xml</td><td>ISX_DEFAULTCOMPONENT</td><td>NPOI.xml</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Source\DemoTest\SemicolonSystem\SemicolonSystem.Show\bin\Release\NPOI.xml</td><td>1</td><td/></row>
-		<row><td>semicolonsystem.business.dll</td><td>SemicolonSystem.Business.dll</td><td>SEMICO~1.DLL|SemicolonSystem.Business.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Source\DemoTest\SemicolonSystem\SemicolonSystem.Show\bin\Release\SemicolonSystem.Business.dll</td><td>1</td><td/></row>
-		<row><td>semicolonsystem.business.pdb</td><td>ISX_DEFAULTCOMPONENT</td><td>SEMICO~1.PDB|SemicolonSystem.Business.pdb</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Source\DemoTest\SemicolonSystem\SemicolonSystem.Show\bin\Release\SemicolonSystem.Business.pdb</td><td>1</td><td/></row>
-		<row><td>semicolonsystem.common.dll</td><td>SemicolonSystem.Common.dll</td><td>SEMICO~1.DLL|SemicolonSystem.Common.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Source\DemoTest\SemicolonSystem\SemicolonSystem.Show\bin\Release\SemicolonSystem.Common.dll</td><td>1</td><td/></row>
-		<row><td>semicolonsystem.common.pdb</td><td>ISX_DEFAULTCOMPONENT</td><td>SEMICO~1.PDB|SemicolonSystem.Common.pdb</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Source\DemoTest\SemicolonSystem\SemicolonSystem.Show\bin\Release\SemicolonSystem.Common.pdb</td><td>1</td><td/></row>
-		<row><td>semicolonsystem.model.dll</td><td>SemicolonSystem.Model.dll</td><td>SEMICO~1.DLL|SemicolonSystem.Model.dll</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Source\DemoTest\SemicolonSystem\SemicolonSystem.Show\bin\Release\SemicolonSystem.Model.dll</td><td>1</td><td/></row>
-		<row><td>semicolonsystem.model.pdb</td><td>ISX_DEFAULTCOMPONENT</td><td>SEMICO~1.PDB|SemicolonSystem.Model.pdb</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Source\DemoTest\SemicolonSystem\SemicolonSystem.Show\bin\Release\SemicolonSystem.Model.pdb</td><td>1</td><td/></row>
-		<row><td>semicolonsystem.show.exe</td><td>SemicolonSystem.Show.exe</td><td>SEMICO~1.EXE|SemicolonSystem.Show.exe</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Source\DemoTest\SemicolonSystem\SemicolonSystem.Show\bin\Release\SemicolonSystem.Show.exe</td><td>1</td><td/></row>
-		<row><td>semicolonsystem.show.exe.con</td><td>ISX_DEFAULTCOMPONENT</td><td>SEMICO~1.CON|SemicolonSystem.Show.exe.config</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Source\DemoTest\SemicolonSystem\SemicolonSystem.Show\bin\Release\SemicolonSystem.Show.exe.config</td><td>1</td><td/></row>
-		<row><td>semicolonsystem.show.pdb</td><td>ISX_DEFAULTCOMPONENT</td><td>SEMICO~1.PDB|SemicolonSystem.Show.pdb</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Source\DemoTest\SemicolonSystem\SemicolonSystem.Show\bin\Release\SemicolonSystem.Show.pdb</td><td>1</td><td/></row>
-		<row><td>semicolonsystem.show.vshost.</td><td>SemicolonSystem.Show.vshost.exe</td><td>SEMICO~1.EXE|SemicolonSystem.Show.vshost.exe</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Source\DemoTest\SemicolonSystem\SemicolonSystem.Show\bin\Release\SemicolonSystem.Show.vshost.exe</td><td>1</td><td/></row>
-		<row><td>semicolonsystem.show.vshost.1</td><td>ISX_DEFAULTCOMPONENT</td><td>SEMICO~1.CON|SemicolonSystem.Show.vshost.exe.config</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Source\DemoTest\SemicolonSystem\SemicolonSystem.Show\bin\Release\SemicolonSystem.Show.vshost.exe.config</td><td>1</td><td/></row>
-		<row><td>semicolonsystem.show.vshost.2</td><td>ISX_DEFAULTCOMPONENT</td><td>SEMICO~1.MAN|SemicolonSystem.Show.vshost.exe.manifest</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Source\DemoTest\SemicolonSystem\SemicolonSystem.Show\bin\Release\SemicolonSystem.Show.vshost.exe.manifest</td><td>1</td><td/></row>
+		<row><td>File</td><td>Component</td><td>SemicolonSystem.Show.主输出</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;SemicolonSystem.Show&gt;|Built</td><td>3</td><td/></row>
+		<row><td>File.xlsx</td><td>ISX_DEFAULTCOMPONENT1</td><td>规则模~1.XLS|规则模版.xlsx</td><td>0</td><td/><td/><td/><td>1</td><td>F:\工作文件\项目\SemicolonSystem\SemicolonSystem.Show\Template\规则模版.xlsx</td><td>1</td><td/></row>
+		<row><td>File.xlsx1</td><td>ISX_DEFAULTCOMPONENT1</td><td>订单模~1.XLS|订单模版.xlsx</td><td>0</td><td/><td/><td/><td>1</td><td>F:\工作文件\项目\SemicolonSystem\SemicolonSystem.Show\Template\订单模版.xlsx</td><td>1</td><td/></row>
+		<row><td>icsharpcode.sharpziplib.dll</td><td>ICSharpCode.SharpZipLib.dll</td><td>ICSHAR~1.DLL|ICSharpCode.SharpZipLib.dll</td><td>0</td><td/><td/><td/><td>1</td><td>F:\工作文件\项目\SemicolonSystem\SemicolonSystem.Show\bin\Release\ICSharpCode.SharpZipLib.dll</td><td>1</td><td/></row>
+		<row><td>newtonsoft.json.dll</td><td>Newtonsoft.Json.dll</td><td>NEWTON~1.DLL|Newtonsoft.Json.dll</td><td>0</td><td/><td/><td/><td>1</td><td>F:\工作文件\项目\SemicolonSystem\SemicolonSystem.Show\bin\Release\Newtonsoft.Json.dll</td><td>1</td><td/></row>
+		<row><td>newtonsoft.json.xml</td><td>ISX_DEFAULTCOMPONENT</td><td>NEWTON~1.XML|Newtonsoft.Json.xml</td><td>0</td><td/><td/><td/><td>1</td><td>F:\工作文件\项目\SemicolonSystem\SemicolonSystem.Show\bin\Release\Newtonsoft.Json.xml</td><td>1</td><td/></row>
+		<row><td>npoi.dll</td><td>NPOI.dll</td><td>NPOI.dll</td><td>0</td><td/><td/><td/><td>1</td><td>F:\工作文件\项目\SemicolonSystem\SemicolonSystem.Show\bin\Release\NPOI.dll</td><td>1</td><td/></row>
+		<row><td>npoi.ooxml.dll</td><td>NPOI.OOXML.dll</td><td>NPOIOO~1.DLL|NPOI.OOXML.dll</td><td>0</td><td/><td/><td/><td>1</td><td>F:\工作文件\项目\SemicolonSystem\SemicolonSystem.Show\bin\Release\NPOI.OOXML.dll</td><td>1</td><td/></row>
+		<row><td>npoi.openxml4net.dll</td><td>NPOI.OpenXml4Net.dll</td><td>NPOIOP~1.DLL|NPOI.OpenXml4Net.dll</td><td>0</td><td/><td/><td/><td>1</td><td>F:\工作文件\项目\SemicolonSystem\SemicolonSystem.Show\bin\Release\NPOI.OpenXml4Net.dll</td><td>1</td><td/></row>
+		<row><td>npoi.openxmlformats.dll</td><td>NPOI.OpenXmlFormats.dll</td><td>NPOIOP~1.DLL|NPOI.OpenXmlFormats.dll</td><td>0</td><td/><td/><td/><td>1</td><td>F:\工作文件\项目\SemicolonSystem\SemicolonSystem.Show\bin\Release\NPOI.OpenXmlFormats.dll</td><td>1</td><td/></row>
+		<row><td>npoi.xml</td><td>ISX_DEFAULTCOMPONENT</td><td>NPOI.xml</td><td>0</td><td/><td/><td/><td>1</td><td>F:\工作文件\项目\SemicolonSystem\SemicolonSystem.Show\bin\Release\NPOI.xml</td><td>1</td><td/></row>
+		<row><td>semicolonsystem.business.dll</td><td>SemicolonSystem.Business.dll</td><td>SEMICO~1.DLL|SemicolonSystem.Business.dll</td><td>0</td><td/><td/><td/><td>1</td><td>F:\工作文件\项目\SemicolonSystem\SemicolonSystem.Show\bin\Release\SemicolonSystem.Business.dll</td><td>1</td><td/></row>
+		<row><td>semicolonsystem.business.pdb</td><td>ISX_DEFAULTCOMPONENT</td><td>SEMICO~1.PDB|SemicolonSystem.Business.pdb</td><td>0</td><td/><td/><td/><td>1</td><td>F:\工作文件\项目\SemicolonSystem\SemicolonSystem.Show\bin\Release\SemicolonSystem.Business.pdb</td><td>1</td><td/></row>
+		<row><td>semicolonsystem.common.dll</td><td>SemicolonSystem.Common.dll</td><td>SEMICO~1.DLL|SemicolonSystem.Common.dll</td><td>0</td><td/><td/><td/><td>1</td><td>F:\工作文件\项目\SemicolonSystem\SemicolonSystem.Show\bin\Release\SemicolonSystem.Common.dll</td><td>1</td><td/></row>
+		<row><td>semicolonsystem.common.pdb</td><td>ISX_DEFAULTCOMPONENT</td><td>SEMICO~1.PDB|SemicolonSystem.Common.pdb</td><td>0</td><td/><td/><td/><td>1</td><td>F:\工作文件\项目\SemicolonSystem\SemicolonSystem.Show\bin\Release\SemicolonSystem.Common.pdb</td><td>1</td><td/></row>
+		<row><td>semicolonsystem.model.dll</td><td>SemicolonSystem.Model.dll</td><td>SEMICO~1.DLL|SemicolonSystem.Model.dll</td><td>0</td><td/><td/><td/><td>1</td><td>F:\工作文件\项目\SemicolonSystem\SemicolonSystem.Show\bin\Release\SemicolonSystem.Model.dll</td><td>1</td><td/></row>
+		<row><td>semicolonsystem.model.pdb</td><td>ISX_DEFAULTCOMPONENT</td><td>SEMICO~1.PDB|SemicolonSystem.Model.pdb</td><td>0</td><td/><td/><td/><td>1</td><td>F:\工作文件\项目\SemicolonSystem\SemicolonSystem.Show\bin\Release\SemicolonSystem.Model.pdb</td><td>1</td><td/></row>
+		<row><td>semicolonsystem.show.applica</td><td>ISX_DEFAULTCOMPONENT</td><td>SEMICO~1.APP|SemicolonSystem.Show.application</td><td>0</td><td/><td/><td/><td>1</td><td>F:\工作文件\项目\SemicolonSystem\SemicolonSystem.Show\bin\Release\SemicolonSystem.Show.application</td><td>1</td><td/></row>
+		<row><td>semicolonsystem.show.exe</td><td>SemicolonSystem.Show.exe</td><td>SEMICO~1.EXE|SemicolonSystem.Show.exe</td><td>0</td><td/><td/><td/><td>1</td><td>F:\工作文件\项目\SemicolonSystem\SemicolonSystem.Show\bin\Release\SemicolonSystem.Show.exe</td><td>1</td><td/></row>
+		<row><td>semicolonsystem.show.exe.con</td><td>ISX_DEFAULTCOMPONENT</td><td>SEMICO~1.CON|SemicolonSystem.Show.exe.config</td><td>0</td><td/><td/><td/><td>1</td><td>F:\工作文件\项目\SemicolonSystem\SemicolonSystem.Show\bin\Release\SemicolonSystem.Show.exe.config</td><td>1</td><td/></row>
+		<row><td>semicolonsystem.show.exe.man</td><td>ISX_DEFAULTCOMPONENT</td><td>SEMICO~1.MAN|SemicolonSystem.Show.exe.manifest</td><td>0</td><td/><td/><td/><td>1</td><td>F:\工作文件\项目\SemicolonSystem\SemicolonSystem.Show\bin\Release\SemicolonSystem.Show.exe.manifest</td><td>1</td><td/></row>
+		<row><td>semicolonsystem.show.pdb</td><td>ISX_DEFAULTCOMPONENT</td><td>SEMICO~1.PDB|SemicolonSystem.Show.pdb</td><td>0</td><td/><td/><td/><td>1</td><td>F:\工作文件\项目\SemicolonSystem\SemicolonSystem.Show\bin\Release\SemicolonSystem.Show.pdb</td><td>1</td><td/></row>
+		<row><td>semicolonsystem.show.vshost.</td><td>ISX_DEFAULTCOMPONENT</td><td>SEMICO~1.APP|SemicolonSystem.Show.vshost.application</td><td>0</td><td/><td/><td/><td>1</td><td>F:\工作文件\项目\SemicolonSystem\SemicolonSystem.Show\bin\Release\SemicolonSystem.Show.vshost.application</td><td>1</td><td/></row>
+		<row><td>semicolonsystem.show.vshost.1</td><td>SemicolonSystem.Show.vshost.exe</td><td>SEMICO~1.EXE|SemicolonSystem.Show.vshost.exe</td><td>0</td><td/><td/><td/><td>1</td><td>F:\工作文件\项目\SemicolonSystem\SemicolonSystem.Show\bin\Release\SemicolonSystem.Show.vshost.exe</td><td>1</td><td/></row>
+		<row><td>semicolonsystem.show.vshost.2</td><td>ISX_DEFAULTCOMPONENT</td><td>SEMICO~1.CON|SemicolonSystem.Show.vshost.exe.config</td><td>0</td><td/><td/><td/><td>1</td><td>F:\工作文件\项目\SemicolonSystem\SemicolonSystem.Show\bin\Release\SemicolonSystem.Show.vshost.exe.config</td><td>1</td><td/></row>
+		<row><td>semicolonsystem.show.vshost.3</td><td>ISX_DEFAULTCOMPONENT</td><td>SEMICO~1.MAN|SemicolonSystem.Show.vshost.exe.manifest</td><td>0</td><td/><td/><td/><td>1</td><td>F:\工作文件\项目\SemicolonSystem\SemicolonSystem.Show\bin\Release\SemicolonSystem.Show.vshost.exe.manifest</td><td>1</td><td/></row>
 	</table>
 
 	<table name="FileSFPCatalog">
@@ -1956,7 +1973,7 @@
 		<col key="yes" def="s72">Tag</col>
 		<col def="S255">Data</col>
 		<row><td>PROJECT_ASSISTANT_DEFAULT_FEATURE</td><td>AlwaysInstall</td></row>
-		<row><td>SemicolonSystem.Show.exe</td><td/></row>
+		<row><td>RegistryPageEnabled</td><td>Yes</td></row>
 	</table>
 
 	<table name="ISBillBoard">
@@ -2083,19 +2100,22 @@
 		<col def="S0">FTPLocation</col>
 		<col def="S0">HTTPLocation</col>
 		<col def="S0">Miscellaneous</col>
-		<row><td>ICSharpCode.SharpZipLib.dll</td><td/><td/><td>_7A96C17F_0326_4844_B3AF_95DA1595AA06_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>Component</td><td/><td/><td>_0009367B_7ABD_43D1_B9BE_982B5B858917_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ICSharpCode.SharpZipLib.dll</td><td/><td/><td>_920113FA_56D9_439D_9985_AC2D5116F368_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT</td><td/><td/><td>_9146A37D_C1FC_4E0B_B369_A7D2A73F7A28_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT1</td><td/><td/><td>_B199BA10_D96A_4D7A_8599_87B4D7D0CE2D_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT2</td><td/><td/><td>_19D2D3DA_EBD7_480D_80F8_371319B7A23C_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>IS_ININSTALL_SHORTCUT</td><td/><td/><td>_6BDA348F_4449_44FE_9697_45C20ECBB77A_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>NPOI.OOXML.dll</td><td/><td/><td>_1C149BE3_7D42_4C1B_8029_D6327087F938_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>NPOI.OpenXml4Net.dll</td><td/><td/><td>_8C921D2E_7925_4E83_A656_1D4BDD7B3B4A_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>NPOI.OpenXmlFormats.dll</td><td/><td/><td>_009A3DBF_E965_472A_9630_6A49398222C8_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>NPOI.dll</td><td/><td/><td>_59870781_4D09_4CE5_959C_385CB2E6112F_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>Newtonsoft.Json.dll</td><td/><td/><td>_87D2DFA4_FFC5_4ECF_B150_36A640078F54_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>SemicolonSystem.Business.dll</td><td/><td/><td>_EDFC338F_E64C_4F52_A76F_E07D1ACA87D9_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>SemicolonSystem.Common.dll</td><td/><td/><td>_E791B5F5_DD7B_4E15_8BD8_12A433EFBA6C_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>SemicolonSystem.Model.dll</td><td/><td/><td>_CF59D96B_036B_4AE7_A7CE_258890BF4731_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>SemicolonSystem.Show.exe</td><td/><td/><td>_1062285E_71FA_44C5_A72E_CB44814306DD_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>SemicolonSystem.Show.vshost.exe</td><td/><td/><td>_0C336D42_538F_4F8D_B1A8_4E4FE67960ED_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>NPOI.OOXML.dll</td><td/><td/><td>_44543319_743B_4417_8586_D672482506BD_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>NPOI.OpenXml4Net.dll</td><td/><td/><td>_3FDD501E_C164_410B_ABD4_F6E92B2E318A_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>NPOI.OpenXmlFormats.dll</td><td/><td/><td>_1931AD96_1CEB_4AEB_AD5A_640EDA56CE91_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>NPOI.dll</td><td/><td/><td>_F3C71BA3_43A6_47E6_8426_44656199B4D4_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>Newtonsoft.Json.dll</td><td/><td/><td>_DD51BF49_1027_4359_855E_87EC3818FEC7_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>SemicolonSystem.Business.dll</td><td/><td/><td>_C7AB5E73_15F7_435B_9BC3_64ED84E00818_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>SemicolonSystem.Common.dll</td><td/><td/><td>_7054FF84_BC4B_49C2_BD1C_1AB14CA73468_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>SemicolonSystem.Model.dll</td><td/><td/><td>_CD17676B_40D2_427D_B1AE_5E978F23F3F0_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>SemicolonSystem.Show.exe</td><td/><td/><td>_329BCFF4_58EB_427F_A9BE_FE9C6F570F2E_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>SemicolonSystem.Show.vshost.exe</td><td/><td/><td>_DB23859F_F028_4906_86E2_14866D823180_FILTER</td><td/><td/><td/><td/></row>
 	</table>
 
 	<table name="ISCustomActionReference">
@@ -2380,6 +2400,7 @@
 		<row><td>ISProjectDataFolder</td><td/><td/><td>1</td></row>
 		<row><td>ISProjectFolder</td><td/><td/><td>1</td></row>
 		<row><td>ProgramFilesFolder</td><td/><td/><td>1</td></row>
+		<row><td>SemicolonSystem.Show</td><td>SemicolonSystem.Show\SemicolonSystem.Show.csproj</td><td/><td>2</td></row>
 		<row><td>SystemFolder</td><td/><td/><td>1</td></row>
 		<row><td>WindowsFolder</td><td/><td/><td>1</td></row>
 	</table>
@@ -2651,6 +2672,7 @@
 		<col def="I2">Order</col>
 		<col def="I2">ISSetupLocation</col>
 		<col def="S255">ISReleaseFlags</col>
+		<row><td>_02B75BB7_A3D2_4B1F_BBBA_357234618CC0_</td><td>Microsoft .NET Framework 4.5.2 Full.prq</td><td/><td>2</td><td/></row>
 	</table>
 
 	<table name="ISSetupType">
@@ -2684,11 +2706,11 @@
 		<col def="I2">Encoded</col>
 		<col def="S0">Comment</col>
 		<col def="I4">TimeStamp</col>
-		<row><td>COMPANY_NAME</td><td>2052</td><td>maxlong</td><td>0</td><td/><td>296084305</td></row>
+		<row><td>COMPANY_NAME</td><td>2052</td><td>maxlong</td><td>0</td><td/><td>296056693</td></row>
 		<row><td>DN_AlwaysInstall</td><td>2052</td><td>始终安装</td><td>0</td><td/><td>161846678</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_COLOR</td><td>2052</td><td>系统颜色设置不足以运行 [ProductName]。</td><td>0</td><td/><td>161846678</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_DOTNETVERSION45FULL</td><td>1033</td><td>Microsoft .NET Framework 4.5 Full package or greater needs to be installed for this installation to continue.</td><td>0</td><td/><td>296044905</td></row>
-		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_DOTNETVERSION45FULL</td><td>2052</td><td>Microsoft .NET Framework 4.5 Full package or greater needs to be installed for this installation to continue.</td><td>0</td><td/><td>296044905</td></row>
+		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_DOTNETVERSION45FULL</td><td>2052</td><td>Microsoft .NET Framework 4.5 Full package or greater needs to be installed for this installation to continue.</td><td>0</td><td/><td>296044757</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_OS</td><td>2052</td><td>操作系统不足以运行 [ProductName]。</td><td>0</td><td/><td>161846678</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_PROCESSOR</td><td>2052</td><td>处理器不足以运行 [ProductName]。</td><td>0</td><td/><td>161846678</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_RAM</td><td>2052</td><td>RAM 量不足以运行 [ProductName]。</td><td>0</td><td/><td>161846678</td></row>
@@ -3504,6 +3526,16 @@
 		<row><td>IDS_SHORTCUT_DISPLAY_NAME2</td><td>2052</td><td>桔子分号.exe</td><td>0</td><td/><td>296032521</td></row>
 		<row><td>IDS_SHORTCUT_DISPLAY_NAME3</td><td>1033</td><td/><td>0</td><td/><td>296063145</td></row>
 		<row><td>IDS_SHORTCUT_DISPLAY_NAME3</td><td>2052</td><td>LAUNCH~1.EXE|Launch SemicolonSystem.Show.vshost.exe</td><td>0</td><td/><td>296063145</td></row>
+		<row><td>IDS_SHORTCUT_DISPLAY_NAME4</td><td>1033</td><td/><td>0</td><td/><td>296075508</td></row>
+		<row><td>IDS_SHORTCUT_DISPLAY_NAME4</td><td>2052</td><td>LAUNCH~1.EXE|Launch SemicolonSystem.Show.exe</td><td>0</td><td/><td>296075508</td></row>
+		<row><td>IDS_SHORTCUT_DISPLAY_NAME5</td><td>1033</td><td/><td>0</td><td/><td>296075508</td></row>
+		<row><td>IDS_SHORTCUT_DISPLAY_NAME5</td><td>2052</td><td>LAUNCH~1.EXE|Launch SemicolonSystem.Show.vshost.exe</td><td>0</td><td/><td>296075508</td></row>
+		<row><td>IDS_SHORTCUT_DISPLAY_NAME6</td><td>1033</td><td/><td>0</td><td/><td>296028437</td></row>
+		<row><td>IDS_SHORTCUT_DISPLAY_NAME6</td><td>2052</td><td>桔子分号.exe</td><td>0</td><td/><td>296055253</td></row>
+		<row><td>IDS_SHORTCUT_DISPLAY_NAME7</td><td>1033</td><td/><td>0</td><td/><td>296028437</td></row>
+		<row><td>IDS_SHORTCUT_DISPLAY_NAME7</td><td>2052</td><td>LAUNCH~1.EXE|Launch SemicolonSystem.Show.vshost.exe</td><td>0</td><td/><td>296028437</td></row>
+		<row><td>IDS_SHORTCUT_DISPLAY_NAME8</td><td>1033</td><td>Uninstall</td><td>0</td><td/><td>296073685</td></row>
+		<row><td>IDS_SHORTCUT_DISPLAY_NAME8</td><td>2052</td><td>Uninstall</td><td>0</td><td/><td>296073685</td></row>
 		<row><td>IDS_SQLBROWSE_INTRO</td><td>2052</td><td>从以下服务器列表中选择要连接的数据库服务器。</td><td>0</td><td/><td>161846678</td></row>
 		<row><td>IDS_SQLBROWSE_INTRO_DB</td><td>2052</td><td>从以下的编录名称列表中，选择您希望将其作为目标的数据库编录。</td><td>0</td><td/><td>161846678</td></row>
 		<row><td>IDS_SQLBROWSE_INTRO_TEMPLATE</td><td>2052</td><td>[IS_SQLBROWSE_INTRO]</td><td>0</td><td/><td>161846678</td></row>
@@ -3792,14 +3824,18 @@
 		<row><td>IDS__TargetReq_DESC_PROCESSOR</td><td>2052</td><td>对于运行 [ProductName] 处理器不足。</td><td>0</td><td/><td>161846678</td></row>
 		<row><td>IDS__TargetReq_DESC_RAM</td><td>2052</td><td>对于运行 [ProductName] 内存量不足。</td><td>0</td><td/><td>161846678</td></row>
 		<row><td>IDS__TargetReq_DESC_RESOLUTION</td><td>2052</td><td>对于运行 [ProductName] 屏幕分辨率不足。</td><td>0</td><td/><td>161846678</td></row>
-		<row><td>ID_STRING1</td><td>2052</td><td>http://www.maxlong.com</td><td>0</td><td/><td>296084305</td></row>
-		<row><td>ID_STRING2</td><td>2052</td><td>maxlong</td><td>0</td><td/><td>296084305</td></row>
+		<row><td>ID_STRING1</td><td>2052</td><td>http://www.maxlong.com</td><td>0</td><td/><td>296056693</td></row>
+		<row><td>ID_STRING2</td><td>2052</td><td>maxlong</td><td>0</td><td/><td>296056693</td></row>
 		<row><td>ID_STRING3</td><td>1033</td><td>LAUNCH~1.EXE|Launch SemicolonSystem.Show.exe</td><td>0</td><td/><td>161859062</td></row>
 		<row><td>ID_STRING3</td><td>2052</td><td>LAUNCH~1.EXE|Launch SemicolonSystem.Show.exe</td><td>0</td><td/><td>161859062</td></row>
 		<row><td>ID_STRING4</td><td>1033</td><td>LAUNCH~1.EXE|Launch SemicolonSystem.Show.exe</td><td>0</td><td/><td>161867254</td></row>
 		<row><td>ID_STRING4</td><td>2052</td><td>LAUNCH~1.EXE|Launch SemicolonSystem.Show.exe</td><td>0</td><td/><td>161867254</td></row>
 		<row><td>ID_STRING5</td><td>1033</td><td>LAUNCH~1.EXE|Launch SemicolonSystem.Show.exe</td><td>0</td><td/><td>296046793</td></row>
 		<row><td>ID_STRING5</td><td>2052</td><td>LAUNCH~1.EXE|Launch SemicolonSystem.Show.exe</td><td>0</td><td/><td>296046793</td></row>
+		<row><td>ID_STRING6</td><td>1033</td><td>LAUNCH~1.EXE|Launch SemicolonSystem.Show.exe</td><td>0</td><td/><td>296063540</td></row>
+		<row><td>ID_STRING6</td><td>2052</td><td>LAUNCH~1.EXE|Launch SemicolonSystem.Show.exe</td><td>0</td><td/><td>296063540</td></row>
+		<row><td>ID_STRING7</td><td>1033</td><td>LAUNCH~1.EXE|Launch SemicolonSystem.Show.exe</td><td>0</td><td/><td>296028469</td></row>
+		<row><td>ID_STRING7</td><td>2052</td><td>LAUNCH~1.EXE|Launch SemicolonSystem.Show.exe</td><td>0</td><td/><td>296028469</td></row>
 		<row><td>IIDS_UITEXT_FeatureUninstalled</td><td>2052</td><td>系统将不安装此功能。</td><td>0</td><td/><td>161846678</td></row>
 	</table>
 
@@ -3916,9 +3952,15 @@
 		<row><td>ARPPRODUCTICON.exe</td><td/><td>&lt;VSSolutionFolder&gt;\orange.ico</td><td>0</td></row>
 		<row><td>SemicolonSystem.Sh_0C4A84C05F634FBCAE3CDD20A5D686A0.exe</td><td/><td>C:\Users\Long\Downloads\orange_128px_1171570_easyicon.net.ico</td><td>0</td></row>
 		<row><td>SemicolonSystem.Sh_19F96A855A994B5BA5652E0695F8253D.exe</td><td/><td>&lt;VSSolutionFolder&gt;\orange.ico</td><td>0</td></row>
+		<row><td>SemicolonSystem.Sh_39A52047DDEE4821BA9A1918B55533CF.exe</td><td/><td>&lt;ISProductFolder&gt;\redist\Language Independent\OS Independent\GenericExe.ico</td><td>0</td></row>
+		<row><td>SemicolonSystem.Sh_3B3DBC0C435741EA8572632040B31659.exe</td><td/><td>&lt;VSSolutionFolder&gt;\SemicolonSystem.Show\orange.ico</td><td>0</td></row>
+		<row><td>SemicolonSystem.Sh_57BD9F3548C642389D930A66D86E9729.exe</td><td/><td>&lt;VSSolutionFolder&gt;\orange.ico</td><td>0</td></row>
+		<row><td>SemicolonSystem.Sh_5957E4DE06714D5CA2A81FFAB8372DD7.exe</td><td/><td>&lt;VSSolutionFolder&gt;\SemicolonSystem.Show\orange.ico</td><td>0</td></row>
 		<row><td>SemicolonSystem.Sh_8770AF03E5B34443B1ED9DDDCB0E332C.exe</td><td/><td>&lt;ISProductFolder&gt;\redist\Language Independent\OS Independent\GenericExe.ico</td><td>0</td></row>
 		<row><td>SemicolonSystem.Sh_B37765A5591E4178B894FB3B6D31E2EF.exe</td><td/><td>&lt;VSSolutionFolder&gt;\orange.ico</td><td>0</td></row>
 		<row><td>SemicolonSystem.Sh_B99C89DA4AFF481E9665CB173C8CA183.exe</td><td/><td>C:\Users\Long\Downloads\orange_128px_1171570_easyicon.net.ico</td><td>0</td></row>
+		<row><td>SemicolonSystem.Sh_ED251A6E3D69420597C841CC9F064588.exe</td><td/><td>&lt;VSSolutionFolder&gt;\orange.ico</td><td>0</td></row>
+		<row><td>Shortcut_E129AA2B3B9D4BED82B07847F5F4E4F1.exe</td><td/><td>C:\Program Files (x86)\InstallShield\2015LE\Redist\Language Independent\OS Independent\uninstall.ico</td><td>0</td></row>
 	</table>
 
 	<table name="IniFile">
@@ -4051,7 +4093,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>ISTheme</td><td>InstallShield Blue.theme</td></row>
 		<row><td>ISUSLock</td><td>{C35C98C4-F0F1-49CE-B39E-5504A75D7177}</td></row>
 		<row><td>ISUSSignature</td><td>{04BBF3F9-EF12-4005-B513-77ED331BBEDA}</td></row>
-		<row><td>ISVisitedViews</td><td>viewAssistant,viewProject,viewFileExtensions,viewShortcuts,viewUI,viewRelease</td></row>
+		<row><td>ISVisitedViews</td><td>viewAssistant,viewProject,viewFileExtensions,viewShortcuts,viewUI,viewRelease,viewObjects,viewUpgradePaths,viewUpdateService,viewAppFiles,viewRegistry,viewEnvironmentVariables,viewVRoots,viewServices,viewTextMessages,viewSystemSearch,viewCustomActions,viewLearnMore</td></row>
 		<row><td>Limited</td><td>1</td></row>
 		<row><td>LockPermissionMode</td><td>1</td></row>
 		<row><td>MsiExecCmdLineOptions</td><td/></row>
@@ -4376,7 +4418,6 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>ErrorDialog</td><td>SetupError</td><td/></row>
 		<row><td>INSTALLLEVEL</td><td>200</td><td/></row>
 		<row><td>ISCHECKFORPRODUCTUPDATES</td><td>1</td><td/></row>
-		<row><td>ISENABLEDWUSFINISHDIALOG</td><td/><td/></row>
 		<row><td>ISSHOWMSILOG</td><td/><td/></row>
 		<row><td>ISVROOT_PORT_NO</td><td>0</td><td/></row>
 		<row><td>IS_COMPLUS_PROGRESSTEXT_COST</td><td>##IDS_COMPLUS_PROGRESSTEXT_COST##</td><td/></row>
@@ -4396,8 +4437,6 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>IS_SQLSERVER_SERVER</td><td/><td/></row>
 		<row><td>IS_SQLSERVER_USERNAME</td><td>sa</td><td/></row>
 		<row><td>InstallChoice</td><td>AR</td><td/></row>
-		<row><td>LAUNCHPROGRAM</td><td>1</td><td/></row>
-		<row><td>LAUNCHREADME</td><td>1</td><td/></row>
 		<row><td>Manufacturer</td><td>##COMPANY_NAME##</td><td/></row>
 		<row><td>PIDKEY</td><td/><td/></row>
 		<row><td>PIDTemplate</td><td>12345&lt;###-%%%%%%%&gt;@@@@@</td><td/></row>
@@ -4424,7 +4463,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>PROGMSG_IIS_ROLLBACKAPPPOOLS</td><td>##IDS_PROGMSG_IIS_ROLLBACKAPPPOOLS##</td><td/></row>
 		<row><td>PROGMSG_IIS_ROLLBACKVROOTS</td><td>##IDS_PROGMSG_IIS_ROLLBACKVROOTS##</td><td/></row>
 		<row><td>PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS</td><td>##IDS_PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS##</td><td/></row>
-		<row><td>ProductCode</td><td>{79CDD0F6-109A-4A72-941A-847A555AA993}</td><td/></row>
+		<row><td>ProductCode</td><td>{F05940F2-CF7A-4DC4-BD9C-A1A0509B8C9C}</td><td/></row>
 		<row><td>ProductName</td><td>桔子分号</td><td/></row>
 		<row><td>ProductVersion</td><td>1.3</td><td/></row>
 		<row><td>ProgressType0</td><td>install</td><td/></row>
@@ -4438,7 +4477,8 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>RestartManagerOption</td><td>CloseRestart</td><td/></row>
 		<row><td>SERIALNUMBER</td><td/><td/></row>
 		<row><td>SERIALNUMVALSUCCESSRETVAL</td><td>1</td><td/></row>
-		<row><td>SHOWLAUNCHPROGRAM</td><td>-1</td><td/></row>
+		<row><td>SHOWLAUNCHPROGRAM</td><td>0</td><td/></row>
+		<row><td>SHOWLAUNCHREADME</td><td>0</td><td/></row>
 		<row><td>SecureCustomProperties</td><td>ISFOUNDNEWERPRODUCTVERSION;USERNAME;COMPANYNAME;ISX_SERIALNUM;SUPPORTDIR;DOTNETVERSION45FULL</td><td/></row>
 		<row><td>SelectedSetupType</td><td>##IDS__DisplayName_Typical##</td><td/></row>
 		<row><td>SetupType</td><td>Typical</td><td/></row>
@@ -4495,6 +4535,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="S0">Value</col>
 		<col def="s72">Component_</col>
 		<col def="I4">ISAttributes</col>
+		<row><td>Registry2</td><td>2</td><td>SOFTWARE\OrangeSemicolon</td><td>InstallPath</td><td>[INSTALLDIR]SemicolonSystem.Show.exe</td><td>ISX_DEFAULTCOMPONENT2</td><td>0</td></row>
 	</table>
 
 	<table name="RemoveFile">
@@ -4503,10 +4544,9 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="L255">FileName</col>
 		<col def="s72">DirProperty</col>
 		<col def="i2">InstallMode</col>
-		<row><td>FileKey1</td><td>SemicolonSystem.Show.exe</td><td/><td>maxlong</td><td>2</td></row>
-		<row><td>FileKey2</td><td>SemicolonSystem.Show.exe</td><td/><td>product_name1</td><td>2</td></row>
 		<row><td>SemicolonSystem.Show.exe</td><td>SemicolonSystem.Show.exe</td><td/><td>product_name1</td><td>2</td></row>
 		<row><td>SemicolonSystem.Show.vshost.exe</td><td>SemicolonSystem.Show.vshost.exe</td><td/><td>product_name1</td><td>2</td></row>
+		<row><td>Shortcut</td><td>IS_ININSTALL_SHORTCUT</td><td/><td>product_name1</td><td>2</td></row>
 	</table>
 
 	<table name="RemoveIniFile">
@@ -4592,9 +4632,10 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="S255">ISComments</col>
 		<col def="S255">ISShortcutName</col>
 		<col def="I4">ISAttributes</col>
-		<row><td>SemicolonSystem.Show.exe</td><td>product_name1</td><td>##IDS_SHORTCUT_DISPLAY_NAME2##</td><td>SemicolonSystem.Show.exe</td><td>AlwaysInstall</td><td/><td/><td/><td>SemicolonSystem.Sh_19F96A855A994B5BA5652E0695F8253D.exe</td><td>0</td><td>1</td><td>INSTALLDIR</td><td/><td/><td/><td/><td/><td/><td/></row>
-		<row><td>SemicolonSystem.Show.exe1</td><td>DesktopFolder</td><td>##IDS_SHORTCUT_DISPLAY_NAME2##</td><td>SemicolonSystem.Show.exe</td><td>AlwaysInstall</td><td/><td/><td/><td>SemicolonSystem.Sh_B37765A5591E4178B894FB3B6D31E2EF.exe</td><td>0</td><td>1</td><td>INSTALLDIR</td><td/><td/><td/><td/><td/><td/><td/></row>
-		<row><td>SemicolonSystem.Show.vshost.exe</td><td>product_name1</td><td>##IDS_SHORTCUT_DISPLAY_NAME3##</td><td>SemicolonSystem.Show.vshost.exe</td><td>AlwaysInstall</td><td/><td/><td/><td>SemicolonSystem.Sh_8770AF03E5B34443B1ED9DDDCB0E332C.exe</td><td>0</td><td>1</td><td>INSTALLDIR</td><td/><td/><td/><td/><td/><td/><td/></row>
+		<row><td>SemicolonSystem.Show.exe</td><td>product_name1</td><td>##IDS_SHORTCUT_DISPLAY_NAME6##</td><td>SemicolonSystem.Show.exe</td><td>AlwaysInstall</td><td/><td/><td/><td>SemicolonSystem.Sh_3B3DBC0C435741EA8572632040B31659.exe</td><td>0</td><td>1</td><td>INSTALLDIR</td><td/><td/><td/><td/><td/><td/><td/></row>
+		<row><td>SemicolonSystem.Show.exe1</td><td>DesktopFolder</td><td>##IDS_SHORTCUT_DISPLAY_NAME6##</td><td>SemicolonSystem.Show.exe</td><td>AlwaysInstall</td><td/><td/><td/><td>SemicolonSystem.Sh_5957E4DE06714D5CA2A81FFAB8372DD7.exe</td><td>0</td><td>1</td><td>INSTALLDIR</td><td/><td/><td/><td/><td/><td/><td/></row>
+		<row><td>SemicolonSystem.Show.vshost.exe</td><td>product_name1</td><td>##IDS_SHORTCUT_DISPLAY_NAME7##</td><td>SemicolonSystem.Show.vshost.exe</td><td>AlwaysInstall</td><td/><td/><td/><td>SemicolonSystem.Sh_39A52047DDEE4821BA9A1918B55533CF.exe</td><td>0</td><td>1</td><td>INSTALLDIR</td><td/><td/><td/><td/><td/><td/><td/></row>
+		<row><td>Shortcut</td><td>product_name1</td><td>##IDS_SHORTCUT_DISPLAY_NAME8##</td><td>IS_ININSTALL_SHORTCUT</td><td>[SystemFolder]msiexec.exe</td><td>/x {2D2BECD3-FCE1-4669-A1E5-5BA9A886DC07}</td><td/><td/><td>Shortcut_E129AA2B3B9D4BED82B07847F5F4E4F1.exe</td><td>0</td><td>1</td><td>INSTALLDIR</td><td/><td/><td/><td/><td/><td/><td/></row>
 	</table>
 
 	<table name="Signature">

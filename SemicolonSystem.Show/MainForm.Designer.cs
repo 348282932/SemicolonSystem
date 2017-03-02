@@ -120,7 +120,7 @@
             // saveTemplateFileDialog
             // 
             this.saveTemplateFileDialog.FileName = "模板";
-            this.saveTemplateFileDialog.Filter = "*.xlsx|*.xls";
+            this.saveTemplateFileDialog.Filter = "*.xls|*.xlsx";
             this.saveTemplateFileDialog.FilterIndex = 0;
             // 
             // MainForm

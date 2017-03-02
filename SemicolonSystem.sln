@@ -12,6 +12,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SemicolonSystem.Common", "SemicolonSystem.Common\SemicolonSystem.Common.csproj", "{58F6068E-BF71-4380-AF24-26B7C2C9EC27}"
 EndProject
 Project("{6141683F-8A12-4E36-9623-2EB02B2C2303}") = "Setup", "Setup\Setup.isproj", "{9B005D28-B641-43B8-B798-E9EC4B3F8B42}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5DFCDC9C-3E0B-401E-B6D6-8261F9F7A7FC} = {5DFCDC9C-3E0B-401E-B6D6-8261F9F7A7FC}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
