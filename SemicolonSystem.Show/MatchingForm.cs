@@ -1,4 +1,5 @@
 ﻿using SemicolonSystem.Business;
+using SemicolonSystem.Common;
 using SemicolonSystem.Model;
 using System;
 using System.Collections.Generic;
@@ -15,13 +16,24 @@ namespace SemicolonSystem.Show
 
         private void MatchingForm_Load(object sender, EventArgs e)
         {
-            var dataResult = OrderService.GetWeightConfig();
+            var dataResult = new DataResult<List<WeightModel>>();
 
-            if (!dataResult.IsSuccess)
+            try
+            {
+                dataResult = OrderService.GetWeightConfig();
+
+                if (!dataResult.IsSuccess)
+                {
+                    MessageBox.Show(dataResult.Message);
+
+                    this.Close();
+
+                    return;
+                }
+            }
+            catch
             {
                 MessageBox.Show("初始化权重配置异常！请尝试重新导入订单！");
-
-                return;
             }
 
             int top = 60;

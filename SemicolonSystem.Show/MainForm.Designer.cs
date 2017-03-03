@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.btn_ImportRule = new System.Windows.Forms.Button();
             this.openRuleFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.btn_ImportOrder = new System.Windows.Forms.Button();
@@ -134,6 +135,7 @@
             this.Controls.Add(this.btn_SetWeight);
             this.Controls.Add(this.btn_ImportOrder);
             this.Controls.Add(this.btn_ImportRule);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "智能分号系统";
             this.ResumeLayout(false);

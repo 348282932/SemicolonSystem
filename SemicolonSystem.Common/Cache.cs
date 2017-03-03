@@ -7,7 +7,14 @@ namespace SemicolonSystem.Common
 {
     public class Cache<TData> where TData : class
     {
+
+#if DEBUG
         private string path = AppDomain.CurrentDomain.BaseDirectory + "\\Cache\\";
+#else
+        private string path = Global.InstallPath + "\\Cache\\";
+#endif
+
+
 
         /// <summary>
         /// 主键

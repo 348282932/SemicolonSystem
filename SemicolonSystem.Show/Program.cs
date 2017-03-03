@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using SemicolonSystem.Common;
+using System;
 using System.Windows.Forms;
 
 namespace SemicolonSystem.Show
@@ -14,6 +12,7 @@ namespace SemicolonSystem.Show
         [STAThread]
         static void Main()
         {
+            Global.Init();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());

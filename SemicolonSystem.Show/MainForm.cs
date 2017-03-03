@@ -1,15 +1,11 @@
-﻿using Microsoft.Win32;
-using SemicolonSystem.Business;
+﻿using SemicolonSystem.Business;
 using SemicolonSystem.Common;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SemicolonSystem.Show
@@ -85,6 +81,11 @@ namespace SemicolonSystem.Show
             }
         }
 
+        /// <summary>
+        /// 设置权重
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_SetWeight_Click(object sender, EventArgs e)
         {
             MatchingForm matchingForm = new MatchingForm();
@@ -92,6 +93,11 @@ namespace SemicolonSystem.Show
             matchingForm.ShowDialog();
         }
 
+        /// <summary>
+        /// 匹配
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_Matching_Click(object sender, EventArgs e)
         {
             var dataResult = OrderService.GetMatchingResult();
@@ -130,7 +136,7 @@ namespace SemicolonSystem.Show
 
                 string filePath = saveResultFileDialog.FileName;
 
-                var sumResults = dataResult.Data.GroupBy(g => g.Model).Select(s => new KeyValuePair<string, int>(s.Key, s.Count())).ToList();
+                var sumResults = dataResult.Data.GroupBy(g => g.Model).Select(s => new KeyValuePair<string, int>(s.Key, s.Count())).OrderBy(o => o.Key).ToList();
 
                 ExcelHelper.TableToExcelForXLS(dt, filePath, sumResults);
 
@@ -142,8 +148,15 @@ namespace SemicolonSystem.Show
             }
         }
 
+        /// <summary>
+        /// 下载规则模板
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void lbl_DownRule_Click(object sender, EventArgs e)
         {
+            saveTemplateFileDialog.FileName = "规则模版";
+
             DialogResult dialogResult = saveTemplateFileDialog.ShowDialog();
 
             if (dialogResult != DialogResult.OK && dialogResult != DialogResult.Yes)
@@ -153,28 +166,13 @@ namespace SemicolonSystem.Show
 
             string filePath = saveTemplateFileDialog.FileName;
 
-            string path = String.Empty;
+            string path = string.Empty;
 
-            #region 获取注册表安装路径
-
-            string softPath = @"SOFTWARE\OrangeSemicolon\SemicolonSystem.Show.exe";
-
-            RegistryKey regKey = Registry.LocalMachine;
-
-            RegistryKey regSubKey = regKey.OpenSubKey(softPath, false);
-
-            object objResult = regSubKey.GetValue("InstallPath");
-
-            RegistryValueKind regValueKind = regSubKey.GetValueKind("InstallPath");
-
-            if (regValueKind == RegistryValueKind.String)
-            {
-                path = objResult.ToString();
-            }
-
-            #endregion
-
-            path = path.Substring(0, path.LastIndexOf("\\")) + "\\Template\\规则模版.xlsx";
+#if DEBUG
+            path = Application.StartupPath + "\\Template\\规则模版.xlsx";
+#else
+            path = Global.InstallPath + "\\Template\\规则模版.xlsx";
+#endif
 
             try
             {
@@ -182,16 +180,23 @@ namespace SemicolonSystem.Show
             }
             catch(Exception ex)
             {
-                MessageBox.Show(String.Format("获取规则模板异常！异常原因：{0}，请尝试在该路径下取出模板！{1}{2}", ex.Message, Environment.NewLine, path));
+                MessageBox.Show(String.Format("获取规则模板异常！异常原因：{0}，请尝试在该路径下取出模版！{1}{2}", ex.Message, Environment.NewLine, path));
 
                 return;
             }
 
-            MessageBox.Show("导出模板成功！");
+            MessageBox.Show("导出模版成功！");
         }
 
+        /// <summary>
+        /// 下载订单模板
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void lbl_DownOrder_Click(object sender, EventArgs e)
         {
+            saveTemplateFileDialog.FileName = "订单模版";
+
             DialogResult dialogResult = saveTemplateFileDialog.ShowDialog();
 
             if (dialogResult != DialogResult.OK && dialogResult != DialogResult.Yes)
@@ -201,28 +206,13 @@ namespace SemicolonSystem.Show
 
             string filePath = saveTemplateFileDialog.FileName;
 
-            string path = String.Empty;
+            string path = string.Empty;
 
-            #region 获取注册表安装路径
-
-            string softPath = @"SOFTWARE\OrangeSemicolon\\SemicolonSystem.Show.exe";
-
-            RegistryKey regKey = Registry.LocalMachine;
-
-            RegistryKey regSubKey = regKey.OpenSubKey(softPath, false);
-
-            object objResult = regSubKey.GetValue("InstallPath");
-
-            RegistryValueKind regValueKind = regSubKey.GetValueKind("InstallPath");
-
-            if (regValueKind == RegistryValueKind.String)
-            {
-                path = objResult.ToString();
-            }
-
-            #endregion
-
-            path = path.Substring(0, path.LastIndexOf("\\")) + "\\Template\\订单模版.xlsx";
+#if DEBUG
+            path = Application.StartupPath + "\\Template\\订单模版.xlsx";
+#else
+            path = Global.InstallPath + "\\Template\\订单模版.xlsx";
+#endif
 
             try
             {

@@ -67,6 +67,7 @@
     <Compile Include="Cache.cs" />
     <Compile Include="DataResult.cs" />
     <Compile Include="ExcelHelper.cs" />
+    <Compile Include="Global.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
