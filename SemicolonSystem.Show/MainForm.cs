@@ -1,5 +1,6 @@
 ﻿using SemicolonSystem.Business;
 using SemicolonSystem.Common;
+using SemicolonSystem.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -24,14 +25,16 @@ namespace SemicolonSystem.Show
         /// <param name="e"></param>
         private void btn_ImportRule_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = openRuleFileDialog.ShowDialog();
+            openFileDialog.FileName = string.Empty;
+
+            DialogResult dialogResult = openFileDialog.ShowDialog();
 
             if(dialogResult != DialogResult.OK && dialogResult != DialogResult.Yes)
             {
                 return;
             }
 
-            string filePath = openRuleFileDialog.FileName;
+            string filePath = openFileDialog.FileName;
 
             DataResult dataResult = RuleService.ImportRuleExcel(filePath);
 
@@ -58,14 +61,16 @@ namespace SemicolonSystem.Show
         /// <param name="e"></param>
         private void btn_ImportOrder_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = openRuleFileDialog.ShowDialog();
+            openFileDialog.FileName = string.Empty;
+
+            DialogResult dialogResult = openFileDialog.ShowDialog();
 
             if (dialogResult != DialogResult.OK && dialogResult != DialogResult.Yes)
             {
                 return;
             }
 
-            string filePath = openRuleFileDialog.FileName;
+            string filePath = openFileDialog.FileName;
 
             DataResult dataResult = OrderService.ImportOrderExcel(filePath);
 
@@ -127,6 +132,8 @@ namespace SemicolonSystem.Show
                     dt.Rows[i][2] = dataResult.Data[i].MatchingLevel.ToString();
                 }
 
+                saveResultFileDialog.FileName = "匹配结果";
+
                 DialogResult dialogResult = saveResultFileDialog.ShowDialog();
 
                 if (dialogResult != DialogResult.OK && dialogResult != DialogResult.Yes)
@@ -136,7 +143,25 @@ namespace SemicolonSystem.Show
 
                 string filePath = saveResultFileDialog.FileName;
 
-                var sumResults = dataResult.Data.GroupBy(g => g.Model).Select(s => new KeyValuePair<string, int>(s.Key, s.Count())).OrderBy(o => o.Key).ToList();
+                var sumResults = dataResult.Data.GroupBy(g => g.Model).Select(s => new KeyValuePair<string, int>(s.Key, s.Count())).ToList();
+
+                var ruleCache = new Cache<List<SizeRuleModel>>();
+
+                var ruleDataResult = ruleCache.GetCache("SizeRule");
+
+                if (!ruleDataResult.IsSuccess)
+                {
+                    MessageBox.Show("请导入规则信息！");
+                }
+
+                var models = ruleDataResult.Data.GroupBy(g => g.Model).Select(s => s.Key).ToList();
+
+                var query = from r in models.AsQueryable()
+                            join s in sumResults.AsQueryable() on r equals s.Key into l
+                            from a in l.DefaultIfEmpty(new KeyValuePair<string, int>(r, 0))
+                            select new KeyValuePair<string, int>(r, a.Value);
+
+                sumResults = query.ToList();
 
                 ExcelHelper.TableToExcelForXLS(dt, filePath, sumResults);
 
@@ -226,6 +251,14 @@ namespace SemicolonSystem.Show
             }
 
             MessageBox.Show("导出模板成功！");
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            if (Global.IsAuthorization)
+            {
+
+            }
         }
     }
 }

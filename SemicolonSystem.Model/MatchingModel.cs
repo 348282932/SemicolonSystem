@@ -7,5 +7,6 @@ namespace SemicolonSystem.Model
         public short PriorityLevel { get; set; }
         public decimal MaxSize { get; set; }
         public decimal MinSize { get; set; }
+        public string Model { get; set; }
     }
 }

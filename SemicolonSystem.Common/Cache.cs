@@ -26,21 +26,30 @@ namespace SemicolonSystem.Common
         /// </summary>
         /// <param name="key"></param>
         /// <param name="data"></param>
-        public void SetCache(string fileName, TData data)
+        public DataResult SetCache(string fileName, TData data)
         {
             fileName = fileName + ".cache";
 
-            if (!Directory.Exists(path))
-                Directory.CreateDirectory(path);
+            try
+            {
+                if (!Directory.Exists(path))
+                    Directory.CreateDirectory(path);
 
-            string filePath = path + fileName;
+                string filePath = path + fileName;
 
-            if (!File.Exists(filePath))
-                File.Create(filePath).Close();
+                if (!File.Exists(filePath))
+                    File.Create(filePath).Close();
 
-            string cache = JsonConvert.SerializeObject(data);
+                string cache = JsonConvert.SerializeObject(data);
 
-            File.WriteAllText(filePath, cache, Encoding.UTF8);
+                File.WriteAllText(filePath, cache, Encoding.UTF8);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return new DataResult("权限异常！请以管理员身份运行该程序！");
+            }
+
+            return new DataResult();
         }
 
         /// <summary>

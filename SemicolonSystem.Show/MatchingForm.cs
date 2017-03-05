@@ -26,7 +26,7 @@ namespace SemicolonSystem.Show
                 {
                     MessageBox.Show(dataResult.Message);
 
-                    this.Close();
+                    Close();
 
                     return;
                 }
@@ -130,7 +130,7 @@ namespace SemicolonSystem.Show
         {
             TextBox tbx = (TextBox)sender;
 
-            if (String.IsNullOrWhiteSpace(tbx.Text))
+            if (string.IsNullOrWhiteSpace(tbx.Text))
             {
                 tbx.Text = "0";
             }
@@ -138,7 +138,7 @@ namespace SemicolonSystem.Show
 
         private void tbx_Offset_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar != 8 && !Char.IsDigit(e.KeyChar) && e.KeyChar != 46)
+            if (e.KeyChar != 8 && !char.IsDigit(e.KeyChar) && e.KeyChar != 46)
             {
                 e.Handled = true;
             }

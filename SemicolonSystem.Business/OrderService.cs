@@ -68,12 +68,13 @@ namespace SemicolonSystem.Business
         /// <param name="orders"></param>
         /// <param name="weights"></param>
         /// <returns></returns>
-        public static List<MatchingResultModel> Matching(List<SizeRuleModel> sizeRules, List<KeyValuePair<String, List<SizeRuleModel>>> orders, List<WeightModel> weights)
+        public static List<MatchingResultModel> Matching(List<SizeRuleModel> sizeRules, List<KeyValuePair<string, List<SizeRuleModel>>> orders, List<WeightModel> weights)
         {
             List<MatchingResultModel> matchingResultList = new List<MatchingResultModel>();
 
             var query = from w in weights.AsQueryable()
                         join s in sizeRules.AsQueryable() on w.Position equals s.Position
+                        where w.PriorityLevel > 0
                         orderby w.PriorityLevel ascending
                         select new 
                         {
@@ -84,17 +85,28 @@ namespace SemicolonSystem.Business
                             MinSize = s.Size - w.Offset  
                         };
 
-            var weightSizeRules = query.GroupBy(g=>g.Model).Select(s=>new KeyValuePair<string, List<MatchingModel>>
-            (
-                s.Key,
-                s.Select(se=> new MatchingModel
-                {
-                    Position = se.Position,
-                    PriorityLevel = se.PriorityLevel,
-                    MaxSize = se.MaxSize,
-                    MinSize = se.MinSize
-                }).ToList()
-            ));
+            var weightSizeRules = query.GroupBy(g => g.Model).Select(s => new KeyValuePair<string, List<MatchingModel>>
+              (
+                  s.Key,
+                  s.Select(se => new MatchingModel
+                  {
+                      Position = se.Position,
+                      PriorityLevel = se.PriorityLevel,
+                      MaxSize = se.MaxSize,
+                      MinSize = se.MinSize
+                  }).ToList()
+              ));
+
+            var weightSizePositions = query.GroupBy(g => new KeyValuePair<string, short>(g.Position, g.PriorityLevel)).Select(s => new KeyValuePair<KeyValuePair<string, short>, List<MatchingModel>>
+                (
+                    s.Key,
+                    s.Select(se => new MatchingModel
+                    {
+                        Model = se.Model,
+                        MaxSize = se.MaxSize,
+                        MinSize = se.MinSize
+                    }).ToList()
+                )).OrderBy(o => o.Key.Value);
 
             foreach (var order in orders)
             {
@@ -104,40 +116,56 @@ namespace SemicolonSystem.Business
 
                 var list = weightSizeRules.Where(f => order.Value.All(a => f.Value.Where(w => a.Position == w.Position).All(aa => a.Size >= aa.MinSize && a.Size <= aa.MaxSize)));
 
+                var count = list.Count();
+
                 var result = list.FirstOrDefault();
 
-                if(!default(KeyValuePair<string, List<MatchingModel>>).Equals(result))
+                if(count > 0)
                 {
                     matchingResult.MatchingLevel = MatchingLevel.PerfectMatch;
 
-                    matchingResult.Model = result.Key;
+                    if (default(KeyValuePair<string, List<MatchingModel>>).Equals(result) && count == 1)
+                    {
+                        matchingResult.Model = result.Key;
+                    }
+                    else
+                    {
+                        matchingResult.Model = ModelMatching(order, weightSizePositions, true);
+                    }
 
                     matchingResultList.Add(matchingResult);
 
                     continue;
                 }
 
-                result = weightSizeRules.FirstOrDefault(f => order.Value.Any(a => f.Value.Where(w => a.Position == w.Position).All(aa => a.Size >= aa.MinSize && a.Size <= aa.MaxSize)));
+                list = weightSizeRules.Where(f => order.Value.Any(a => f.Value.Where(w => a.Position == w.Position).All(aa => a.Size >= aa.MinSize && a.Size <= aa.MaxSize)));
 
-                if (!default(KeyValuePair<string, List<MatchingModel>>).Equals(result))
+                count = list.Count();
+
+                result = list.FirstOrDefault();
+
+                if (count > 0)
                 {
                     matchingResult.MatchingLevel = MatchingLevel.BarelyMatch;
 
-                    matchingResult.Model = result.Key;
+                    if (default(KeyValuePair<string, List<MatchingModel>>).Equals(result) && count == 1)
+                    {
+                        matchingResult.Model = result.Key;
+                    }
+                    else
+                    {
+                        matchingResult.Model = ModelMatching(order, weightSizePositions, true);
+                    }
 
                     matchingResultList.Add(matchingResult);
+
+                    continue;
                 }
                 else
                 {
-                    var priorityLevelMaxPosition = weights.FirstOrDefault(f => f.PriorityLevel > 0 && f.PriorityLevel == weights.Min(m => m.PriorityLevel));
-
-                    var size = order.Value.FirstOrDefault(w => w.Position == priorityLevelMaxPosition.Position).Size;
-
-                    result = weightSizeRules.FirstOrDefault(f => f.Value.Any(a => Math.Abs((a.MaxSize + a.MinSize) - size) == f.Value.Where(w => w.Position == priorityLevelMaxPosition.Position).Min(m => Math.Abs((m.MaxSize + m.MinSize) - size))));
-
                     matchingResult.MatchingLevel = MatchingLevel.ForceMatching;
 
-                    matchingResult.Model = result.Key;
+                    matchingResult.Model = ModelMatching(order, weightSizePositions, false);
 
                     matchingResultList.Add(matchingResult);
                 }
@@ -145,8 +173,6 @@ namespace SemicolonSystem.Business
 
             return matchingResultList;
         }
-
-
 
         /// <summary>
         /// 获取权重配置
@@ -156,9 +182,11 @@ namespace SemicolonSystem.Business
         {
             List<WeightModel> list = new List<WeightModel>();
 
-            var cache = new Cache<List<KeyValuePair<String, List<SizeRuleModel>>>>();
+            var cache = new Cache<List<KeyValuePair<string, List<SizeRuleModel>>>>();
 
             var weightCache = new Cache<List<WeightModel>>();
+
+            var ruleCache = new Cache<List<SizeRuleModel>>();
 
             try
             {
@@ -166,8 +194,17 @@ namespace SemicolonSystem.Business
 
                 if (!orderDataResult.IsSuccess)
                 {
-                    return new DataResult<List<WeightModel>>("找不到订单信息！");
+                    return new DataResult<List<WeightModel>>("请导入订单信息！");
                 }
+
+                var ruletDataResult = ruleCache.GetCache("SizeRule");
+
+                if (!ruletDataResult.IsSuccess)
+                {
+                    return new DataResult<List<WeightModel>>("请导入规则信息！");
+                }
+
+                var orderPositions = orderDataResult.Data.FirstOrDefault().Value.Where(w => ruletDataResult.Data.Any(a => a.Position == w.Position)).ToList();
 
                 var weightDataResult = weightCache.GetCache("WeightCofig");
 
@@ -177,8 +214,6 @@ namespace SemicolonSystem.Business
                 {
                     weights = weightDataResult.Data;
 
-                    var orderPositions = orderDataResult.Data.FirstOrDefault().Value;
-
                     if (orderPositions.Count == weights.Count && orderPositions.All(a => weights.Any(aa => aa.Position == a.Position)))
                     {
                         return new DataResult<List<WeightModel>>(weights);
@@ -186,10 +221,10 @@ namespace SemicolonSystem.Business
                 }
 
                 list.AddRange(
-                    orderDataResult.Data.FirstOrDefault().Value.Select(ss => new WeightModel
+                    orderPositions.Select(s => new WeightModel
                     {
                         Offset = 0,
-                        Position = ss.Position,
+                        Position = s.Position,
                         PriorityLevel = 999
                     }).ToList()
                 );
@@ -212,9 +247,7 @@ namespace SemicolonSystem.Business
         {
             var cache = new Cache<List<WeightModel>>();
 
-            cache.SetCache("WeightCofig", list);
-
-            return new DataResult();
+            return cache.SetCache("WeightCofig", list);
         }
 
         /// <summary>
@@ -246,10 +279,10 @@ namespace SemicolonSystem.Business
                 return new DataResult("请按模版导入 Excel");
             }
 
-            if (tab.Columns[0].ToString().Trim() != "姓名")
-            {
-                return new DataResult("请按模版导入 Excel");
-            }
+            //if (tab.Columns[0].ToString().Trim() != "姓名")
+            //{
+            //    return new DataResult("请按模版导入 Excel");
+            //}
 
             var orderList = new List<KeyValuePair<String, List<SizeRuleModel>>>();
 
@@ -292,9 +325,72 @@ namespace SemicolonSystem.Business
 
             var cache = new Cache<List<KeyValuePair<String, List<SizeRuleModel>>>>();
 
-            cache.SetCache("Order", orderList);
+            return cache.SetCache("Order", orderList);
+        }
 
-            return dataResult;
+        /// <summary>
+        /// 按优先级进行偏移量匹配
+        /// </summary>
+        /// <param name="order"></param>
+        /// <param name="weightSizePositions"></param>
+        /// <returns></returns>
+        private static string ModelMatching(KeyValuePair<string, List<SizeRuleModel>> order,IOrderedQueryable<KeyValuePair<KeyValuePair<string, short>, List<MatchingModel>>> weightSizePositions, bool isMatched)
+        {
+            Dictionary<KeyValuePair<string, short>, Dictionary<string, decimal>> modelOffsetList = new Dictionary<KeyValuePair<string, short>, Dictionary<string, decimal>>();
+
+            foreach (var item in weightSizePositions)
+            {
+                var size = order.Value.FirstOrDefault(f => f.Position == item.Key.Key).Size;
+
+                if (isMatched)
+                {
+                    modelOffsetList.Add(item.Key, item.Value.Select(s => new KeyValuePair<string, decimal>
+                    (
+                       s.Model,
+                       Math.Abs((s.MaxSize + s.MinSize) - size * 2)
+                    )).ToDictionary(k => k.Key, v => v.Value)
+                    );
+                }
+                else
+                {
+                    modelOffsetList.Add(item.Key, item.Value.Select(s => new KeyValuePair<string, decimal>
+                            (
+                               s.Model,
+                               Math.Min(Math.Abs(s.MaxSize - size), Math.Abs(s.MinSize - size))
+                            )).ToDictionary(k => k.Key, v => v.Value)
+                            );
+                }
+                
+            }
+
+            string[] arrTow = null;
+
+            foreach (var item in modelOffsetList)
+            {
+                KeyValuePair<string, decimal>[] arr = null;
+
+                if (arrTow == null)
+                {
+                    arr = item.Value.Where(w => w.Value == item.Value.Min(m => m.Value)).ToArray();
+
+                    arrTow = arr.Select(s => s.Key).ToArray();
+                }
+                else
+                {
+                    var temp = item.Value.Where(w => arrTow.Any(a => a == w.Key));
+
+                    arr = temp.Where(w => w.Value == temp.Min(m => m.Value)).ToArray();
+
+                    arrTow = arr.Select(s => s.Key).ToArray();
+                }
+
+                if (arrTow.Length == 1)
+                {
+                    return arrTow[0];
+                }
+            }
+
+            return arrTow[0];
         }
     }
 }

@@ -15,7 +15,15 @@ namespace SemicolonSystem.Show
             Global.Init();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+
+            if (Global.IsAuthorization)
+            {
+                Application.Run(new MainForm());
+            }
+            else
+            {
+                Application.Run(new ActivationForm());
+            }
         }
     }
 }

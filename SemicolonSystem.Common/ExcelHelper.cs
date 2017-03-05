@@ -84,15 +84,19 @@ namespace SemicolonSystem.Common
                 cell.SetCellValue(dt.Columns[i].ColumnName);
             }
 
+            int rowCount = dt.Rows.Count;
+
+            int count = dt.Rows.Count > sumResult.Count ? dt.Rows.Count : sumResult.Count;
+
             //数据
-            for (int i = 0; i < dt.Rows.Count; i++)
+            for (int i = 0; i < count; i++)
             {
                 IRow row1 = sheet.CreateRow(i + 1);
                 for (int j = 0; j < dt.Columns.Count; j++)
                 {
                     ICell cell = row1.CreateCell(j);
 
-                    if (j < 2)
+                    if (j < 2 && i < rowCount)
                     {
                         string cellValue = dt.Rows[i][j].ToString();
 
@@ -137,6 +141,8 @@ namespace SemicolonSystem.Common
                         cell.SetCellValue(sumResult[i].Value);
                     }
                 }
+
+                if (i < dt.Rows.Count) dt.Rows.Add(dt.NewRow());
             }
 
             //转为字节数组

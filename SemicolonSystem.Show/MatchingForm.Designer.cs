@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MatchingForm));
             this.lbl_PositionTitle = new System.Windows.Forms.Label();
             this.lbl_OffsetTitle = new System.Windows.Forms.Label();
             this.lbl_PriorityLevel = new System.Windows.Forms.Label();
@@ -83,6 +84,9 @@
             this.Controls.Add(this.lbl_PriorityLevel);
             this.Controls.Add(this.lbl_OffsetTitle);
             this.Controls.Add(this.lbl_PositionTitle);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "MatchingForm";
             this.Text = "设置权重匹配订单";
             this.Load += new System.EventHandler(this.MatchingForm_Load);

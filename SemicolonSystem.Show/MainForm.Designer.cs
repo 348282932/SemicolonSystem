@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.btn_ImportRule = new System.Windows.Forms.Button();
-            this.openRuleFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.btn_ImportOrder = new System.Windows.Forms.Button();
             this.btn_SetWeight = new System.Windows.Forms.Button();
             this.btn_Matching = new System.Windows.Forms.Button();
@@ -50,11 +50,11 @@
             this.btn_ImportRule.UseVisualStyleBackColor = true;
             this.btn_ImportRule.Click += new System.EventHandler(this.btn_ImportRule_Click);
             // 
-            // openRuleFileDialog
+            // openFileDialog
             // 
-            this.openRuleFileDialog.Filter = "*.xls|*.xlsx";
-            this.openRuleFileDialog.FilterIndex = 0;
-            this.openRuleFileDialog.Title = "导入文件路径";
+            this.openFileDialog.Filter = "*.xls|*.xlsx";
+            this.openFileDialog.FilterIndex = 0;
+            this.openFileDialog.Title = "导入文件路径";
             // 
             // btn_ImportOrder
             // 
@@ -88,7 +88,6 @@
             // 
             // saveResultFileDialog
             // 
-            this.saveResultFileDialog.FileName = "匹配结果";
             this.saveResultFileDialog.Filter = "*.xls|*.xlsx";
             this.saveResultFileDialog.FilterIndex = 0;
             // 
@@ -120,7 +119,6 @@
             // 
             // saveTemplateFileDialog
             // 
-            this.saveTemplateFileDialog.FileName = "模板";
             this.saveTemplateFileDialog.Filter = "*.xls|*.xlsx";
             this.saveTemplateFileDialog.FilterIndex = 0;
             // 
@@ -138,6 +136,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "智能分号系统";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -146,7 +145,7 @@
         #endregion
 
         private System.Windows.Forms.Button btn_ImportRule;
-        private System.Windows.Forms.OpenFileDialog openRuleFileDialog;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.Button btn_ImportOrder;
         private System.Windows.Forms.Button btn_SetWeight;
         private System.Windows.Forms.Button btn_Matching;
