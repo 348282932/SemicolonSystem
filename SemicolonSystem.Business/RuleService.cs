@@ -3,6 +3,7 @@ using SemicolonSystem.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace SemicolonSystem.Business
 {
@@ -21,7 +22,7 @@ namespace SemicolonSystem.Business
 
             try
             {
-                tab = ExcelHelper.GetDataTable(fileName);
+                tab = ExcelHelper.GetDataTable(fileName).FirstOrDefault();
             }
             catch (Exception ex)
             {
@@ -30,7 +31,7 @@ namespace SemicolonSystem.Business
 
             List<SizeRuleModel> sizeList = new List<SizeRuleModel>();
 
-            if (tab.Rows.Count == 0 || tab.Columns.Count == 0)
+            if (tab == null || tab.Rows.Count == 0 || tab.Columns.Count == 0)
             {
                 return new DataResult("请按模版导入 Excel");
             }

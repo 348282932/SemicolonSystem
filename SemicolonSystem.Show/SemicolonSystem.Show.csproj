@@ -127,6 +127,12 @@
     <Compile Include="MatchingForm.Designer.cs">
       <DependentUpon>MatchingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="OrderImportSettingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OrderImportSettingForm.Designer.cs">
+      <DependentUpon>OrderImportSettingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ActivationForm.resx">
@@ -137,6 +143,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MatchingForm.resx">
       <DependentUpon>MatchingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OrderImportSettingForm.resx">
+      <DependentUpon>OrderImportSettingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

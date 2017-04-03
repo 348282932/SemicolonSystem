@@ -2,6 +2,7 @@
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using SemicolonSystem.Model.Enum;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -17,49 +18,85 @@ namespace SemicolonSystem.Common
         /// </summary>
         /// <param name="file"></param>
         /// <returns></returns>
-        public static DataTable ExcelToTableForXLS(string file)
+        public static List<DataTable> ExcelToTablesForXLS(string file, int marginHader, int marginBottom)
         {
-            DataTable dt = new DataTable();
+            List<DataTable> tabs = new List<DataTable>();
+
             using (FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Read))
             {
                 HSSFWorkbook hssfworkbook = new HSSFWorkbook(fs);
-                ISheet sheet = hssfworkbook.GetSheetAt(0);
 
-                //表头
-                IRow header = sheet.GetRow(sheet.FirstRowNum);
-                List<int> columns = new List<int>();
-                for (int i = 0; i < header.LastCellNum; i++)
+                var index = 0;
+
+                while (true)
                 {
-                    object obj = GetValueTypeForXLS(header.GetCell(i) as HSSFCell);
-                    if (obj == null || obj.ToString() == string.Empty)
+                    if (index + 1 > hssfworkbook.Count) break;
+
+                    DataTable dt = new DataTable();
+
+                    ISheet sheet = hssfworkbook.GetSheetAt(index);
+
+                    dt.TableName = sheet.SheetName;
+
+                    // 表头
+
+                    IRow header = sheet.GetRow(sheet.FirstRowNum + marginHader);
+
+                    List<int> columns = new List<int>();
+
+                    for (int i = 0; i < header.LastCellNum; i++)
                     {
-                        dt.Columns.Add(new DataColumn("Columns" + i.ToString()));
-                        //continue;
-                    }
-                    else
-                        dt.Columns.Add(new DataColumn(obj.ToString()));
-                    columns.Add(i);
-                }
-                //数据
-                for (int i = sheet.FirstRowNum + 1; i <= sheet.LastRowNum; i++)
-                {
-                    DataRow dr = dt.NewRow();
-                    bool hasValue = false;
-                    foreach (int j in columns)
-                    {
-                        dr[j] = GetValueTypeForXLS(sheet.GetRow(i).GetCell(j) as HSSFCell);
-                        if (dr[j] != null && dr[j].ToString() != string.Empty)
+                        object obj = GetValueTypeForXLS(header.GetCell(i) as HSSFCell);
+
+                        if (obj == null || obj.ToString() == string.Empty)
                         {
-                            hasValue = true;
+                            dt.Columns.Add(new DataColumn("Columns" + i.ToString()));
+                        }
+                        else
+                        {
+                            // TODO：此处列名重复会抛出异常！
+
+                            dt.Columns.Add(new DataColumn(obj.ToString()));
+                        }
+
+                        columns.Add(i);
+                    }
+
+                    // 数据
+
+                    for (int i = sheet.FirstRowNum + marginHader + 1; i <= sheet.LastRowNum; i++)
+                    {
+                        DataRow dr = dt.NewRow();
+
+                        bool hasValue = false;
+
+                        foreach (int j in columns)
+                        {
+                            dr[j] = GetValueTypeForXLS(sheet.GetRow(i).GetCell(j) as HSSFCell);
+
+                            if (dr[j] != null && dr[j].ToString() != string.Empty)
+                            {
+                                hasValue = true;
+                            }
+                        }
+                        if (hasValue)
+                        {
+                            dt.Rows.Add(dr);
                         }
                     }
-                    if (hasValue)
+
+                    for (int i = 1; i < marginBottom + 1; i++)
                     {
-                        dt.Rows.Add(dr);
+                        dt.Rows.RemoveAt(dt.Rows.Count - 1);
                     }
+
+                    tabs.Add(dt);
+
+                    index++;
                 }
             }
-            return dt;
+
+            return tabs;
         }
 
         /// <summary>
@@ -67,83 +104,117 @@ namespace SemicolonSystem.Common
         /// </summary>
         /// <param name="dt"></param>
         /// <param name="file"></param>
-        public static void TableToExcelForXLS(DataTable dt, string file, List<KeyValuePair<string,int>> sumResult)
+        public static void TableToExcelForXLS(List<DataTable> tabs, string file)
         {
             XSSFWorkbook hssfworkbook = new XSSFWorkbook();
-            ISheet sheet = hssfworkbook.CreateSheet("匹配结果");
 
-            //表头
-            IRow row = sheet.CreateRow(0);
-            for (int i = 0; i < dt.Columns.Count; i++)
+            foreach (var dt in tabs)
             {
-                if (i == 2)
+                ISheet sheet = hssfworkbook.CreateSheet(dt.TableName);
+
+                //表头
+
+                IRow row = sheet.CreateRow(0);
+
+                for (int i = 0; i < dt.Columns.Count; i++)
                 {
-                    continue;
-                }
-                ICell cell = row.CreateCell(i);
-                cell.SetCellValue(dt.Columns[i].ColumnName);
-            }
+                    ICell cell = row.CreateCell(i);
 
-            int rowCount = dt.Rows.Count;
-
-            int count = dt.Rows.Count > sumResult.Count ? dt.Rows.Count : sumResult.Count;
-
-            //数据
-            for (int i = 0; i < count; i++)
-            {
-                IRow row1 = sheet.CreateRow(i + 1);
-                for (int j = 0; j < dt.Columns.Count; j++)
-                {
-                    ICell cell = row1.CreateCell(j);
-
-                    if (j < 2 && i < rowCount)
+                    if (!dt.Columns[i].ColumnName.Contains("匹配程度"))
                     {
+                        if (dt.Columns[i].ColumnName.Contains("Column"))
+                        {
+                            cell.SetCellValue(string.Empty);
+                        }
+                        else
+                        {
+                            cell.SetCellValue(dt.Columns[i].ColumnName);
+                        }
+                    }
+                }
+
+                int rowCount = dt.Rows.Count;
+
+                int count = dt.Rows.Count;
+
+                // 数据
+
+                for (int i = 0; i < count; i++)
+                {
+                    IRow row1 = sheet.CreateRow(i + 1);
+
+                    for (int j = 0; j < dt.Columns.Count; j++)
+                    {
+                        ICell cell = row1.CreateCell(j);
+
                         string cellValue = dt.Rows[i][j].ToString();
 
-                        ICellStyle colorStyle = hssfworkbook.CreateCellStyle();
-                        colorStyle.FillPattern = FillPattern.SolidForeground;
-                        cell.CellStyle = colorStyle;
+                        if (dt.Columns[j].ColumnName.Contains("匹配程度"))
+                        {
+                            var styleCell = row1.Cells[j - 2];
 
-                        if (dt.Rows[i][2].ToString() == MatchingLevel.PerfectMatch.ToString())
-                            colorStyle.FillForegroundColor = 3;
+                            ICellStyle colorStyle = hssfworkbook.CreateCellStyle();
 
-                        if (dt.Rows[i][2].ToString() == MatchingLevel.BarelyMatch.ToString())
-                            colorStyle.FillForegroundColor = 5;
+                            colorStyle.FillPattern = FillPattern.SolidForeground;
 
-                        if (dt.Rows[i][2].ToString() == MatchingLevel.ForceMatching.ToString())
-                            colorStyle.FillForegroundColor = 2;
+                            if (cellValue == MatchingLevel.PerfectMatch.ToString())
+                                colorStyle.FillForegroundColor = 3;
 
-                        cell.SetCellValue(cellValue);
+                            if (cellValue == MatchingLevel.BarelyMatch.ToString())
+                                colorStyle.FillForegroundColor = 5;
+
+                            if (cellValue == MatchingLevel.ForceMatching.ToString())
+                                colorStyle.FillForegroundColor = 2;
+
+                            if (!string.IsNullOrWhiteSpace(cellValue))
+                            {
+                                styleCell.CellStyle = colorStyle;
+                            }
+
+                            cellValue = string.Empty;
+                        }
+
+                        if (dt.Columns[j].ColumnName.Contains("型号") || dt.Columns[j].ColumnName.Contains("数量"))
+                        {
+                            ICellStyle style = hssfworkbook.CreateCellStyle();
+
+                            style.Alignment = HorizontalAlignment.Center;
+
+                            IFont f = hssfworkbook.CreateFont();
+
+                            f.Boldweight = (short)FontBoldWeight.Bold;
+
+                            style.SetFont(f);
+
+                            cell.CellStyle = style;
+
+                            if (dt.Columns[j].ColumnName.Contains("数量"))
+                            {
+                                if (dt.Rows[i][j] is DBNull)
+                                {
+                                    cell.SetCellValue(cellValue);
+                                }
+                                else
+                                {
+                                    cell.SetCellValue(Convert.ToInt32(dt.Rows[i][j]));
+                                }
+                            }
+                            else
+                            {
+                                cell.SetCellValue(cellValue);
+                            }
+                        }
+                        else
+                        {
+                            cell.SetCellValue(cellValue);
+                        }
                     }
 
-                    if (j == 3 && i < sumResult.Count)
-                    {
-                        dt.Rows[i][j] = sumResult[i].Key;
-
-                        ICellStyle style = hssfworkbook.CreateCellStyle();
-                        style.Alignment = HorizontalAlignment.Center;
-                        IFont f = hssfworkbook.CreateFont();
-                        f.Boldweight = (short)FontBoldWeight.Bold;
-                        style.SetFont(f);
-                        cell.CellStyle = style;
-                        cell.SetCellValue(sumResult[i].Key);
-                    }
-
-                    if (j == 4 && i < sumResult.Count)
-                    {
-                        dt.Rows[i][j] = sumResult[i].Value;
-                        ICellStyle style = hssfworkbook.CreateCellStyle();
-                        style.Alignment = HorizontalAlignment.Center;
-                        IFont f = hssfworkbook.CreateFont();
-                        f.Boldweight = (short)FontBoldWeight.Bold;
-                        style.SetFont(f);
-                        cell.CellStyle = style;
-                        cell.SetCellValue(sumResult[i].Value);
-                    }
+                    if (i < dt.Rows.Count) dt.Rows.Add(dt.NewRow());
                 }
-
-                if (i < dt.Rows.Count) dt.Rows.Add(dt.NewRow());
             }
+
+            
 
             //转为字节数组
             MemoryStream stream = new MemoryStream();
@@ -192,49 +263,78 @@ namespace SemicolonSystem.Common
         /// </summary>
         /// <param name="file"></param>
         /// <returns></returns>
-        public static DataTable ExcelToTableForXLSX(string file)
+        public static List<DataTable> ExcelToTablesForXLSX(string file, int marginHader, int marginBottom)
         {
-            DataTable dt = new DataTable();
+            List<DataTable> tabs = new List<DataTable>();
+
             using (FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Read))
             {
                 XSSFWorkbook xssfworkbook = new XSSFWorkbook(fs);
-                ISheet sheet = xssfworkbook.GetSheetAt(0);
 
-                //表头
-                IRow header = sheet.GetRow(sheet.FirstRowNum);
-                List<int> columns = new List<int>();
-                for (int i = 0; i < header.LastCellNum; i++)
+                var index = 0;
+
+                while (true)
                 {
-                    object obj = GetValueTypeForXLSX(header.GetCell(i) as XSSFCell);
-                    if (obj == null || obj.ToString() == string.Empty)
+                    if (index + 1 > xssfworkbook.Count) break;
+
+                    DataTable dt = new DataTable();
+
+                    ISheet sheet = xssfworkbook.GetSheetAt(index);
+
+                    // 表头
+
+                    IRow header = sheet.GetRow(sheet.FirstRowNum + marginHader);
+
+                    List<int> columns = new List<int>();
+
+                    for (int i = 0; i < header.LastCellNum; i++)
                     {
-                        dt.Columns.Add(new DataColumn("Columns" + i.ToString()));
-                        //continue;
-                    }
-                    else
-                        dt.Columns.Add(new DataColumn(obj.ToString()));
-                    columns.Add(i);
-                }
-                //数据
-                for (int i = sheet.FirstRowNum + 1; i <= sheet.LastRowNum; i++)
-                {
-                    DataRow dr = dt.NewRow();
-                    bool hasValue = false;
-                    foreach (int j in columns)
-                    {
-                        dr[j] = GetValueTypeForXLSX(sheet.GetRow(i).GetCell(j) as XSSFCell);
-                        if (dr[j] != null && dr[j].ToString() != string.Empty)
+                        object obj = GetValueTypeForXLSX(header.GetCell(i) as XSSFCell);
+
+                        if (obj == null || obj.ToString() == string.Empty)
                         {
-                            hasValue = true;
+                            dt.Columns.Add(new DataColumn("Columns" + i.ToString()));
+                        }
+                        else
+                        {
+                            dt.Columns.Add(new DataColumn(obj.ToString()));
+                        }
+                         
+                        columns.Add(i);
+                    }
+                    //数据
+                    for (int i = sheet.FirstRowNum + marginHader + 1; i <= sheet.LastRowNum - marginBottom; i++)
+                    {
+                        DataRow dr = dt.NewRow();
+
+                        bool hasValue = false;
+
+                        foreach (int j in columns)
+                        {
+                            dr[j] = GetValueTypeForXLSX(sheet.GetRow(i).GetCell(j) as XSSFCell);
+
+                            if (dr[j] != null && dr[j].ToString() != string.Empty)
+                            {
+                                hasValue = true;
+                            }
+                        }
+                        if (hasValue)
+                        {
+                            dt.Rows.Add(dr);
                         }
                     }
-                    if (hasValue)
+
+                    for (int i = 1; i < marginBottom + 1; i++)
                     {
-                        dt.Rows.Add(dr);
+                        dt.Rows.RemoveAt(dt.Rows.Count - 1);
                     }
+
+                    tabs.Add(dt);
+
+                    index++;
                 }
             }
-            return dt;
+            return tabs;
         }
 
         /// <summary>
@@ -312,16 +412,17 @@ namespace SemicolonSystem.Common
         /// </summary>
         /// <param name="filepath"></param>
         /// <returns></returns>
-        public static DataTable GetDataTable(string filepath)
+        public static List<DataTable> GetDataTable(string filepath, int marginHader = 0, int marginBottom = 0)
         {
-            var dt = new DataTable("xls");
+            var dt = new List<DataTable>();
+
             if (filepath.Last() == 's')
             {
-                dt = ExcelToTableForXLS(filepath);
+                dt = ExcelToTablesForXLS(filepath, marginHader, marginBottom);
             }
             else
             {
-                dt = ExcelToTableForXLSX(filepath);
+                dt = ExcelToTablesForXLSX(filepath, marginHader, marginBottom);
             }
             return dt;
         }

@@ -52,7 +52,7 @@
             // 
             // openFileDialog
             // 
-            this.openFileDialog.Filter = "*.xls|*.xlsx";
+            this.openFileDialog.Filter = "所有文件|*.*|Excel文件|*.xlsx|Excel文件|*.xls";
             this.openFileDialog.FilterIndex = 0;
             this.openFileDialog.Title = "导入文件路径";
             // 
@@ -136,7 +136,6 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "智能分号系统";
-            this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -146,12 +145,12 @@
 
         private System.Windows.Forms.Button btn_ImportRule;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
-        private System.Windows.Forms.Button btn_ImportOrder;
         private System.Windows.Forms.Button btn_SetWeight;
         private System.Windows.Forms.Button btn_Matching;
         private System.Windows.Forms.SaveFileDialog saveResultFileDialog;
         private System.Windows.Forms.Label lbl_DownRule;
         private System.Windows.Forms.Label lbl_DownOrder;
         private System.Windows.Forms.SaveFileDialog saveTemplateFileDialog;
+        public System.Windows.Forms.Button btn_ImportOrder;
     }
 }

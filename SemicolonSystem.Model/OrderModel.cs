@@ -2,11 +2,10 @@
 
 namespace SemicolonSystem.Model
 {
-    public class MatchingResultModel
+    public class OrderModel
     {
         public string SheetName { get; set; }
 
-        public List<MatchingRowModel> MatchingRows { get; set; }
+        public List<OrderRow> OrderRows { get; set; }
     }
-
 }

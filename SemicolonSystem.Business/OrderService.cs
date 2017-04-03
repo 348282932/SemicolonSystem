@@ -16,6 +16,8 @@ namespace SemicolonSystem.Business
         /// <returns></returns>
         public static DataResult<List<MatchingResultModel>> GetMatchingResult()
         {
+            var resultList = new List<MatchingResultModel>();
+
             var ruleCache = new Cache<List<SizeRuleModel>>();
 
             var ruleDataResult = ruleCache.GetCache("SizeRule");
@@ -25,7 +27,7 @@ namespace SemicolonSystem.Business
                 return new DataResult<List<MatchingResultModel>>("请导入尺寸规则");
             }
 
-            var orderCache = new Cache<List<KeyValuePair<String, List<SizeRuleModel>>>>();
+            var orderCache = new Cache<List<OrderModel>>();
 
             var orderDataResult = orderCache.GetCache("Order");
 
@@ -47,7 +49,7 @@ namespace SemicolonSystem.Business
             else
             {
                 weights.AddRange(
-                    orderDataResult.Data.FirstOrDefault().Value.Select(ss => new WeightModel
+                    orderDataResult.Data.FirstOrDefault().OrderRows.FirstOrDefault().SizeRules.Select(ss => new WeightModel
                     {
                         Offset = 0,
                         Position = ss.Position,
@@ -56,9 +58,20 @@ namespace SemicolonSystem.Business
                 );
             }
 
-            var matchingResultList = Matching(ruleDataResult.Data, orderDataResult.Data, weights);
+            foreach (var item in orderDataResult.Data)
+            {
 
-            return new DataResult<List<MatchingResultModel>>(matchingResultList);
+                var matchingResult = new MatchingResultModel();
+
+                matchingResult.SheetName = item.SheetName;
+
+                matchingResult.MatchingRows = Matching(ruleDataResult.Data, item.OrderRows, weights);
+
+                resultList.Add(matchingResult);
+
+            }
+
+            return new DataResult<List<MatchingResultModel>>(resultList);
         }
 
         /// <summary>
@@ -67,10 +80,10 @@ namespace SemicolonSystem.Business
         /// <param name="sizeRules"></param>
         /// <param name="orders"></param>
         /// <param name="weights"></param>
-        /// <returns></returns>
-        public static List<MatchingResultModel> Matching(List<SizeRuleModel> sizeRules, List<KeyValuePair<string, List<SizeRuleModel>>> orders, List<WeightModel> weights)
+        /// <returns></returns> //List<KeyValuePair<string, List<SizeRuleModel>>>
+        public static List<MatchingRowModel> Matching(List<SizeRuleModel> sizeRules, List<OrderRow> orders, List<WeightModel> weights)
         {
-            List<MatchingResultModel> matchingResultList = new List<MatchingResultModel>();
+            List<MatchingRowModel> matchingResultList = new List<MatchingRowModel>();
 
             var query = from w in weights.AsQueryable()
                         join s in sizeRules.AsQueryable() on w.Position equals s.Position
@@ -110,11 +123,13 @@ namespace SemicolonSystem.Business
 
             foreach (var order in orders)
             {
-                var matchingResult = new MatchingResultModel();
+                var matchingResult = new MatchingRowModel();
 
-                matchingResult.Name = order.Key;
+                matchingResult.Name = order.Name;
 
-                var list = weightSizeRules.Where(f => order.Value.All(a => f.Value.Where(w => a.Position == w.Position).All(aa => a.Size >= aa.MinSize && a.Size <= aa.MaxSize)));
+                matchingResult.Sex = order.Sex;
+
+                var list = weightSizeRules.Where(f => order.SizeRules.All(a => f.Value.Where(w => a.Position == w.Position).All(aa => a.Size >= aa.MinSize && a.Size <= aa.MaxSize)));
 
                 var count = list.Count();
 
@@ -138,7 +153,7 @@ namespace SemicolonSystem.Business
                     continue;
                 }
 
-                list = weightSizeRules.Where(f => order.Value.Any(a => f.Value.Where(w => a.Position == w.Position).All(aa => a.Size >= aa.MinSize && a.Size <= aa.MaxSize)));
+                list = weightSizeRules.Where(f => order.SizeRules.Any(a => f.Value.Where(w => a.Position == w.Position).All(aa => a.Size >= aa.MinSize && a.Size <= aa.MaxSize)));
 
                 count = list.Count();
 
@@ -182,7 +197,7 @@ namespace SemicolonSystem.Business
         {
             List<WeightModel> list = new List<WeightModel>();
 
-            var cache = new Cache<List<KeyValuePair<string, List<SizeRuleModel>>>>();
+            var cache = new Cache<List<OrderModel>>();
 
             var weightCache = new Cache<List<WeightModel>>();
 
@@ -204,7 +219,7 @@ namespace SemicolonSystem.Business
                     return new DataResult<List<WeightModel>>("请导入规则信息！");
                 }
 
-                var orderPositions = orderDataResult.Data.FirstOrDefault().Value.Where(w => ruletDataResult.Data.Any(a => a.Position == w.Position)).ToList();
+                var orderPositions = orderDataResult.Data.FirstOrDefault().OrderRows.FirstOrDefault().SizeRules.Where(w => ruletDataResult.Data.Any(a => a.Position == w.Position)).ToList();
 
                 var weightDataResult = weightCache.GetCache("WeightCofig");
 
@@ -255,15 +270,32 @@ namespace SemicolonSystem.Business
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        public static DataResult ImportOrderExcel(string fileName)
+        public static DataResult ImportOrderExcel(string fileName, int marginHader, int marginBottom)
         {
+            var ruleCache = new Cache<List<SizeRuleModel>>();
+
+            var ruleDataResult = ruleCache.GetCache("SizeRule");
+
+            if (!ruleDataResult.IsSuccess)
+            {
+                return new DataResult<List<MatchingResultModel>>("请导入尺寸规则");
+            }
+
             DataResult dataResult = new DataResult();
 
-            DataTable tab = new DataTable();
+            List<DataTable> tabs = new List<DataTable>();
 
             try
             {
-                tab = ExcelHelper.GetDataTable(fileName);
+                tabs = ExcelHelper.GetDataTable(fileName, marginHader, marginBottom);
+            }
+            catch (DuplicateNameException ex)
+            {
+                dataResult.IsSuccess = false;
+
+                dataResult.Message = "表头的列名重复，" + ex.Message;
+
+                return dataResult;
             }
             catch (Exception ex)
             {
@@ -274,9 +306,85 @@ namespace SemicolonSystem.Business
                 return dataResult;
             }
 
-            if (tab.Rows.Count == 0 || tab.Columns.Count == 0)
+            if (tabs == null || tabs.Count == 0)
             {
                 return new DataResult("请按模版导入 Excel");
+            }
+
+            var orderList = new List<OrderModel>();
+
+            foreach (var tab in tabs)
+            {
+                if (tab.Rows.Count == 0 || tab.Columns.Count == 0)
+                {
+                    return new DataResult("请按模版导入 Excel");
+                }
+
+                var orderModel = new OrderModel();
+
+                orderModel.SheetName = tab.TableName;
+
+                var orderRows = new List<OrderRow>();
+
+                try
+                {
+                    for (int i = 0; i < tab.Rows.Count; i++)
+                    {
+                        List<SizeRuleModel> ruleList = new List<SizeRuleModel>();
+
+                        var sex = string.Empty;
+
+                        for (int j = 1; j < tab.Columns.Count; j++)
+                        {
+                            if (tab.Columns[j].ColumnName.Trim() == "性别")
+                            {
+                                sex = tab.Rows[i][j].ToString().Trim();
+
+                                if (string.IsNullOrWhiteSpace(sex) || (!sex.Contains("男") && !sex.Contains("女")) || (sex.Contains("男") && sex.Contains("女")))
+                                {
+                                    dataResult.IsSuccess = false;
+
+                                    dataResult.Message += string.Format("{2}表“{0}”性别存在格式错误！错误位置：第{1}行", tab.TableName, i + 2 + marginHader, Environment.NewLine);
+                                }
+                            }
+                            else if (!ruleDataResult.Data.Any(a => a.Position == tab.Columns[j].ColumnName.Trim()))
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                ruleList.Add(new SizeRuleModel
+                                {
+                                    Position = tab.Columns[j].ColumnName.Trim(),
+                                    Size = Convert.ToDecimal(tab.Rows[i][j].ToString().Trim()),
+                                    Model = string.Empty
+                                });
+                            }
+                        }
+
+                        orderRows.Add(new OrderRow { Name = tab.Rows[i][0].ToString(), SizeRules = ruleList, Sex = sex });
+                    }
+
+                    orderModel.OrderRows = orderRows;
+
+                    orderList.Add(orderModel);
+                }
+                catch (FormatException)
+                {
+                    dataResult.IsSuccess = false;
+
+                    dataResult.Message = string.Format("表“{0}”导入的尺寸数据不符合规范", tab.TableName);
+
+                    return dataResult;
+                }
+                catch (Exception)
+                {
+                    dataResult.IsSuccess = false;
+
+                    dataResult.Message = "导入 Excel 格式不正确！请按照模版导入！";
+
+                    return dataResult;
+                }
             }
 
             //if (tab.Columns[0].ToString().Trim() != "姓名")
@@ -284,46 +392,12 @@ namespace SemicolonSystem.Business
             //    return new DataResult("请按模版导入 Excel");
             //}
 
-            var orderList = new List<KeyValuePair<String, List<SizeRuleModel>>>();
-
-            try
+            if (!dataResult.IsSuccess)
             {
-                for (int i = 0; i < tab.Rows.Count; i++)
-                {
-                    List<SizeRuleModel> ruleList = new List<SizeRuleModel>();
-
-                    for (int j = 1; j < tab.Columns.Count; j++)
-                    {
-                        ruleList.Add(new SizeRuleModel
-                        {
-                            Position = tab.Columns[j].ColumnName,
-                            Size = Convert.ToDecimal(tab.Rows[i][j].ToString().Trim()),
-                            Model = String.Empty
-                        });
-
-                    }
-
-                    orderList.Add(new KeyValuePair<String, List<SizeRuleModel>>(tab.Rows[i][0].ToString(), ruleList));
-                }
-            }
-            catch (FormatException)
-            {
-                dataResult.IsSuccess = false;
-
-                dataResult.Message = "导入的尺寸大小必须是数字或小数";
-
-                return dataResult;
-            }
-            catch (Exception)
-            {
-                dataResult.IsSuccess = false;
-
-                dataResult.Message = "导入 Excel 格式不正确！请按照模版导入！";
-
                 return dataResult;
             }
 
-            var cache = new Cache<List<KeyValuePair<String, List<SizeRuleModel>>>>();
+            var cache = new Cache<List<OrderModel>>();
 
             return cache.SetCache("Order", orderList);
         }
@@ -334,13 +408,13 @@ namespace SemicolonSystem.Business
         /// <param name="order"></param>
         /// <param name="weightSizePositions"></param>
         /// <returns></returns>
-        private static string ModelMatching(KeyValuePair<string, List<SizeRuleModel>> order,IOrderedQueryable<KeyValuePair<KeyValuePair<string, short>, List<MatchingModel>>> weightSizePositions, bool isMatched)
+        private static string ModelMatching(OrderRow order,IOrderedQueryable<KeyValuePair<KeyValuePair<string, short>, List<MatchingModel>>> weightSizePositions, bool isMatched)
         {
             Dictionary<KeyValuePair<string, short>, Dictionary<string, decimal>> modelOffsetList = new Dictionary<KeyValuePair<string, short>, Dictionary<string, decimal>>();
 
             foreach (var item in weightSizePositions)
             {
-                var size = order.Value.FirstOrDefault(f => f.Position == item.Key.Key).Size;
+                var size = order.SizeRules.FirstOrDefault(f => f.Position == item.Key.Key).Size;
 
                 if (isMatched)
                 {
