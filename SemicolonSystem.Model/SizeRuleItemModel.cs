@@ -1,7 +1,7 @@
 ﻿
 namespace SemicolonSystem.Model
 {
-    public class SizeRuleModel
+    public class SizeRuleItemModel
     {
         public string Model { get; set; }
         public string Position { get; set; }

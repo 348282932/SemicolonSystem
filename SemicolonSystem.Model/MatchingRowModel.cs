@@ -11,5 +11,7 @@ namespace SemicolonSystem.Model
         public string Model { get; set; }
 
         public MatchingLevel MatchingLevel { get; set; }
+
+        public string SheetName { get; set; }
     }
 }

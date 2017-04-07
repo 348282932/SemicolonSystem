@@ -344,6 +344,7 @@
 		<row><td>ICSharpCode.SharpZipLib.dll</td><td>{6870D063-EC0B-45CD-A665-1114049BEA89}</td><td>INSTALLDIR</td><td>2</td><td/><td>icsharpcode.sharpziplib.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT</td><td>{EEE31D39-C26B-48B3-ADE1-529A6F3ADEE3}</td><td>INSTALLDIR</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT1</td><td>{C40B64EA-60E5-475E-9CEE-5978BEEF4FD9}</td><td>TEMPLATE</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT2</td><td>{D1D3B3C2-79E4-4EEA-B71E-E25A2E2D662A}</td><td>IMAGES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>IS_ININSTALL_SHORTCUT</td><td>{375506B2-6923-43E6-A6B5-FC67F9300CF4}</td><td>INSTALLDIR</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>NPOI.OOXML.dll</td><td>{05175548-316F-492B-A28B-DDEA30738AAE}</td><td>INSTALLDIR</td><td>2</td><td/><td>npoi.ooxml.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>NPOI.OpenXml4Net.dll</td><td>{FFBAB78E-9DCB-400E-90A8-A00613E57511}</td><td>INSTALLDIR</td><td>2</td><td/><td>npoi.openxml4net.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
@@ -1064,10 +1065,12 @@
 	<table name="CreateFolder">
 		<col key="yes" def="s72">Directory_</col>
 		<col key="yes" def="s72">Component_</col>
+		<row><td>IMAGES</td><td>ISX_DEFAULTCOMPONENT2</td></row>
 		<row><td>INSTALLDIR</td><td>Component</td></row>
 		<row><td>INSTALLDIR</td><td>ICSharpCode.SharpZipLib.dll</td></row>
 		<row><td>INSTALLDIR</td><td>ISX_DEFAULTCOMPONENT</td></row>
 		<row><td>INSTALLDIR</td><td>ISX_DEFAULTCOMPONENT1</td></row>
+		<row><td>INSTALLDIR</td><td>ISX_DEFAULTCOMPONENT2</td></row>
 		<row><td>INSTALLDIR</td><td>IS_ININSTALL_SHORTCUT</td></row>
 		<row><td>INSTALLDIR</td><td>NPOI.OOXML.dll</td></row>
 		<row><td>INSTALLDIR</td><td>NPOI.OpenXml4Net.dll</td></row>
@@ -1171,6 +1174,7 @@
 		<row><td>FavoritesFolder</td><td>TARGETDIR</td><td>.:FAVORI~1|Favorites</td><td/><td>0</td><td/></row>
 		<row><td>FontsFolder</td><td>TARGETDIR</td><td>.:Fonts</td><td/><td>0</td><td/></row>
 		<row><td>GlobalAssemblyCache</td><td>TARGETDIR</td><td>.:Global~1|GlobalAssemblyCache</td><td/><td>0</td><td/></row>
+		<row><td>IMAGES</td><td>INSTALLDIR</td><td>Images</td><td/><td>0</td><td/></row>
 		<row><td>INSTALLDIR</td><td>ORANGESEMICOLON</td><td>.</td><td/><td>0</td><td/></row>
 		<row><td>ISCommonFilesFolder</td><td>CommonFilesFolder</td><td>Instal~1|InstallShield</td><td/><td>0</td><td/></row>
 		<row><td>ISMyCompanyDir</td><td>ProgramFilesFolder</td><td>MYCOMP~1|My Company Name</td><td/><td>0</td><td/></row>
@@ -1903,6 +1907,7 @@
 		<row><td>AlwaysInstall</td><td>ICSharpCode.SharpZipLib.dll</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT1</td></row>
+		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT2</td></row>
 		<row><td>AlwaysInstall</td><td>IS_ININSTALL_SHORTCUT</td></row>
 		<row><td>AlwaysInstall</td><td>NPOI.OOXML.dll</td></row>
 		<row><td>AlwaysInstall</td><td>NPOI.OpenXml4Net.dll</td></row>
@@ -1932,6 +1937,7 @@
 		<row><td>File.xlsx</td><td>ISX_DEFAULTCOMPONENT1</td><td>订单模~1.XLS|订单模版.xlsx</td><td>0</td><td/><td/><td/><td>1</td><td>F:\工作文件\项目\SemicolonSystem\SemicolonSystem.Show\Template\订单模版.xlsx</td><td>1</td><td/></row>
 		<row><td>File.xlsx1</td><td>ISX_DEFAULTCOMPONENT1</td><td>规则模~1.XLS|规则模版.xlsx</td><td>0</td><td/><td/><td/><td>1</td><td>F:\工作文件\项目\SemicolonSystem\SemicolonSystem.Show\Template\规则模版.xlsx</td><td>1</td><td/></row>
 		<row><td>icsharpcode.sharpziplib.dll</td><td>ICSharpCode.SharpZipLib.dll</td><td>ICSHAR~1.DLL|ICSharpCode.SharpZipLib.dll</td><td>0</td><td/><td/><td/><td>1</td><td>F:\工作文件\项目\SemicolonSystem\SemicolonSystem.Show\bin\x86\Release\ICSharpCode.SharpZipLib.dll</td><td>1</td><td/></row>
+		<row><td>loading.gif</td><td>ISX_DEFAULTCOMPONENT2</td><td>Loading.gif</td><td>0</td><td/><td/><td/><td>1</td><td>F:\工作文件\项目\SemicolonSystem\SemicolonSystem.Show\Images\Loading.gif</td><td>1</td><td/></row>
 		<row><td>newtonsoft.json.dll</td><td>Newtonsoft.Json.dll</td><td>NEWTON~1.DLL|Newtonsoft.Json.dll</td><td>0</td><td/><td/><td/><td>1</td><td>F:\工作文件\项目\SemicolonSystem\SemicolonSystem.Show\bin\x86\Release\Newtonsoft.Json.dll</td><td>1</td><td/></row>
 		<row><td>newtonsoft.json.xml</td><td>ISX_DEFAULTCOMPONENT</td><td>NEWTON~1.XML|Newtonsoft.Json.xml</td><td>0</td><td/><td/><td/><td>1</td><td>F:\工作文件\项目\SemicolonSystem\SemicolonSystem.Show\bin\x86\Release\Newtonsoft.Json.xml</td><td>1</td><td/></row>
 		<row><td>npoi.dll</td><td>NPOI.dll</td><td>NPOI.dll</td><td>0</td><td/><td/><td/><td>1</td><td>F:\工作文件\项目\SemicolonSystem\SemicolonSystem.Show\bin\x86\Release\NPOI.dll</td><td>1</td><td/></row>
@@ -2099,6 +2105,7 @@
 		<row><td>ICSharpCode.SharpZipLib.dll</td><td/><td/><td>_8401CF5B_C63D_465F_8A9E_9A0E6D3C02DB_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT</td><td/><td/><td>_9146A37D_C1FC_4E0B_B369_A7D2A73F7A28_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT1</td><td/><td/><td>_B199BA10_D96A_4D7A_8599_87B4D7D0CE2D_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT2</td><td/><td/><td>_508A145C_8466_408D_9E51_A406FE943B12_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>IS_ININSTALL_SHORTCUT</td><td/><td/><td>_6BDA348F_4449_44FE_9697_45C20ECBB77A_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>NPOI.OOXML.dll</td><td/><td/><td>_BBA120E6_F0C4_444E_BDCA_0760B6441738_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>NPOI.OpenXml4Net.dll</td><td/><td/><td>_89FD9856_882E_45A1_A6C9_95CD44ED454B_FILTER</td><td/><td/><td/><td/></row>
@@ -3533,7 +3540,7 @@
 		<row><td>IDS_SHORTCUT_DISPLAY_NAME16</td><td>1033</td><td/><td>0</td><td/><td>698711665</td></row>
 		<row><td>IDS_SHORTCUT_DISPLAY_NAME16</td><td>2052</td><td>LAUNCH~1.EXE|Launch SemicolonSystem.Show.vshost.exe</td><td>0</td><td/><td>698711665</td></row>
 		<row><td>IDS_SHORTCUT_DISPLAY_NAME17</td><td>1033</td><td/><td>0</td><td/><td>698713777</td></row>
-		<row><td>IDS_SHORTCUT_DISPLAY_NAME17</td><td>2052</td><td>桔子分号</td><td>0</td><td/><td>698726065</td></row>
+		<row><td>IDS_SHORTCUT_DISPLAY_NAME17</td><td>2052</td><td>桔子归号</td><td>0</td><td/><td>572903511</td></row>
 		<row><td>IDS_SHORTCUT_DISPLAY_NAME18</td><td>1033</td><td/><td>0</td><td/><td>698713777</td></row>
 		<row><td>IDS_SHORTCUT_DISPLAY_NAME18</td><td>2052</td><td>LAUNCH~1.EXE|Launch SemicolonSystem.Show.vshost.exe</td><td>0</td><td/><td>698713777</td></row>
 		<row><td>IDS_SHORTCUT_DISPLAY_NAME2</td><td>1033</td><td/><td>0</td><td/><td>296063145</td></row>
@@ -4502,9 +4509,9 @@ QwBEAF8AUgBPAE0AAQBFAHgAcAByAGUAcwBzAA==
 		<row><td>PROGMSG_IIS_ROLLBACKAPPPOOLS</td><td>##IDS_PROGMSG_IIS_ROLLBACKAPPPOOLS##</td><td/></row>
 		<row><td>PROGMSG_IIS_ROLLBACKVROOTS</td><td>##IDS_PROGMSG_IIS_ROLLBACKVROOTS##</td><td/></row>
 		<row><td>PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS</td><td>##IDS_PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS##</td><td/></row>
-		<row><td>ProductCode</td><td>{C4674716-CED7-4EC0-9990-0CEBEB412A5F}</td><td/></row>
-		<row><td>ProductName</td><td>桔子分号</td><td/></row>
-		<row><td>ProductVersion</td><td>1.3</td><td/></row>
+		<row><td>ProductCode</td><td>{B0FE5FD0-A693-4259-B021-13E3B5B71F67}</td><td/></row>
+		<row><td>ProductName</td><td>桔子归号</td><td/></row>
+		<row><td>ProductVersion</td><td>1.1</td><td/></row>
 		<row><td>ProgressType0</td><td>install</td><td/></row>
 		<row><td>ProgressType1</td><td>Installing</td><td/></row>
 		<row><td>ProgressType2</td><td>installed</td><td/></row>

@@ -29,7 +29,7 @@ namespace SemicolonSystem.Business
                 return new DataResult(ex.Message);
             }
 
-            List<SizeRuleModel> sizeList = new List<SizeRuleModel>();
+            List<SizeRuleItemModel> sizeList = new List<SizeRuleItemModel>();
 
             if (tab == null || tab.Rows.Count == 0 || tab.Columns.Count == 0)
             {
@@ -47,7 +47,7 @@ namespace SemicolonSystem.Business
                 {
                     for (int j = 1; j < tab.Columns.Count; j++)
                     {
-                        sizeList.Add(new SizeRuleModel
+                        sizeList.Add(new SizeRuleItemModel
                         {
                             Model = tab.Rows[i][0].ToString().Trim(),
                             Position = tab.Columns[j].ColumnName.Trim(),
@@ -65,7 +65,7 @@ namespace SemicolonSystem.Business
                 return new DataResult("导入 Excel 格式不正确！请按照模版导入！");
             }
 
-            Cache<List<SizeRuleModel>> cache = new Cache<List<SizeRuleModel>>();
+            Cache<List<SizeRuleItemModel>> cache = new Cache<List<SizeRuleItemModel>>();
 
             dataResult = cache.SetCache("SizeRule", sizeList);
 

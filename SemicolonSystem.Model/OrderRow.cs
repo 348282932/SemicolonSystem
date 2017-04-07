@@ -11,6 +11,6 @@ namespace SemicolonSystem.Model
 
         public string Sex { get; set; }
 
-        public List<SizeRuleModel> SizeRules { get; set; }
+        public List<SizeRuleItemModel> SizeRules { get; set; }
     }
 }

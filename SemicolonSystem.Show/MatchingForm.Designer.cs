@@ -49,11 +49,11 @@
             // 
             this.lbl_OffsetTitle.AutoSize = true;
             this.lbl_OffsetTitle.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl_OffsetTitle.Location = new System.Drawing.Point(132, 21);
+            this.lbl_OffsetTitle.Location = new System.Drawing.Point(128, 21);
             this.lbl_OffsetTitle.Name = "lbl_OffsetTitle";
-            this.lbl_OffsetTitle.Size = new System.Drawing.Size(44, 12);
+            this.lbl_OffsetTitle.Size = new System.Drawing.Size(57, 12);
             this.lbl_OffsetTitle.TabIndex = 0;
-            this.lbl_OffsetTitle.Text = "偏移量";
+            this.lbl_OffsetTitle.Text = "归号范围";
             // 
             // lbl_PriorityLevel
             // 

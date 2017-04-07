@@ -38,11 +38,13 @@
             this.lbl_DownRule = new System.Windows.Forms.Label();
             this.lbl_DownOrder = new System.Windows.Forms.Label();
             this.saveTemplateFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.btn_Summary = new System.Windows.Forms.Button();
+            this.openFilesDialog = new System.Windows.Forms.OpenFileDialog();
             this.SuspendLayout();
             // 
             // btn_ImportRule
             // 
-            this.btn_ImportRule.Location = new System.Drawing.Point(103, 27);
+            this.btn_ImportRule.Location = new System.Drawing.Point(98, 23);
             this.btn_ImportRule.Name = "btn_ImportRule";
             this.btn_ImportRule.Size = new System.Drawing.Size(101, 50);
             this.btn_ImportRule.TabIndex = 0;
@@ -58,7 +60,7 @@
             // 
             // btn_ImportOrder
             // 
-            this.btn_ImportOrder.Location = new System.Drawing.Point(103, 98);
+            this.btn_ImportOrder.Location = new System.Drawing.Point(98, 98);
             this.btn_ImportOrder.Name = "btn_ImportOrder";
             this.btn_ImportOrder.Size = new System.Drawing.Size(101, 50);
             this.btn_ImportOrder.TabIndex = 1;
@@ -68,7 +70,7 @@
             // 
             // btn_SetWeight
             // 
-            this.btn_SetWeight.Location = new System.Drawing.Point(103, 169);
+            this.btn_SetWeight.Location = new System.Drawing.Point(98, 172);
             this.btn_SetWeight.Name = "btn_SetWeight";
             this.btn_SetWeight.Size = new System.Drawing.Size(101, 50);
             this.btn_SetWeight.TabIndex = 2;
@@ -78,7 +80,7 @@
             // 
             // btn_Matching
             // 
-            this.btn_Matching.Location = new System.Drawing.Point(103, 240);
+            this.btn_Matching.Location = new System.Drawing.Point(98, 248);
             this.btn_Matching.Name = "btn_Matching";
             this.btn_Matching.Size = new System.Drawing.Size(101, 50);
             this.btn_Matching.TabIndex = 3;
@@ -97,7 +99,7 @@
             this.lbl_DownRule.BackColor = System.Drawing.SystemColors.Control;
             this.lbl_DownRule.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lbl_DownRule.ForeColor = System.Drawing.Color.Blue;
-            this.lbl_DownRule.Location = new System.Drawing.Point(13, 311);
+            this.lbl_DownRule.Location = new System.Drawing.Point(12, 395);
             this.lbl_DownRule.Name = "lbl_DownRule";
             this.lbl_DownRule.Size = new System.Drawing.Size(77, 12);
             this.lbl_DownRule.TabIndex = 4;
@@ -110,7 +112,7 @@
             this.lbl_DownOrder.BackColor = System.Drawing.SystemColors.Control;
             this.lbl_DownOrder.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lbl_DownOrder.ForeColor = System.Drawing.Color.Blue;
-            this.lbl_DownOrder.Location = new System.Drawing.Point(214, 311);
+            this.lbl_DownOrder.Location = new System.Drawing.Point(211, 395);
             this.lbl_DownOrder.Name = "lbl_DownOrder";
             this.lbl_DownOrder.Size = new System.Drawing.Size(77, 12);
             this.lbl_DownOrder.TabIndex = 4;
@@ -122,11 +124,27 @@
             this.saveTemplateFileDialog.Filter = "*.xls|*.xlsx";
             this.saveTemplateFileDialog.FilterIndex = 0;
             // 
+            // btn_Summary
+            // 
+            this.btn_Summary.Location = new System.Drawing.Point(98, 326);
+            this.btn_Summary.Name = "btn_Summary";
+            this.btn_Summary.Size = new System.Drawing.Size(101, 50);
+            this.btn_Summary.TabIndex = 5;
+            this.btn_Summary.Text = "汇总结果";
+            this.btn_Summary.UseVisualStyleBackColor = true;
+            this.btn_Summary.Click += new System.EventHandler(this.btn_Summary_Click);
+            // 
+            // openFilesDialog
+            // 
+            this.openFilesDialog.FileName = "openFilesDialog";
+            this.openFilesDialog.Multiselect = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(303, 335);
+            this.ClientSize = new System.Drawing.Size(305, 416);
+            this.Controls.Add(this.btn_Summary);
             this.Controls.Add(this.lbl_DownOrder);
             this.Controls.Add(this.lbl_DownRule);
             this.Controls.Add(this.btn_Matching);
@@ -135,7 +153,7 @@
             this.Controls.Add(this.btn_ImportRule);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
-            this.Text = "智能分号系统";
+            this.Text = "智能归号系统";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -152,5 +170,7 @@
         private System.Windows.Forms.Label lbl_DownOrder;
         private System.Windows.Forms.SaveFileDialog saveTemplateFileDialog;
         public System.Windows.Forms.Button btn_ImportOrder;
+        private System.Windows.Forms.Button btn_Summary;
+        private System.Windows.Forms.OpenFileDialog openFilesDialog;
     }
 }

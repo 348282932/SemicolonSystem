@@ -281,6 +281,8 @@ namespace SemicolonSystem.Common
 
                     ISheet sheet = xssfworkbook.GetSheetAt(index);
 
+                    dt.TableName = sheet.SheetName;
+
                     // 表头
 
                     IRow header = sheet.GetRow(sheet.FirstRowNum + marginHader);

@@ -88,6 +88,7 @@
     <Compile Include="DataResult.cs" />
     <Compile Include="Encryption.cs" />
     <Compile Include="ExcelHelper.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
