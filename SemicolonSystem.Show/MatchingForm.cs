@@ -9,8 +9,12 @@ namespace SemicolonSystem.Show
 {
     public partial class MatchingForm : Form
     {
-        public MatchingForm()
+        private static string _sizeRuleName;
+
+        public MatchingForm(string sizeRuleName)
         {
+            _sizeRuleName = sizeRuleName;
+
             InitializeComponent();
         }
 
@@ -20,7 +24,7 @@ namespace SemicolonSystem.Show
 
             try
             {
-                dataResult = OrderService.GetWeightConfig();
+                dataResult = OrderService.GetWeightConfig(_sizeRuleName);
 
                 if (!dataResult.IsSuccess)
                 {
@@ -62,33 +66,66 @@ namespace SemicolonSystem.Show
 
                 lbl_Position.Name = "lbl_Position";
 
+
+                Label lbl_Offset_negative = new Label();
+
+                lbl_Offset_negative.Text = "-";
+
+                lbl_Offset_negative.Top = top + 3;
+
+                lbl_Offset_negative.Left = 120;
+
+                lbl_Offset_negative.Width = 15;
+
+                lbl_Offset_negative.Name = "lbl_Offset_negative";
+
+
+                TextBox tbx_Offset_left = new TextBox();
+
+                tbx_Offset_left.Text = item.OffsetLeft.ToString();
+
+                tbx_Offset_left.Top = top;
+
+                tbx_Offset_left.Left = 137;
+
+                tbx_Offset_left.Width = 40;
+
+                tbx_Offset_left.Name = "tbx_Offset_left";
+
+                tbx_Offset_left.LostFocus += tbx_Offset_left_LostFocus;
+
+                tbx_Offset_left.KeyPress += tbx_Offset_left_KeyPress;
+
+
                 Label lbl_Offset = new Label();
 
-                lbl_Offset.Text = "±";
+                lbl_Offset.Text = "~";
 
                 lbl_Offset.Top = top + 3;
 
-                lbl_Offset.Left = 127;
+                lbl_Offset.Left = 180;
 
                 lbl_Offset.Width = 15;
 
                 lbl_Offset.Name = "lbl_Offset";
 
-                TextBox tbx_Offset = new TextBox();
 
-                tbx_Offset.Text = item.Offset.ToString();
+                TextBox tbx_Offset_right = new TextBox();
 
-                tbx_Offset.Top = top;
+                tbx_Offset_right.Text = item.OffsetRight.ToString();
 
-                tbx_Offset.Left = 145;
+                tbx_Offset_right.Top = top;
 
-                tbx_Offset.Width = 40;
+                tbx_Offset_right.Left = 198;
 
-                tbx_Offset.Name = "tbx_Offset";
+                tbx_Offset_right.Width = 40;
 
-                tbx_Offset.LostFocus += tbx_Offset_LostFocus;
+                tbx_Offset_right.Name = "tbx_Offset_right";
 
-                tbx_Offset.KeyPress += tbx_Offset_KeyPress;
+                tbx_Offset_right.LostFocus += tbx_Offset_right_LostFocus;
+
+                tbx_Offset_right.KeyPress += tbx_Offset_right_KeyPress;
+
 
                 ComboBox cbx_PriorityLevel = new ComboBox();
 
@@ -102,7 +139,7 @@ namespace SemicolonSystem.Show
 
                 cbx_PriorityLevel.Top = top;
 
-                cbx_PriorityLevel.Left = 224;
+                cbx_PriorityLevel.Left = 290;
 
                 cbx_PriorityLevel.Width = 40;
 
@@ -110,9 +147,13 @@ namespace SemicolonSystem.Show
 
                 Controls.Add(lbl_Position);
 
+                Controls.Add(lbl_Offset_negative);
+
+                Controls.Add(tbx_Offset_left);
+
                 Controls.Add(lbl_Offset);
 
-                Controls.Add(tbx_Offset);
+                Controls.Add(tbx_Offset_right);
 
                 Controls.Add(cbx_PriorityLevel);
 
@@ -126,7 +167,15 @@ namespace SemicolonSystem.Show
             btn_confirm.Top = top + 10;
         }
 
-        private void tbx_Offset_LostFocus(object sender, EventArgs e)
+        private void tbx_Offset_right_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar != 8 && !char.IsDigit(e.KeyChar) && e.KeyChar != 46)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void tbx_Offset_right_LostFocus(object sender, EventArgs e)
         {
             TextBox tbx = (TextBox)sender;
 
@@ -136,7 +185,17 @@ namespace SemicolonSystem.Show
             }
         }
 
-        private void tbx_Offset_KeyPress(object sender, KeyPressEventArgs e)
+        private void tbx_Offset_left_LostFocus(object sender, EventArgs e)
+        {
+            TextBox tbx = (TextBox)sender;
+
+            if (string.IsNullOrWhiteSpace(tbx.Text))
+            {
+                tbx.Text = "0";
+            }
+        }
+
+        private void tbx_Offset_left_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar != 8 && !char.IsDigit(e.KeyChar) && e.KeyChar != 46)
             {
@@ -150,7 +209,9 @@ namespace SemicolonSystem.Show
 
             var positionArr = Controls.Find("lbl_Position", false);
 
-            var offsetArr = Controls.Find("tbx_Offset", false);
+            var offsetLeftArr = Controls.Find("tbx_Offset_left", false);
+
+            var offsetRightArr = Controls.Find("tbx_Offset_right", false);
 
             var priorityLevelArr = Controls.Find("cbx_PriorityLevel", false);
 
@@ -158,17 +219,20 @@ namespace SemicolonSystem.Show
             {
                 var priorityLevel = Convert.ToInt16(((ComboBox)priorityLevelArr[i]).SelectedValue);
 
-                var offset = Convert.ToDecimal(offsetArr[i].Text.Trim());
+                var offsetLeft = Convert.ToDecimal(offsetLeftArr[i].Text.Trim());
+
+                var offsetRight = Convert.ToDecimal(offsetRightArr[i].Text.Trim());
 
                 list.Add(new WeightModel
                 {
                     Position = positionArr[i].Text.ToString(),
-                    Offset = offset,
+                    OffsetLeft = offsetLeft,
+                    OffsetRight = offsetRight,
                     PriorityLevel = priorityLevel
                 });
             }
 
-            var dataResult = OrderService.ImportWeightCofig(list);
+            var dataResult = OrderService.ImportWeightCofig(list, _sizeRuleName);
 
             if (dataResult.IsSuccess)
             {

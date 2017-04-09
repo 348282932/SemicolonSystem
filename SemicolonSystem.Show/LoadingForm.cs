@@ -173,7 +173,7 @@ namespace SemicolonSystem.Show
                 {
                     this.workAction(arg);
                 },
-                            this.workActionArg);
+                this.workActionArg);
 
                 workTask.Start();
                 Task.WaitAll(workTask);

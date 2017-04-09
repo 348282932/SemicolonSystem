@@ -31,7 +31,7 @@ namespace SemicolonSystem.Show
 
             DialogResult dialogResult = openFileDialog.ShowDialog();
 
-            if(dialogResult != DialogResult.OK && dialogResult != DialogResult.Yes)
+            if (dialogResult != DialogResult.OK && dialogResult != DialogResult.Yes)
             {
                 return;
             }
@@ -73,11 +73,33 @@ namespace SemicolonSystem.Show
         /// <param name="e"></param>
         private void btn_SetWeight_Click(object sender, EventArgs e)
         {
-            MatchingForm matchingForm = new MatchingForm();
+            var ruleCache = new Cache<List<SizeRuleModel>>();
 
-            matchingForm.ShowDialog();
+            var ruletDataResult = ruleCache.GetCache("SizeRule");
+
+            if (!ruletDataResult.IsSuccess)
+            {
+                MessageBox.Show("请导入规则信息！");
+
+                return;
+            }
+
+            if (ruletDataResult.Data.Count == 1)
+            {
+                var cache = new Cache<List<WeightModel>>();
+
+                MatchingForm matchingForm = new MatchingForm(ruletDataResult.Data[0].Name);
+
+                matchingForm.ShowDialog();
+            }
+            else
+            {
+                MatchingSettingForm matchingForm = new MatchingSettingForm();
+
+                matchingForm.ShowDialog();
+            }
         }
-
+        
         /// <summary>
         /// 匹配
         /// </summary>
@@ -85,272 +107,52 @@ namespace SemicolonSystem.Show
         /// <param name="e"></param>
         private void btn_Matching_Click(object sender, EventArgs e)
         {
-            var tabs = new List<DataTable>();
-
-            ShowLoadingForm("正在匹配，请稍等片刻！", this, (obj) => 
+            try
             {
-                var dataResult = OrderService.GetMatchingResult();
+                var tabs = new List<DataTable>();
 
-                if (!dataResult.IsSuccess)
+                var isSuccess = true;
+
+                ShowLoadingForm("正在匹配，请稍等片刻！", this, (obj) =>
                 {
-                    MessageBox.Show("匹配失败！失败原因：" + dataResult.Message);
-                }
+                    var dataResult = Matching();
 
-                var isHasSex = false;
-
-                foreach (var item in dataResult.Data)
-                {
-                    isHasSex = item.MatchingRows.Any(a => !string.IsNullOrWhiteSpace(a.Sex));
-
-                    DataTable dt = new DataTable();
-
-                    dt.TableName = item.SheetName;
-
-                    var sumResults = Sort(item.MatchingRows.GroupBy(g => g.Model).Select(s => new KeyValuePair<string, int>(s.Key, s.Count())).ToList());
-
-                    if (isHasSex)
+                    if (!dataResult.IsSuccess)
                     {
-                        dt.Columns.Add(new DataColumn("姓名(男)"));
+                        MessageBox.Show("匹配失败！失败原因：" + dataResult.Message);
 
-                        dt.Columns.Add(new DataColumn("结果(男)"));
+                        isSuccess = false;
 
-                        dt.Columns.Add(new DataColumn("匹配程度(男)"));
-
-                        dt.Columns.Add(new DataColumn("号型(男)"));
-
-                        dt.Columns.Add(new DataColumn("数量(男)"));
-
-                        dt.Columns.Add(new DataColumn());
-
-                        dt.Columns.Add(new DataColumn("姓名(女)"));
-
-                        dt.Columns.Add(new DataColumn("结果(女)"));
-
-                        dt.Columns.Add(new DataColumn("匹配程度(女)"));
-
-                        dt.Columns.Add(new DataColumn("号型(女)"));
-
-                        dt.Columns.Add(new DataColumn("数量(女)"));
-
-                        dt.Columns.Add(new DataColumn());
-
-                        dt.Columns.Add(new DataColumn("汇总"));
-
-                        dt.Columns.Add(new DataColumn("号型"));
-
-                        dt.Columns.Add(new DataColumn("数量"));
-
-                        var boyList = item.MatchingRows.Where(w => w.Sex.Contains("男")).ToList();
-
-                        var girlList = item.MatchingRows.Where(w => w.Sex.Contains("女")).ToList();
-
-                        var sumBoyResults = Sort(boyList.GroupBy(g => g.Model).Select(s => new KeyValuePair<string, int>(s.Key, s.Count())).ToList());
-
-                        var sumGirlResults = Sort(girlList.GroupBy(g => g.Model).Select(s => new KeyValuePair<string, int>(s.Key, s.Count())).ToList());
-
-                        var count = Math.Max(boyList.Count, girlList.Count);
-
-                        for (int i = 0; i < count; i++)
-                        {
-                            dt.Rows.Add(dt.NewRow());
-                        }
-
-                        for (int i = 0; i < boyList.Count; i++)
-                        {
-                            dt.Rows[i][0] = boyList[i].Name;
-
-                            dt.Rows[i][1] = boyList[i].Model;
-
-                            dt.Rows[i][2] = boyList[i].MatchingLevel.ToString();
-                        }
-
-                        for (int i = 0; i < sumBoyResults.Count; i++)
-                        {
-                            dt.Rows[i][3] = sumBoyResults[i].Key;
-
-                            dt.Rows[i][4] = sumBoyResults[i].Value;
-                        }
-
-                        for (int i = 0; i < girlList.Count; i++)
-                        {
-                            dt.Rows[i][6] = girlList[i].Name;
-
-                            dt.Rows[i][7] = girlList[i].Model;
-
-                            dt.Rows[i][8] = girlList[i].MatchingLevel.ToString();
-                        }
-
-                        for (int i = 0; i < sumGirlResults.Count; i++)
-                        {
-                            dt.Rows[i][9] = sumGirlResults[i].Key;
-
-                            dt.Rows[i][10] = sumGirlResults[i].Value;
-                        }
-
-                        for (int i = 0; i < sumResults.Count; i++)
-                        {
-
-                            dt.Rows[i][13] = sumResults[i].Key;
-
-                            dt.Rows[i][14] = sumResults[i].Value;
-                        }
-                    }
-                    else
-                    {
-                        dt.Columns.Add(new DataColumn("姓名"));
-
-                        dt.Columns.Add(new DataColumn("结果"));
-
-                        dt.Columns.Add(new DataColumn("匹配程度"));
-
-                        dt.Columns.Add(new DataColumn("号型"));
-
-                        dt.Columns.Add(new DataColumn("数量"));
-
-                        for (int i = 0; i < item.MatchingRows.Count; i++)
-                        {
-                            dt.Rows.Add(dt.NewRow());
-
-                            dt.Rows[i][0] = item.MatchingRows[i].Name;
-
-                            dt.Rows[i][1] = item.MatchingRows[i].Model;
-
-                            dt.Rows[i][2] = item.MatchingRows[i].MatchingLevel.ToString();
-                        }
-
-                        for (int i = 0; i < sumResults.Count; i++)
-                        {
-
-                            dt.Rows[i][3] = sumResults[i].Key;
-
-                            dt.Rows[i][4] = sumResults[i].Value;
-                        }
+                        return;
                     }
 
-                    tabs.Add(dt);
-                }
+                    tabs = dataResult.Data;
+                });
 
-                DataTable sumTabA = new DataTable();
-
-                sumTabA.TableName = "汇总1";
-
-                sumTabA.Columns.Add(new DataColumn("汇总(男)"));
-
-                sumTabA.Columns.Add(new DataColumn("号型(男)"));
-
-                sumTabA.Columns.Add(new DataColumn("数量(男)"));
-
-                sumTabA.Columns.Add(new DataColumn());
-
-                sumTabA.Columns.Add(new DataColumn("汇总(女)"));
-
-                sumTabA.Columns.Add(new DataColumn("号型(女)"));
-
-                sumTabA.Columns.Add(new DataColumn("数量(女)"));
-
-                sumTabA.Columns.Add(new DataColumn());
-
-                sumTabA.Columns.Add(new DataColumn("总汇总"));
-
-                sumTabA.Columns.Add(new DataColumn("号型"));
-
-                sumTabA.Columns.Add(new DataColumn("数量"));
-
-                List<MatchingRowModel> sumData = new List<MatchingRowModel>();
-
-                foreach (var item in dataResult.Data)
+                if (!isSuccess)
                 {
-                    sumData.AddRange(item.MatchingRows);
+                    return;
                 }
 
-                var boyDataList = sumData.Where(w => w.Sex.Contains("男")).ToList();
+                saveResultFileDialog.FileName = "匹配结果";
 
-                var girlDataList = sumData.Where(w => w.Sex.Contains("女")).ToList();
+                DialogResult dialogResult = saveResultFileDialog.ShowDialog();
 
-                var sumDataBoyResults = Sort(boyDataList.GroupBy(g => g.Model).Select(s => new KeyValuePair<string, int>(s.Key, s.Count())).ToList());
-
-                var sumDataGirlResults = Sort(girlDataList.GroupBy(g => g.Model).Select(s => new KeyValuePair<string, int>(s.Key, s.Count())).ToList());
-
-                var sumDataResults = Sort(sumData.GroupBy(g => g.Model).Select(s => new KeyValuePair<string, int>(s.Key, s.Count())).ToList());
-
-                for (int i = 0; i < sumDataResults.Count; i++)
+                if (dialogResult != DialogResult.OK && dialogResult != DialogResult.Yes)
                 {
-                    sumTabA.Rows.Add(sumTabA.NewRow());
+                    return;
                 }
 
-                for (int i = 0; i < sumDataBoyResults.Count; i++)
-                {
-                    sumTabA.Rows[i][1] = sumDataBoyResults[i].Key;
+                string filePath = saveResultFileDialog.FileName;
 
-                    sumTabA.Rows[i][2] = sumDataBoyResults[i].Value;
-                }
+                ExcelHelper.TableToExcelForXLS(tabs, filePath);
 
-                for (int i = 0; i < sumDataGirlResults.Count; i++)
-                {
-                    sumTabA.Rows[i][5] = sumDataGirlResults[i].Key;
-
-                    sumTabA.Rows[i][6] = sumDataGirlResults[i].Value;
-                }
-
-                for (int i = 0; i < sumDataResults.Count; i++)
-                {
-                    sumTabA.Rows[i][9] = sumDataResults[i].Key;
-
-                    sumTabA.Rows[i][10] = sumDataResults[i].Value;
-                }
-
-                tabs.Add(sumTabA);
-
-                DataTable sumTabB = new DataTable();
-
-                sumTabB.TableName = "汇总2";
-
-                var maxRowCount = sumDataResults.Max(m => m.Value);
-
-                for (int i = 0; i < maxRowCount; i++)
-                {
-                    sumTabB.Rows.Add(sumTabB.NewRow());
-                }
-
-                for (int i = 0; i < sumDataResults.Count; i++)
-                {
-                    sumTabB.Columns.Add(new DataColumn(string.Format("号型({0})", sumDataResults[i].Key)));
-
-                    sumTabB.Columns.Add(new DataColumn(string.Format("姓名({0})", sumDataResults[i].Key)));
-
-                    sumTabB.Columns.Add(new DataColumn(string.Format("年级({0})", sumDataResults[i].Key)));
-
-                    sumTabB.Columns.Add(new DataColumn());
-
-                    var sumList = sumData.Where(w => w.Model == sumDataResults[i].Key).Select(s => new { s.Model, s.SheetName, s.Name }).ToList();
-
-                    for (int j = 0; j < sumList.Count; j++)
-                    {
-                        sumTabB.Rows[j][i * 4] = sumList[j].Model;
-
-                        sumTabB.Rows[j][i * 4 + 1] = sumList[j].Name;
-
-                        sumTabB.Rows[j][i * 4 + 2] = sumList[j].SheetName;
-                    }
-                }
-
-                tabs.Add(sumTabB);
-            });
-
-            saveResultFileDialog.FileName = "匹配结果";
-
-            DialogResult dialogResult = saveResultFileDialog.ShowDialog();
-
-            if (dialogResult != DialogResult.OK && dialogResult != DialogResult.Yes)
-            {
-                return;
+                MessageBox.Show("匹配成功！");
             }
-
-            string filePath = saveResultFileDialog.FileName;
-
-            ExcelHelper.TableToExcelForXLS(tabs, filePath);
-
-            MessageBox.Show("匹配成功！");
+            catch (Exception ex)
+            {
+                MessageBox.Show(string.Format("匹配失败！失败原因{0}，请仔细检查表格格式是否正确！", ex.Message));
+            }
         }
 
         /// <summary>
@@ -374,7 +176,7 @@ namespace SemicolonSystem.Show
             string path = string.Empty;
 
 #if DEBUG
-            path =Application.StartupPath.Substring(0, Application.StartupPath.LastIndexOf("bin")) + "Template\\规则模版.xlsx";
+            path = Application.StartupPath.Substring(0, Application.StartupPath.LastIndexOf("bin")) + "Template\\规则模版.xlsx";
 #else
             path = Global.InstallPath + "\\Template\\规则模版.xlsx";
 #endif
@@ -388,7 +190,7 @@ namespace SemicolonSystem.Show
 
                 File.Copy(path, filePath);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(String.Format("获取规则模板异常！异常原因：{0}，请尝试在该路径下取出模版！{1}{2}", ex.Message, Environment.NewLine, path));
 
@@ -448,9 +250,9 @@ namespace SemicolonSystem.Show
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        private List<KeyValuePair<string, int>> Sort(List<KeyValuePair<string, int>> data)
+        private List<KeyValuePair<string, int>> Sort(List<KeyValuePair<string, int>> data, string sizeRule)
         {
-            var ruleCache = new Cache<List<SizeRuleItemModel>>();
+            var ruleCache = new Cache<List<SizeRuleModel>>();
 
             var ruleDataResult = ruleCache.GetCache("SizeRule");
 
@@ -459,14 +261,16 @@ namespace SemicolonSystem.Show
                 MessageBox.Show("请导入规则信息！");
             }
 
-            var models = ruleDataResult.Data.GroupBy(g => g.Model).Select(s => s.Key).ToList();
+            var ruleData = ruleDataResult.Data.FirstOrDefault(w => w.Name == sizeRule);
+
+            var models = ruleData.Items.GroupBy(g => g.Model).Select(s => s.Key).ToList();
 
             var query = from r in models.AsQueryable()
                         join s in data.AsQueryable() on r equals s.Key into l
                         from a in l.DefaultIfEmpty(new KeyValuePair<string, int>(r, 0))
                         select new KeyValuePair<string, int>(r, a.Value);
 
-            return query.Where(w=>w.Value != 0).ToList();
+            return query.Where(w => w.Value != 0).ToList();
         }
 
         /// <summary>
@@ -584,33 +388,48 @@ namespace SemicolonSystem.Show
                 summaryList.AddRange(dataResult.Data);
             }
 
+            var columnNames = summaryList.GroupBy(g => g.RuleName).Select(s => s.Key).ToList();
+
+            var manColumnNames = summaryList.Where(w=>w.Sex == "男").GroupBy(g => g.RuleName).Select(s => s.Key).ToList();
+
+            var womanColumnNames = summaryList.Where(w=>w.Sex == "女").GroupBy(g => g.RuleName).Select(s => s.Key).ToList();
+
             List<DataTable> tabs = new List<DataTable>();
 
             DataTable tab = new DataTable();
 
-            tab.TableName = "结果汇总";
+            tab.TableName = "汇总1";
 
-            tab.Columns.Add(new DataColumn("汇总(男)"));
+            tab.Columns.Add("汇总(男)");
 
-            tab.Columns.Add(new DataColumn("号型(男)"));
+            foreach (var item in manColumnNames)
+            {
+                tab.Columns.Add(string.Format("号型(男)_{0}", item));
 
-            tab.Columns.Add(new DataColumn("数量(男)"));
+                tab.Columns.Add(string.Format("数量(男)_{0}", item));
+            }
 
             tab.Columns.Add(new DataColumn());
 
             tab.Columns.Add(new DataColumn("汇总(女)"));
 
-            tab.Columns.Add(new DataColumn("号型(女)"));
+            foreach (var item in womanColumnNames)
+            {
+                tab.Columns.Add(string.Format("号型(女)_{0}", item));
 
-            tab.Columns.Add(new DataColumn("数量(女)"));
+                tab.Columns.Add(string.Format("数量(女)_{0}", item));
+            }
 
             tab.Columns.Add(new DataColumn());
 
             tab.Columns.Add(new DataColumn("总汇总"));
 
-            tab.Columns.Add(new DataColumn("号型"));
+            foreach (var item in columnNames)
+            {
+                tab.Columns.Add(string.Format("号型_{0}", item));
 
-            tab.Columns.Add(new DataColumn("数量"));
+                tab.Columns.Add(string.Format("数量_{0}", item));
+            }
 
             var rowsCount = summaryList.Count(c => string.IsNullOrWhiteSpace(c.Sex));
 
@@ -621,39 +440,46 @@ namespace SemicolonSystem.Show
 
             if (isSummaryAll)
             {
-                var manList = summaryList
-                .Where(w => w.Sex == "男")
-                .GroupBy(g => g.Model)
-                .Select(s => new
+                foreach (var item in manColumnNames)
                 {
-                    Model = s.Key,
-                    Count = s.Sum(ss => ss.Count)
-                }).ToList();
+                    var manList = summaryList
+                        .Where(w =>w.RuleName == item && w.Sex == "男")
+                        .GroupBy(g => g.Model)
+                        .Select(s => new
+                        {
+                            Model = s.Key,
+                            Count = s.Sum(ss => ss.Count)
+                        }).ToList();
 
-                for (int i = 0; i < manList.Count; i++)
-                {
-                    tab.Rows[i]["号型(男)"] = manList[i].Model;
-                    tab.Rows[i]["数量(男)"] = manList[i].Count;
+                    for (int i = 0; i < manList.Count; i++)
+                    {
+                        tab.Rows[i]["号型(男)_" + item] = manList[i].Model;
+                        tab.Rows[i]["数量(男)_" + item] = manList[i].Count;
+                    }
                 }
 
-                var womanList = summaryList
-                    .Where(w => w.Sex == "女")
-                    .GroupBy(g => g.Model)
-                    .Select(s => new
-                    {
-                        Model = s.Key,
-                        Count = s.Sum(ss => ss.Count)
-                    }).ToList();
-
-                for (int i = 0; i < womanList.Count; i++)
+                foreach (var item in womanColumnNames)
                 {
-                    tab.Rows[i]["号型(女)"] = womanList[i].Model;
-                    tab.Rows[i]["数量(女)"] = womanList[i].Count;
+                    var womanList = summaryList
+                        .Where(w => w.RuleName == item && w.Sex == "女")
+                        .GroupBy(g => g.Model)
+                        .Select(s => new
+                        {
+                            Model = s.Key,
+                            Count = s.Sum(ss => ss.Count)
+                        }).ToList();
+
+                    for (int i = 0; i < womanList.Count; i++)
+                    {
+                        tab.Rows[i]["号型(女)_" + item] = womanList[i].Model;
+                        tab.Rows[i]["数量(女)_" + item] = womanList[i].Count;
+                    }
                 }
             }
-
-            var sumList = summaryList
-                .Where(w => string.IsNullOrWhiteSpace(w.Sex))
+            foreach (var item in columnNames)
+            {
+                var sumList = summaryList
+                .Where(w => w.RuleName == item && string.IsNullOrWhiteSpace(w.Sex))
                 .GroupBy(g => g.Model)
                 .Select(s => new
                 {
@@ -661,10 +487,11 @@ namespace SemicolonSystem.Show
                     Count = s.Sum(ss => ss.Count)
                 }).ToList();
 
-            for (int i = 0; i < sumList.Count; i++)
-            {
-                tab.Rows[i]["号型"] = sumList[i].Model;
-                tab.Rows[i]["数量"] = sumList[i].Count;
+                for (int i = 0; i < sumList.Count; i++)
+                {
+                    tab.Rows[i]["号型_" + item] = sumList[i].Model;
+                    tab.Rows[i]["数量_" + item] = sumList[i].Count;
+                }
             }
 
             tabs.Add(tab);
@@ -683,6 +510,527 @@ namespace SemicolonSystem.Show
             ExcelHelper.TableToExcelForXLS(tabs, filePath);
 
             MessageBox.Show("匹配成功！");
+        }
+
+        /// <summary>
+        /// 匹配
+        /// </summary>
+        /// <returns></returns>
+        private DataResult<List<DataTable>> Matching()
+        {
+            List<DataTable> tabs = new List<DataTable>();
+
+            var dataResult = OrderService.GetMatchingResult();
+
+            if (!dataResult.IsSuccess)
+            {
+                return new DataResult<List<DataTable>>(dataResult.Message);
+            }
+
+            List<MatchingDataModel> listData = new List<MatchingDataModel>();
+
+            var list = dataResult.Data;
+
+            var orderCache = new Cache<List<OrderModel>>();
+
+            var orderDataResult = orderCache.GetCache("Order");
+
+            if (!orderDataResult.IsSuccess)
+            {
+                return new DataResult<List<DataTable>>("请导入订单信息");
+            }
+
+            foreach (var sheet in orderDataResult.Data)
+            {
+                var matchingData = new MatchingDataModel();
+
+                matchingData.SheetName = sheet.SheetName;
+
+                var rows = new List<MatchingDataSheetModel>();
+
+                foreach (var row in sheet.OrderRows)
+                {
+                    List<MatchingDataSheetItemModel> items = new List<MatchingDataSheetItemModel>();
+
+                    var sexList = list.Where(w => w.Sex == row.Sex).ToList();
+
+                    if (sexList == null || sexList.Count == 0)
+                    {
+                        sexList = list.Where(w => string.IsNullOrWhiteSpace(w.Sex)).ToList();
+                    }
+
+                    foreach (var f in sexList)
+                    {
+                        var data = f.Items.FirstOrDefault(w => w.SheetName == sheet.SheetName).MatchingRows.FirstOrDefault(ff => ff.Name == row.Name);
+
+                        if (data == null) continue;
+
+                        items.Add(new MatchingDataSheetItemModel
+                        {
+                            Model = data.Model,
+                            MatchingLevel = data.MatchingLevel,
+                            SizeRuleName = f.SizeRuleName
+                        });
+                    }
+
+                    rows.Add(new MatchingDataSheetModel
+                    {
+                        SheetName = sheet.SheetName,
+                        Name = row.Name,
+                        Sex = row.Sex,
+                        Items = items,
+                        Property1 = row.Property1,
+                        Property2 = row.Property2,
+                        Property3 = row.Property3
+                    });
+                }
+
+                matchingData.Items = rows;
+
+                listData.Add(matchingData);
+            }
+
+            var isHasSex = false;
+
+            foreach (var item in listData)
+            {
+                item.Items = item.Items.OrderBy(o => o.Property1).ThenBy(o => o.Property2).ThenBy(o => o.Property3).ToList();
+
+                isHasSex = item.Items.Any(a => !string.IsNullOrWhiteSpace(a.Sex));
+
+                DataTable dt = new DataTable();
+
+                dt.TableName = item.SheetName;
+
+                var sumResultList = new List<KeyValuePair<string, List<KeyValuePair<string, int>>>>();
+
+                foreach (var model in list)
+                {
+                    var sheetRows = model.Items.FirstOrDefault(f => f.SheetName == item.SheetName).MatchingRows;
+
+                    sumResultList.Add(new KeyValuePair<string, List<KeyValuePair<string, int>>>(model.SizeRuleName, Sort(sheetRows.GroupBy(g => g.Model).Select(s => new KeyValuePair<string, int>(s.Key, s.Count())).ToList(), model.SizeRuleName)));
+                }
+
+                if (isHasSex)
+                {
+                    var manfirstRow = item.Items.FirstOrDefault(f => f.Sex == "男");
+
+                    if (!string.IsNullOrWhiteSpace(manfirstRow.Property1)) dt.Columns.Add("属性一_男");
+
+                    if (!string.IsNullOrWhiteSpace(manfirstRow.Property2)) dt.Columns.Add("属性二_男");
+
+                    if (!string.IsNullOrWhiteSpace(manfirstRow.Property3)) dt.Columns.Add("属性三_男");
+
+                    dt.Columns.Add("姓名(男)");
+
+                    foreach (var model in manfirstRow.Items)
+                    {
+                        dt.Columns.Add(string.Format("结果(男)_{0}", model.SizeRuleName));
+
+                        dt.Columns.Add(string.Format("匹配程度(男)_{0}", model.SizeRuleName));
+                    }
+
+                    dt.Columns.Add();
+
+                    foreach (var model in manfirstRow.Items)
+                    {
+                        dt.Columns.Add(string.Format("号型(男)_{0}", model.SizeRuleName));
+
+                        dt.Columns.Add(string.Format("数量(男)_{0}", model.SizeRuleName));
+                    }
+
+                    dt.Columns.Add();
+
+                    var womanfirstRow = item.Items.FirstOrDefault(f => f.Sex == "女");
+
+                    if (!string.IsNullOrWhiteSpace(manfirstRow.Property1)) dt.Columns.Add("属性一_女");
+
+                    if (!string.IsNullOrWhiteSpace(manfirstRow.Property2)) dt.Columns.Add("属性二_女");
+
+                    if (!string.IsNullOrWhiteSpace(manfirstRow.Property3)) dt.Columns.Add("属性三_女");
+
+                    dt.Columns.Add("姓名(女)");
+
+                    foreach (var model in womanfirstRow.Items)
+                    {
+                        dt.Columns.Add(string.Format("结果(女)_{0}", model.SizeRuleName));
+
+                        dt.Columns.Add(string.Format("匹配程度(女)_{0}", model.SizeRuleName));
+                    }
+
+                    dt.Columns.Add();
+
+                    foreach (var model in womanfirstRow.Items)
+                    {
+                        dt.Columns.Add(string.Format("号型(女)_{0}", model.SizeRuleName));
+
+                        dt.Columns.Add(string.Format("数量(女)_{0}", model.SizeRuleName));
+                    }
+
+                    dt.Columns.Add();
+
+                    dt.Columns.Add("汇总");
+
+                    var firstRow = new MatchingDataSheetModel();
+
+                    var items = new List<MatchingDataSheetItemModel>();
+
+                    items.AddRange(manfirstRow.Items);
+
+                    items.AddRange(womanfirstRow.Items);
+
+                    firstRow.Items = items;
+
+                    for (int i = 0; i < dataResult.Data.Count; i++)
+                    {
+                        dt.Columns.Add(string.Format("汇总_号型_{0}", dataResult.Data[i].SizeRuleName));
+
+                        dt.Columns.Add(string.Format("汇总_数量_{0}", dataResult.Data[i].SizeRuleName));
+
+                        //if (dataResult.Data.Count - 1 == i)
+                        //{
+                        //    break;
+                        //}
+                    }
+
+                    var boyList = item.Items.Where(w => w.Sex.Contains("男")).ToList();
+
+                    var girlList = item.Items.Where(w => w.Sex.Contains("女")).ToList();
+
+                    var sumBoyResultList = new List<KeyValuePair<string, List<KeyValuePair<string, int>>>>();
+
+                    var sumGirlResultList = new List<KeyValuePair<string, List<KeyValuePair<string, int>>>>();
+
+                    foreach (var model in list)
+                    {
+                        var sheetRows = model.Items.FirstOrDefault(f => f.SheetName == item.SheetName).MatchingRows;
+
+                        sumBoyResultList.Add(new KeyValuePair<string, List<KeyValuePair<string, int>>>(model.SizeRuleName, Sort(sheetRows.Where(w => w.Sex.Contains("男")).GroupBy(g => g.Model).Select(s => new KeyValuePair<string, int>(s.Key, s.Count())).ToList(), model.SizeRuleName)));
+
+                        sumGirlResultList.Add(new KeyValuePair<string, List<KeyValuePair<string, int>>>(model.SizeRuleName, Sort(sheetRows.Where(w => w.Sex.Contains("女")).GroupBy(g => g.Model).Select(s => new KeyValuePair<string, int>(s.Key, s.Count())).ToList(), model.SizeRuleName)));
+                    }
+
+                    var index = Math.Max(boyList.Count, girlList.Count);
+
+                    for (int i = 0; i < index; i++)
+                    {
+                        dt.Rows.Add(dt.NewRow());
+                    }
+
+                    for (int i = 0; i < boyList.Count; i++)
+                    {
+                        dt.Rows[i]["姓名(男)"] = boyList[i].Name;
+
+                        if (!string.IsNullOrWhiteSpace(manfirstRow.Property1)) dt.Rows[i]["属性一_男"] = boyList[i].Property1;
+
+                        if (!string.IsNullOrWhiteSpace(manfirstRow.Property2)) dt.Rows[i]["属性二_男"] = boyList[i].Property2;
+
+                        if (!string.IsNullOrWhiteSpace(manfirstRow.Property3)) dt.Rows[i]["属性三_男"] = boyList[i].Property3;
+
+                        var mancount = boyList[i].Items.Where(s => s.SizeRuleName.Contains("男")).ToList();
+
+                        for (int j = 0; j < mancount.Count; j++)
+                        {
+                            dt.Rows[i][string.Format("结果(男)_{0}", mancount[j].SizeRuleName)] = mancount[j].Model;
+
+                            dt.Rows[i][string.Format("匹配程度(男)_{0}", mancount[j].SizeRuleName)] = mancount[j].MatchingLevel.ToString();
+                        }
+                    }
+
+                    foreach (var sumBoy in sumBoyResultList)
+                    {
+                        for (int i = 0; i < sumBoy.Value.Count; i++)
+                        {
+                            dt.Rows[i][string.Format("号型(男)_{0}", sumBoy.Key)] = sumBoy.Value[i].Key;
+
+                            dt.Rows[i][string.Format("数量(男)_{0}", sumBoy.Key)] = sumBoy.Value[i].Value;
+                        }
+                    }
+
+                    for (int i = 0; i < girlList.Count; i++)
+                    {
+                        dt.Rows[i]["姓名(女)"] = girlList[i].Name;
+
+                        if (!string.IsNullOrWhiteSpace(womanfirstRow.Property1)) dt.Rows[i]["属性一_女"] = girlList[i].Property1;
+
+                        if (!string.IsNullOrWhiteSpace(womanfirstRow.Property2)) dt.Rows[i]["属性二_女"] = girlList[i].Property2;
+
+                        if (!string.IsNullOrWhiteSpace(womanfirstRow.Property3)) dt.Rows[i]["属性三_女"] = girlList[i].Property3;
+
+                        var wonancount = girlList[i].Items.Where(s => s.SizeRuleName.Contains("女")).ToList();
+
+                        for (int j = 0; j < wonancount.Count; j++)
+                        {
+                            dt.Rows[i][string.Format("结果(女)_{0}", wonancount[j].SizeRuleName)] = wonancount[j].Model;
+
+                            dt.Rows[i][string.Format("匹配程度(女)_{0}", wonancount[j].SizeRuleName)] = wonancount[j].MatchingLevel.ToString();
+                        }
+                    }
+
+                    foreach (var sumGirl in sumGirlResultList)
+                    {
+                        for (int i = 0; i < sumGirl.Value.Count; i++)
+                        {
+                            dt.Rows[i][string.Format("号型(女)_{0}", sumGirl.Key)] = sumGirl.Value[i].Key;
+
+                            dt.Rows[i][string.Format("数量(女)_{0}", sumGirl.Key)] = sumGirl.Value[i].Value;
+                        }
+                    }
+
+                    var sumRowCount = sumResultList.Max(m => m.Value.Count);
+
+                    if (index < sumRowCount)
+                    {
+                        for (int i = 0; i < sumRowCount - index; i++)
+                        {
+                            dt.Rows.Add(dt.NewRow());
+                        }
+                    }
+
+                    foreach (var sum in sumResultList)
+                    {
+                        for (int i = 0; i < sum.Value.Count; i++)
+                        {
+                            dt.Rows[i][string.Format("汇总_号型_{0}", sum.Key)] = sum.Value[i].Key;
+
+                            dt.Rows[i][string.Format("汇总_数量_{0}", sum.Key)] = sum.Value[i].Value;
+                        }
+                    }
+                }
+                else
+                {
+                    var firstRow = item.Items.FirstOrDefault();
+
+                    if (!string.IsNullOrWhiteSpace(firstRow.Property1)) dt.Columns.Add("属性一");
+
+                    if (!string.IsNullOrWhiteSpace(firstRow.Property2)) dt.Columns.Add("属性二");
+
+                    if (!string.IsNullOrWhiteSpace(firstRow.Property3)) dt.Columns.Add("属性三");
+
+                    dt.Columns.Add("姓名");
+
+                    foreach (var model in firstRow.Items)
+                    {
+                        dt.Columns.Add(string.Format("结果_{0}", model.SizeRuleName));
+
+                        dt.Columns.Add(string.Format("匹配程度_{0}", model.SizeRuleName));
+                    }
+
+                    dt.Columns.Add();
+
+                    foreach (var model in firstRow.Items)
+                    {
+                        dt.Columns.Add(string.Format("号型_{0}", model.SizeRuleName));
+
+                        dt.Columns.Add(string.Format("数量_{0}", model.SizeRuleName));
+                    }
+
+                    for (int i = 0; i < item.Items.Count; i++)
+                    {
+                        dt.Rows.Add(dt.NewRow());
+
+                        dt.Rows[i]["姓名"] = item.Items[i].Name;
+
+                        if (!string.IsNullOrWhiteSpace(firstRow.Property1)) dt.Rows[i]["属性一"] = item.Items[i].Property1;
+
+                        if (!string.IsNullOrWhiteSpace(firstRow.Property2)) dt.Rows[i]["属性二"] = item.Items[i].Property2;
+
+                        if (!string.IsNullOrWhiteSpace(firstRow.Property3)) dt.Rows[i]["属性三"] = item.Items[i].Property3;
+
+                        for (int j = 0; j < item.Items[i].Items.Count; j++)
+                        {
+
+                            dt.Rows[i][string.Format("结果_{0}", item.Items[i].Items[j].SizeRuleName)] = item.Items[i].Items[j].Model;
+
+                            dt.Rows[i][string.Format("匹配程度_{0}", item.Items[i].Items[j].SizeRuleName)] = item.Items[i].Items[j].MatchingLevel.ToString();
+                        }
+                    }
+
+                    foreach (var sum in sumResultList)
+                    {
+                        for (int i = 0; i < sum.Value.Count; i++)
+                        {
+                            dt.Rows[i][string.Format("号型_{0}", sum.Key)] = sum.Value[i].Key;
+
+                            dt.Rows[i][string.Format("数量_{0}", sum.Key)] = sum.Value[i].Value;
+                        }
+                    }
+                }
+
+                tabs.Add(dt);
+            }
+
+            DataTable sumTabA = new DataTable();
+
+            sumTabA.TableName = "汇总1";
+
+            var sumDataList = new List<KeyValuePair<string, List<KeyValuePair<string, int>>>>();
+
+            var sizeRuleList = new List<KeyValuePair<string, List<MatchingRowModel>>>();
+
+            foreach (var model in dataResult.Data)
+            {
+                var tempList = new List<MatchingRowModel>();
+
+                foreach (var item in model.Items)
+                {
+                    tempList.AddRange(item.MatchingRows);
+                }
+
+                sizeRuleList.Add(new KeyValuePair<string, List<MatchingRowModel>>(model.SizeRuleName, tempList));
+            }
+
+            foreach (var item in sizeRuleList)
+            {
+                sumDataList.Add(new KeyValuePair<string, List<KeyValuePair<string, int>>>(item.Key, Sort(item.Value.GroupBy(g => g.Model).Select(s => new KeyValuePair<string, int>(s.Key, s.Count())).ToList(), item.Key)));
+            }
+
+            var manSizeRule = dataResult.Data.Where(w => w.Sex == "男" || string.IsNullOrWhiteSpace(w.Sex)).ToList();
+
+            if (manSizeRule != null && manSizeRule.Count >= 0)
+            {
+                sumTabA.Columns.Add("汇总_男");
+            }
+
+            foreach (var model in manSizeRule)
+            {
+                sumTabA.Columns.Add(string.Format("号型(男)_{0}", model.SizeRuleName));
+
+                sumTabA.Columns.Add(string.Format("数量(男)_{0}", model.SizeRuleName));
+            }
+
+            var womanSizeRule = dataResult.Data.Where(w => w.Sex == "女" || string.IsNullOrWhiteSpace(w.Sex)).ToList();
+
+            if (womanSizeRule != null && womanSizeRule.Count >= 0)
+            {
+                sumTabA.Columns.Add();
+
+                sumTabA.Columns.Add("汇总_女");
+            }
+
+            foreach (var model in womanSizeRule)
+            {
+                sumTabA.Columns.Add(string.Format("号型(女)_{0}", model.SizeRuleName));
+
+                sumTabA.Columns.Add(string.Format("数量(女)_{0}", model.SizeRuleName));
+            }
+
+            sumTabA.Columns.Add();
+
+            sumTabA.Columns.Add(new DataColumn("汇总"));
+
+            foreach (var model in dataResult.Data)
+            {
+                sumTabA.Columns.Add(string.Format("汇总_号型_{0}", model.SizeRuleName));
+
+                sumTabA.Columns.Add(string.Format("汇总_数量_{0}", model.SizeRuleName));
+            }
+
+            var sumItems = new List<KeyValuePair<string, List<MatchingRowModel>>>();
+
+            foreach (var item in list)
+            {
+                var data = new List<MatchingRowModel>();
+
+                foreach (var sheet in item.Items)
+                {
+                    data.AddRange(sheet.MatchingRows);
+                }
+
+                sumItems.Add(new KeyValuePair<string, List<MatchingRowModel>>(item.SizeRuleName, data));
+            }
+
+            var sumBoyDataList = new List<KeyValuePair<string, List<KeyValuePair<string, int>>>>();
+
+            var sumGirlDataList = new List<KeyValuePair<string, List<KeyValuePair<string, int>>>>();
+
+            foreach (var model in sumItems)
+            {
+                sumBoyDataList.Add(new KeyValuePair<string, List<KeyValuePair<string, int>>>(model.Key, Sort(model.Value.Where(w => w.Sex.Contains("男")).GroupBy(g => g.Model).Select(s => new KeyValuePair<string, int>(s.Key, s.Count())).ToList(), model.Key)));
+
+                sumGirlDataList.Add(new KeyValuePair<string, List<KeyValuePair<string, int>>>(model.Key, Sort(model.Value.Where(w => w.Sex.Contains("女")).GroupBy(g => g.Model).Select(s => new KeyValuePair<string, int>(s.Key, s.Count())).ToList(), model.Key)));
+            }
+
+            //var count = Math.Max(sumBoyDataList.Max(m => m.Value.Count), sumGirlDataList.Max(m => m.Value.Count));
+
+            var count = sumDataList.Max(m => m.Value.Count);
+
+            for (int i = 0; i < count; i++)
+            {
+                sumTabA.Rows.Add(sumTabA.NewRow());
+            }
+
+            foreach (var sumBoy in sumBoyDataList)
+            {
+                for (int i = 0; i < sumBoy.Value.Count; i++)
+                {
+                    sumTabA.Rows[i][string.Format("号型(男)_{0}", sumBoy.Key)] = sumBoy.Value[i].Key;
+
+                    sumTabA.Rows[i][string.Format("数量(男)_{0}", sumBoy.Key)] = sumBoy.Value[i].Value;
+                }
+            }
+
+            foreach (var sumGirl in sumGirlDataList)
+            {
+                for (int i = 0; i < sumGirl.Value.Count; i++)
+                {
+                    sumTabA.Rows[i][string.Format("号型(女)_{0}", sumGirl.Key)] = sumGirl.Value[i].Key;
+
+                    sumTabA.Rows[i][string.Format("数量(女)_{0}", sumGirl.Key)] = sumGirl.Value[i].Value;
+                }
+            }
+
+            foreach (var item in sumDataList)
+            {
+                for (int i = 0; i < item.Value.Count; i++)
+                {
+                    sumTabA.Rows[i][string.Format("汇总_号型_{0}", item.Key)] = item.Value[i].Key;
+
+                    sumTabA.Rows[i][string.Format("汇总_数量_{0}", item.Key)] = item.Value[i].Value;
+                }
+            }
+
+            tabs.Add(sumTabA);
+
+            foreach (var item in sumDataList)
+            {
+                DataTable sumTabB = new DataTable();
+
+                sumTabB.TableName = "汇总_" + item.Key;
+
+                var maxRowCount = item.Value.Max(m => m.Value);
+
+                for (int i = 0; i < maxRowCount; i++)
+                {
+                    sumTabB.Rows.Add(sumTabB.NewRow());
+                }
+
+                for (int i = 0; i < item.Value.Count; i++)
+                {
+                    sumTabB.Columns.Add(new DataColumn(string.Format("号型_{0}", item.Value[i].Key)));
+
+                    sumTabB.Columns.Add(new DataColumn(string.Format("姓名_{0}", item.Value[i].Key)));
+
+                    sumTabB.Columns.Add(new DataColumn(string.Format("表名_{0}", item.Value[i].Key)));
+
+                    sumTabB.Columns.Add(new DataColumn());
+
+                    var sumList = sizeRuleList.FirstOrDefault(f => f.Key == item.Key).Value.Where(w => w.Model == item.Value[i].Key).Select(s => new { s.Model, s.SheetName, s.Name }).ToList();
+
+                    for (int j = 0; j < sumList.Count; j++)
+                    {
+                        sumTabB.Rows[j][i * 4] = sumList[j].Model;
+
+                        sumTabB.Rows[j][i * 4 + 1] = sumList[j].Name;
+
+                        sumTabB.Rows[j][i * 4 + 2] = sumList[j].SheetName;
+                    }
+                }
+
+                tabs.Add(sumTabB);
+            }
+
+            return new DataResult<List<DataTable>>(tabs);
         }
     }
 }

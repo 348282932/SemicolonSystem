@@ -18,7 +18,7 @@ namespace SemicolonSystem.Common
         /// </summary>
         /// <param name="file"></param>
         /// <returns></returns>
-        public static List<DataTable> ExcelToTablesForXLS(string file, int marginHader, int marginBottom)
+        public static List<DataTable> ExcelToTablesForXLS(string file, int marginHader, int marginBottom, bool isSummary = false)
         {
             List<DataTable> tabs = new List<DataTable>();
 
@@ -36,11 +36,26 @@ namespace SemicolonSystem.Common
 
                     ISheet sheet = hssfworkbook.GetSheetAt(index);
 
-                    dt.TableName = sheet.SheetName;
+                    dt.TableName = sheet.SheetName.Trim();
+
+                    if (isSummary)
+                    {
+                        if (dt.TableName != "汇总1")
+                        {
+                            index++;
+
+                            continue;
+                        }
+                    }
 
                     // 表头
 
                     IRow header = sheet.GetRow(sheet.FirstRowNum + marginHader);
+
+                    if (header == null)
+                    {
+                        throw new Exception(string.Format("表：{0}，首行为空！请检查！", dt.TableName));
+                    }
 
                     List<int> columns = new List<int>();
 
@@ -50,6 +65,11 @@ namespace SemicolonSystem.Common
 
                         if (obj == null || obj.ToString() == string.Empty)
                         {
+                            //if (i == 0)
+                            //{
+                            //    throw new Exception("导入出错！请注意导入的工作表是否有空页或者格式有误！");
+                            //}
+
                             dt.Columns.Add(new DataColumn("Columns" + i.ToString()));
                         }
                         else
@@ -116,20 +136,33 @@ namespace SemicolonSystem.Common
 
                 IRow row = sheet.CreateRow(0);
 
+                var num = 0;
+
                 for (int i = 0; i < dt.Columns.Count; i++)
                 {
-                    ICell cell = row.CreateCell(i);
-
                     if (!dt.Columns[i].ColumnName.Contains("匹配程度"))
                     {
-                        if (dt.Columns[i].ColumnName.Contains("Column"))
+                        ICell cell = row.CreateCell(i - num);
+
+                        if (dt.Columns[i].ColumnName.Contains("Column") || dt.Columns[i].ColumnName.Contains("属性"))
                         {
                             cell.SetCellValue(string.Empty);
                         }
                         else
                         {
-                            cell.SetCellValue(dt.Columns[i].ColumnName);
+                            var str = dt.Columns[i].ColumnName;
+
+                            if (dt.Columns[i].ColumnName.Contains("汇总_"))
+                            {
+                                str = dt.Columns[i].ColumnName.Substring(dt.Columns[i].ColumnName.IndexOf("_") + 1);
+                            }
+
+                            cell.SetCellValue(str);
                         }
+                    }
+                    else
+                    {
+                        num++;
                     }
                 }
 
@@ -143,15 +176,22 @@ namespace SemicolonSystem.Common
                 {
                     IRow row1 = sheet.CreateRow(i + 1);
 
+                    var index = 0;
+
                     for (int j = 0; j < dt.Columns.Count; j++)
                     {
-                        ICell cell = row1.CreateCell(j);
+                        ICell cell = null;
+
+                        if (!dt.Columns[j].ColumnName.Contains("匹配程度"))
+                        {
+                            cell = row1.CreateCell(j - index);
+                        }
 
                         string cellValue = dt.Rows[i][j].ToString();
 
                         if (dt.Columns[j].ColumnName.Contains("匹配程度"))
                         {
-                            var styleCell = row1.Cells[j - 2];
+                            var styleCell = row1.Cells[j - 1 - index];
 
                             ICellStyle colorStyle = hssfworkbook.CreateCellStyle();
 
@@ -172,9 +212,14 @@ namespace SemicolonSystem.Common
                             }
 
                             cellValue = string.Empty;
+
+                            index++;
+
+                            continue;
                         }
 
-                        if (dt.Columns[j].ColumnName.Contains("型号") || dt.Columns[j].ColumnName.Contains("数量"))
+
+                        if (dt.Columns[j].ColumnName.Contains("数量"))
                         {
                             ICellStyle style = hssfworkbook.CreateCellStyle();
 
@@ -263,7 +308,7 @@ namespace SemicolonSystem.Common
         /// </summary>
         /// <param name="file"></param>
         /// <returns></returns>
-        public static List<DataTable> ExcelToTablesForXLSX(string file, int marginHader, int marginBottom)
+        public static List<DataTable> ExcelToTablesForXLSX(string file, int marginHader, int marginBottom, bool isSummary = false)
         {
             List<DataTable> tabs = new List<DataTable>();
 
@@ -281,11 +326,26 @@ namespace SemicolonSystem.Common
 
                     ISheet sheet = xssfworkbook.GetSheetAt(index);
 
-                    dt.TableName = sheet.SheetName;
+                    dt.TableName = sheet.SheetName.Trim();
+
+                    if (isSummary)
+                    {
+                        if (dt.TableName != "汇总1")
+                        {
+                            index++;
+
+                            continue;
+                        }
+                    }
 
                     // 表头
 
                     IRow header = sheet.GetRow(sheet.FirstRowNum + marginHader);
+
+                    if (header == null)
+                    {
+                        throw new Exception(string.Format("表：{0}，首行为空！请检查！", dt.TableName));
+                    }
 
                     List<int> columns = new List<int>();
 
@@ -295,6 +355,11 @@ namespace SemicolonSystem.Common
 
                         if (obj == null || obj.ToString() == string.Empty)
                         {
+                            //if (i == 0)
+                            //{
+                            //    throw new Exception("导入出错！请注意导入的工作表是否有空页或者格式有误！");
+                            //}
+
                             dt.Columns.Add(new DataColumn("Columns" + i.ToString()));
                         }
                         else
@@ -414,17 +479,17 @@ namespace SemicolonSystem.Common
         /// </summary>
         /// <param name="filepath"></param>
         /// <returns></returns>
-        public static List<DataTable> GetDataTable(string filepath, int marginHader = 0, int marginBottom = 0)
+        public static List<DataTable> GetDataTable(string filepath, int marginHader = 0, int marginBottom = 0, bool isSummary = false)
         {
             var dt = new List<DataTable>();
 
             if (filepath.Last() == 's')
             {
-                dt = ExcelToTablesForXLS(filepath, marginHader, marginBottom);
+                dt = ExcelToTablesForXLS(filepath, marginHader, marginBottom, isSummary);
             }
             else
             {
-                dt = ExcelToTablesForXLSX(filepath, marginHader, marginBottom);
+                dt = ExcelToTablesForXLSX(filepath, marginHader, marginBottom, isSummary);
             }
             return dt;
         }

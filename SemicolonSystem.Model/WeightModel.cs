@@ -9,9 +9,14 @@ namespace SemicolonSystem.Model
         public string Position { get; set; }
 
         /// <summary>
-        /// 偏移量
+        /// 左偏移量
         /// </summary>
-        public decimal Offset { get; set; }
+        public decimal OffsetLeft { get; set; }
+
+        /// <summary>
+        /// 右偏移量
+        /// </summary>
+        public decimal OffsetRight { get; set; }
 
         /// <summary>
         /// 优先级（从小到大依次递减）

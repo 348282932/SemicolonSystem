@@ -7,5 +7,7 @@
         public string Sex { get; set; }
 
         public int Count { get; set; }
+
+        public string RuleName { get; set; }
     }
 }

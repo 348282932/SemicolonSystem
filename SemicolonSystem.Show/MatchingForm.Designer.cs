@@ -49,7 +49,7 @@
             // 
             this.lbl_OffsetTitle.AutoSize = true;
             this.lbl_OffsetTitle.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl_OffsetTitle.Location = new System.Drawing.Point(128, 21);
+            this.lbl_OffsetTitle.Location = new System.Drawing.Point(155, 21);
             this.lbl_OffsetTitle.Name = "lbl_OffsetTitle";
             this.lbl_OffsetTitle.Size = new System.Drawing.Size(57, 12);
             this.lbl_OffsetTitle.TabIndex = 0;
@@ -59,7 +59,7 @@
             // 
             this.lbl_PriorityLevel.AutoSize = true;
             this.lbl_PriorityLevel.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl_PriorityLevel.Location = new System.Drawing.Point(224, 21);
+            this.lbl_PriorityLevel.Location = new System.Drawing.Point(285, 21);
             this.lbl_PriorityLevel.Name = "lbl_PriorityLevel";
             this.lbl_PriorityLevel.Size = new System.Drawing.Size(44, 12);
             this.lbl_PriorityLevel.TabIndex = 0;
@@ -67,7 +67,7 @@
             // 
             // btn_confirm
             // 
-            this.btn_confirm.Location = new System.Drawing.Point(212, 61);
+            this.btn_confirm.Location = new System.Drawing.Point(254, 61);
             this.btn_confirm.Name = "btn_confirm";
             this.btn_confirm.Size = new System.Drawing.Size(75, 23);
             this.btn_confirm.TabIndex = 1;
@@ -79,7 +79,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(319, 96);
+            this.ClientSize = new System.Drawing.Size(383, 96);
             this.Controls.Add(this.btn_confirm);
             this.Controls.Add(this.lbl_PriorityLevel);
             this.Controls.Add(this.lbl_OffsetTitle);

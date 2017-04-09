@@ -17,37 +17,66 @@ namespace SemicolonSystem.Business
 
             try
             {
-                tab = ExcelHelper.GetDataTable(fileName).FirstOrDefault(f => f.TableName == "汇总1");
+                tab = ExcelHelper.GetDataTable(fileName, isSummary: true).FirstOrDefault(f => f.TableName == "汇总1");
+
+                var man = new List<string>();
+
+                var woman = new List<string>();
+
+                var sum = new List<string>();
+
+                for (int i = 0; i < tab.Columns.Count; i++)
+                {
+                    var str = tab.Columns[i].ToString().Trim();
+
+                    if (str.Contains("号型(男)")) man.Add(str.Remove(0, 6));
+
+                    if (str.Contains("号型(女)")) woman.Add(str.Remove(0, 6));
+
+                    if (str.Contains("号型_")) sum.Add(str.Remove(0, 3));
+
+                }
 
                 for (int i = 0; i < tab.Rows.Count; i++)
                 {
-                    if (!(tab.Rows[i]["号型(男)"] is DBNull))
+                    foreach (var item in man)
                     {
-                        summaryList.Add(new SummaryModel
+                        if (!(tab.Rows[i]["号型(男)_" + item] is DBNull))
                         {
-                            Model = tab.Rows[i]["号型(男)"].ToString().Trim(),
-                            Count = Convert.ToInt32(tab.Rows[i]["数量(男)"].ToString().Trim()),
-                            Sex = "男"
-                        });
+                            summaryList.Add(new SummaryModel
+                            {
+                                Model = tab.Rows[i]["号型(男)_" + item].ToString().Trim(),
+                                Count = Convert.ToInt32(tab.Rows[i]["数量(男)_" + item].ToString().Trim()),
+                                Sex = "男",
+                                RuleName = item
+                            });
+                        }
                     }
 
-                    if (!(tab.Rows[i]["号型(女)"] is DBNull))
+                    foreach (var item in woman)
                     {
-                        summaryList.Add(new SummaryModel
+                        if (!(tab.Rows[i]["号型(女)_" + item] is DBNull))
                         {
-                            Model = tab.Rows[i]["号型(女)"].ToString().Trim(),
-                            Count = Convert.ToInt32(tab.Rows[i]["数量(女)"].ToString().Trim()),
-                            Sex = "女"
-                        });
+                            summaryList.Add(new SummaryModel
+                            {
+                                Model = tab.Rows[i]["号型(女)_" + item].ToString().Trim(),
+                                Count = Convert.ToInt32(tab.Rows[i]["数量(女)_" + item].ToString().Trim()),
+                                Sex = "女",
+                                RuleName = item
+                            });
+                        }
                     }
-
-                    if (!(tab.Rows[i]["号型"] is DBNull))
+                    foreach (var item in sum)
                     {
-                        summaryList.Add(new SummaryModel
+                        if (!(tab.Rows[i]["号型_" + item] is DBNull))
                         {
-                            Model = tab.Rows[i]["号型"].ToString().Trim(),
-                            Count = Convert.ToInt32(tab.Rows[i]["数量"].ToString().Trim()),
-                        });
+                            summaryList.Add(new SummaryModel
+                            {
+                                Model = tab.Rows[i]["号型_"+ item].ToString().Trim(),
+                                Count = Convert.ToInt32(tab.Rows[i]["数量_"+ item].ToString().Trim()),
+                                RuleName = item
+                            });
+                        }
                     }
                 }
 

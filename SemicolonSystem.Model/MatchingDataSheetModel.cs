@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace SemicolonSystem.Model
 {
-    public class OrderRow
+    public class MatchingDataSheetModel
     {
         public string Name { get; set; }
 
@@ -17,6 +14,8 @@ namespace SemicolonSystem.Model
 
         public string Property3 { get; set; }
 
-        public List<SizeRuleItemModel> SizeRules { get; set; }
+        public string SheetName { get; set; }
+
+        public List<MatchingDataSheetItemModel> Items { get; set; }
     }
 }

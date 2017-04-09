@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace SemicolonSystem.Common
@@ -78,18 +79,40 @@ namespace SemicolonSystem.Common
         }
 
         /// <summary>
-        /// 清除指定缓存
+        /// 清除缓存
         /// </summary>
-        /// <param name="cacheName"></param>
-        public void Clear(string cacheName)
+        /// <param name="cacheName">缓存文件名称</param>
+        /// <param name="isVlurry">是否启用模糊删除</param>
+        public void Clear(string cacheName, bool isVlurry = false)
         {
-            cacheName = cacheName + ".cache";
+            string filePath = string.Empty;
 
-            string filePath = path + cacheName;
-
-            if (File.Exists(filePath))
+            if (isVlurry)
             {
-                File.Delete(filePath);
+                DirectoryInfo theFolder = new DirectoryInfo(path);
+
+                var fileNames = theFolder.GetFiles().Where(w => w.Name.Contains(cacheName));
+
+                foreach (var item in fileNames)
+                {
+                    filePath = path + item.Name;
+
+                    if (File.Exists(filePath))
+                    {
+                        File.Delete(filePath);
+                    }
+                }
+            }
+            else
+            {
+                cacheName = cacheName + ".cache";
+
+                filePath = path + cacheName;
+
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                }
             }
         }
     }

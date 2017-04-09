@@ -3,7 +3,6 @@ using SemicolonSystem.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 
 namespace SemicolonSystem.Business
 {
@@ -18,22 +17,20 @@ namespace SemicolonSystem.Business
         {
             DataResult dataResult = new DataResult();
 
-            DataTable tab = new DataTable();
+            List<DataTable> tabs = new List<DataTable>();
 
             try
             {
-                tab = ExcelHelper.GetDataTable(fileName).FirstOrDefault();
+                tabs = ExcelHelper.GetDataTable(fileName);
             }
             catch (Exception ex)
             {
                 return new DataResult(ex.Message);
             }
 
-            List<SizeRuleItemModel> sizeList = new List<SizeRuleItemModel>();
-
-            if (tab == null || tab.Rows.Count == 0 || tab.Columns.Count == 0)
+            if (tabs == null || tabs.Count == 0)
             {
-                return new DataResult("请按模版导入 Excel");
+                return new DataResult("导入模板失败！请检查模板是否为空，格式是否有误！");
             }
 
             //if (tab.Columns[0].ToString().Trim() != "尺寸/型号")
@@ -41,19 +38,61 @@ namespace SemicolonSystem.Business
             //    return new DataResult("请按模版导入 Excel");
             //}
 
+            List<SizeRuleModel> sizeRuleList = new List<SizeRuleModel>();
+
             try
             {
-                for (int i = 0; i < tab.Rows.Count; i++)
+                foreach (var tab in tabs)
                 {
-                    for (int j = 1; j < tab.Columns.Count; j++)
+                    if (tab == null || tab.Rows.Count == 0 || tab.Columns.Count == 0)
                     {
-                        sizeList.Add(new SizeRuleItemModel
-                        {
-                            Model = tab.Rows[i][0].ToString().Trim(),
-                            Position = tab.Columns[j].ColumnName.Trim(),
-                            Size = Convert.ToDecimal(tab.Rows[i][j].ToString().Trim())
-                        });
+                        return new DataResult("请按模版导入 Excel");
                     }
+
+                    SizeRuleModel sizeRule = new SizeRuleModel();
+
+                    sizeRule.Name = tab.TableName;
+
+                    if (tab.TableName.Contains("男") && tab.TableName.Contains("女"))
+                    {
+                        return new DataResult("规则模版名称不能同时包含男和女");
+                    }
+
+                    if (tab.TableName.Contains("男"))
+                    {
+                        sizeRule.Sex = "男";
+                    }
+                    else if (tab.TableName.Contains("女"))
+                    {
+                        sizeRule.Sex = "女";
+                    }
+                    else
+                    {
+                        sizeRule.Sex = string.Empty;
+                    }
+
+                    List<SizeRuleItemModel> sizeRuleItemList = new List<SizeRuleItemModel>();
+
+                    for (int i = 0; i < tab.Rows.Count; i++)
+                    {
+                        for (int j = 1; j < tab.Columns.Count; j++)
+                        {
+                            var sizeStr = tab.Rows[i][j].ToString().Trim();
+
+                            if (string.IsNullOrWhiteSpace(sizeStr)) continue;
+
+                            sizeRuleItemList.Add(new SizeRuleItemModel
+                            {
+                                Model = tab.Rows[i][0].ToString().Trim(),
+                                Position = tab.Columns[j].ColumnName.Trim(),
+                                Size = Convert.ToDecimal(sizeStr)
+                            });
+                        }
+                    }
+
+                    sizeRule.Items = sizeRuleItemList;
+
+                    sizeRuleList.Add(sizeRule);
                 }
             }
             catch (FormatException)
@@ -65,13 +104,13 @@ namespace SemicolonSystem.Business
                 return new DataResult("导入 Excel 格式不正确！请按照模版导入！");
             }
 
-            Cache<List<SizeRuleItemModel>> cache = new Cache<List<SizeRuleItemModel>>();
+            Cache<List<SizeRuleModel>> cache = new Cache<List<SizeRuleModel>>();
 
-            dataResult = cache.SetCache("SizeRule", sizeList);
+            dataResult = cache.SetCache("SizeRule", sizeRuleList);
 
             cache.Clear("Order");
 
-            cache.Clear("WeightCofig");
+            cache.Clear("WeightCofig", true);
 
             return dataResult;
         }
