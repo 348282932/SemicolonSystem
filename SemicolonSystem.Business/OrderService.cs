@@ -11,12 +11,18 @@ namespace SemicolonSystem.Business
 {
     public class OrderService
     {
+        public static List<string> jumpOverList = new List<string>();
+
         /// <summary>
         /// 获取匹配结果集
         /// </summary>
         /// <returns></returns>
-        public static DataResult<List<MatchingResultModel>> GetMatchingResult()
+        public static DataResult<List<MatchingResultModel>> GetMatchingResult(out List<string> jumpOvers)
         {
+            jumpOverList.Clear();
+
+            jumpOvers = jumpOverList;
+
             var ruleCache = new Cache<List<SizeRuleModel>>();
 
             var ruleDataResult = ruleCache.GetCache("SizeRule");
@@ -442,6 +448,8 @@ namespace SemicolonSystem.Business
 
                 var result = list.FirstOrDefault();
 
+                var model = string.Empty;
+
                 if (count > 0)
                 {
                     matchingResult.MatchingLevel = MatchingLevel.PerfectMatch;
@@ -452,7 +460,11 @@ namespace SemicolonSystem.Business
                     }
                     else
                     {
-                        matchingResult.Model = ModelMatching(order, weightSizePositions, true);
+                        model = ModelMatching(order, weightSizePositions, true);
+
+                        if (string.IsNullOrEmpty(model)) continue;
+
+                        matchingResult.Model = model;
                     }
 
                     matchingResultList.Add(matchingResult);
@@ -476,7 +488,11 @@ namespace SemicolonSystem.Business
                     }
                     else
                     {
-                        matchingResult.Model = ModelMatching(order, weightSizePositions, true);
+                        model = ModelMatching(order, weightSizePositions, true);
+
+                        if (string.IsNullOrEmpty(model)) continue;
+
+                        matchingResult.Model = model;
                     }
 
                     matchingResultList.Add(matchingResult);
@@ -487,7 +503,11 @@ namespace SemicolonSystem.Business
                 {
                     matchingResult.MatchingLevel = MatchingLevel.ForceMatching;
 
-                    matchingResult.Model = ModelMatching(order, weightSizePositions, false);
+                    model = ModelMatching(order, weightSizePositions, false);
+
+                    if (string.IsNullOrEmpty(model)) continue;
+
+                    matchingResult.Model = model;
 
                     matchingResultList.Add(matchingResult);
                 }
@@ -562,7 +582,12 @@ namespace SemicolonSystem.Business
 
             if (arrTow == null)
             {
-                throw new Exception(string.Format("发现客户:{0},无有效量体数据！", order.Name));
+                if (!jumpOverList.Contains(order.Name))
+                {
+                    jumpOverList.Add(order.Name);
+                }
+
+                return string.Empty;
             }
 
             return arrTow[0];

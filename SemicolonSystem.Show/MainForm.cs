@@ -111,11 +111,13 @@ namespace SemicolonSystem.Show
             {
                 var tabs = new List<DataTable>();
 
+                var jumpOvers = new List<string>();
+
                 var isSuccess = true;
 
-                ShowLoadingForm("正在匹配，请稍等片刻！", this, (obj) =>
-                {
-                    var dataResult = Matching();
+            ShowLoadingForm("正在匹配，请稍等片刻！", this, (obj) =>
+            {
+                var dataResult = Matching(ref jumpOvers);
 
                     if (!dataResult.IsSuccess)
                     {
@@ -127,9 +129,9 @@ namespace SemicolonSystem.Show
                     }
 
                     tabs = dataResult.Data;
-                });
+            });
 
-                if (!isSuccess)
+            if (!isSuccess)
                 {
                     return;
                 }
@@ -147,11 +149,18 @@ namespace SemicolonSystem.Show
 
                 ExcelHelper.TableToExcelForXLS(tabs, filePath);
 
-                MessageBox.Show("匹配成功！");
+                if (jumpOvers.Count > 0)
+                {
+                    MessageBox.Show(string.Format("匹配成功！以下客户有效量体数据为空！{0}{1}", Environment.NewLine, string.Join("，", jumpOvers.ToArray())));
+                }
+                else
+                {
+                    MessageBox.Show("匹配成功！");
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(string.Format("匹配失败！失败原因{0}，请仔细检查表格格式是否正确！", ex.Message));
+                MessageBox.Show(string.Format("匹配失败！失败原因{0} 请仔细检查表格格式是否正确！", ex.Message));
             }
         }
 
@@ -516,11 +525,11 @@ namespace SemicolonSystem.Show
         /// 匹配
         /// </summary>
         /// <returns></returns>
-        private DataResult<List<DataTable>> Matching()
+        private DataResult<List<DataTable>> Matching(ref List<string> jumpOvers)
         {
             List<DataTable> tabs = new List<DataTable>();
 
-            var dataResult = OrderService.GetMatchingResult();
+            var dataResult = OrderService.GetMatchingResult(out jumpOvers);
 
             if (!dataResult.IsSuccess)
             {
@@ -727,7 +736,7 @@ namespace SemicolonSystem.Show
 
                         if (!string.IsNullOrWhiteSpace(manfirstRow.Property3)) dt.Rows[i]["属性三_男"] = boyList[i].Property3;
 
-                        var mancount = boyList[i].Items.Where(s => s.SizeRuleName.Contains("男")).ToList();
+                        var mancount = boyList[i].Items.Where(s => !s.SizeRuleName.Contains("女")).ToList();
 
                         for (int j = 0; j < mancount.Count; j++)
                         {
@@ -757,7 +766,7 @@ namespace SemicolonSystem.Show
 
                         if (!string.IsNullOrWhiteSpace(womanfirstRow.Property3)) dt.Rows[i]["属性三_女"] = girlList[i].Property3;
 
-                        var wonancount = girlList[i].Items.Where(s => s.SizeRuleName.Contains("女")).ToList();
+                        var wonancount = girlList[i].Items.Where(s => !s.SizeRuleName.Contains("男")).ToList();
 
                         for (int j = 0; j < wonancount.Count; j++)
                         {

@@ -4509,7 +4509,7 @@ QwBEAF8AUgBPAE0AAQBFAHgAcAByAGUAcwBzAA==
 		<row><td>PROGMSG_IIS_ROLLBACKAPPPOOLS</td><td>##IDS_PROGMSG_IIS_ROLLBACKAPPPOOLS##</td><td/></row>
 		<row><td>PROGMSG_IIS_ROLLBACKVROOTS</td><td>##IDS_PROGMSG_IIS_ROLLBACKVROOTS##</td><td/></row>
 		<row><td>PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS</td><td>##IDS_PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS##</td><td/></row>
-		<row><td>ProductCode</td><td>{B0FE5FD0-A693-4259-B021-13E3B5B71F67}</td><td/></row>
+		<row><td>ProductCode</td><td>{085628F0-2D59-4A67-B3BA-53A09D4226A3}</td><td/></row>
 		<row><td>ProductName</td><td>桔子归号</td><td/></row>
 		<row><td>ProductVersion</td><td>1.1</td><td/></row>
 		<row><td>ProgressType0</td><td>install</td><td/></row>
@@ -4528,7 +4528,7 @@ QwBEAF8AUgBPAE0AAQBFAHgAcAByAGUAcwBzAA==
 		<row><td>SecureCustomProperties</td><td>ISFOUNDNEWERPRODUCTVERSION;USERNAME;COMPANYNAME;ISX_SERIALNUM;SUPPORTDIR;DOTNETVERSION40FULL</td><td/></row>
 		<row><td>SelectedSetupType</td><td>##IDS__DisplayName_Typical##</td><td/></row>
 		<row><td>SetupType</td><td>Typical</td><td/></row>
-		<row><td>UpgradeCode</td><td>{BB8FD1D3-B9EB-47CB-B422-C06A1BBD6934}</td><td/></row>
+		<row><td>UpgradeCode</td><td>{B70844EA-93DA-4150-BA63-1AFAE124EBB5}</td><td/></row>
 		<row><td>_IsMaintenance</td><td>Change</td><td/></row>
 		<row><td>_IsSetupTypeMin</td><td>Typical</td><td/></row>
 	</table>
